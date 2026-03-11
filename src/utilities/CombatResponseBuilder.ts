@@ -29,6 +29,9 @@ export async function buildCombatResponse(data: ICombatJSON | IStepJSON): Promis
   // Determine if combat buttons should be shown
   const isCombatData = data as ICombatJSON;
   const isStepData = data as IStepJSON;
+  const rewards = isStepData.rewards;
+  const levelsGained = rewards.levelsGained;
+  const gainedLevels = levelsGained >= 1;
 
   const showButtons =
     (isCombatData.combatEnded === false) ||  // Active combat (attack/flee result)
@@ -45,6 +48,12 @@ export async function buildCombatResponse(data: ICombatJSON | IStepJSON): Promis
         .setLabel('Flee')
         .setStyle(ButtonStyle.Secondary),
     );
+    components.push(row);
+  } else if (gainedLevels) {
+    const row = new ActionRowBuilder<ButtonBuilder>();
+    const points = levelsGained * 2;
+    row.addComponents(new ButtonBuilder().setCustomId(`skillpoints:${points}`).setLabel(`⭐ Spend Skillpoints ${points}`).setStyle(ButtonStyle.Secondary));
+
     components.push(row);
   }
 
