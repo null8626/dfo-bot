@@ -1,0 +1,43 @@
+import { IEnemyJSON } from "./IEnemyJSON";
+import { IItemJSON } from "./IItemJSON";
+
+export interface IStepJSON {
+  success: boolean;
+  combatTrigger: boolean;
+  flavorText: string;
+  scenarioAuthor: string;
+  scenarioId: string;
+  rewards: IStepRewardsJSON;
+  playerStats: IStepPlayerStatsJSON;
+  error?: string;
+  cooldownRemaining?: number;
+  enemy?: IEnemyJSON;
+  inCombat?: boolean;
+};
+
+export interface IStepRewardsJSON {
+  xp: number;
+  gold: number;
+  item: IItemJSON | null;
+  levelsGained: number;
+};
+
+export interface IActiveBonuses {
+  critChance: number;
+  critDamage: number;
+  dodge: number;
+  lifeSteal: number;
+  goldFind: number;
+  xpBonus: number;
+  thorns: number;
+};
+
+export interface IStepPlayerStatsJSON {
+  hp: number;
+  maxHp: number;
+  level: number;
+  exp: number;
+  gold: number;
+  expRequired: number;
+  activeBonuses: IActiveBonuses;
+};
