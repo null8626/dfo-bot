@@ -1,23 +1,26 @@
-import { type ChatInputCommandInteraction, type Client } from "discord.js";
-import SlashCommand from "../structures/SlashCommand";
-import { type ICombatJSON } from "../interfaces/ICombatJSON";
-import { apiFetch } from "../utilities/ApiClient";
-import { buildCombatResponse } from "../utilities/CombatResponseBuilder";
-import { formatError, formatCooldown } from "../utilities/ErrorMessages";
-import Routes from "../utilities/Routes";
+import { type ChatInputCommandInteraction, type Client } from 'discord.js';
+import SlashCommand from '../structures/SlashCommand';
+import { type ICombatJSON } from '../interfaces/ICombatJSON';
+import { apiFetch } from '../utilities/ApiClient';
+import { buildCombatResponse } from '../utilities/CombatResponseBuilder';
+import { formatError, formatCooldown } from '../utilities/ErrorMessages';
+import Routes from '../utilities/Routes';
 
 export default class AttackCommand extends SlashCommand {
   constructor() {
     super({
-      name: "attack",
-      description: "Attack the enemy in your encounter",
-      category: "Gaming",
+      name: 'attack',
+      description: 'Attack the enemy in your encounter',
+      category: 'Gaming',
       cooldown: 1.8,
       isGlobalCommand: true
     });
   }
 
-  public async execute(interaction: ChatInputCommandInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ChatInputCommandInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply();
 
     const res = await apiFetch(Routes.combat(), {
@@ -30,7 +33,7 @@ export default class AttackCommand extends SlashCommand {
       return;
     }
 
-    const data = await res.json() as ICombatJSON;
+    const data = (await res.json()) as ICombatJSON;
 
     if (data.error) {
       await interaction.editReply({ content: formatError(data.error) });

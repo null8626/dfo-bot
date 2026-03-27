@@ -7,7 +7,10 @@ import { type IInventoryItem } from '../interfaces/IInventoryJSON';
 import { type ITaskJSON, type IChestSlot } from '../interfaces/IGameJSON';
 import ItemManager from '../managers/ItemManager';
 import WorkerPool from './WorkerPool';
-import type { LeaderboardEntry, LeaderboardConfig } from './LeaderboardImageBuilder';
+import type {
+  LeaderboardEntry,
+  LeaderboardConfig
+} from './LeaderboardImageBuilder';
 import type { MarketListing, MarketPageConfig } from './MarketImageBuilder';
 import type { TasksPageConfig } from './TasksImageBuilder';
 import type { ChestsPageConfig } from './ChestsImageBuilder';
@@ -17,7 +20,6 @@ import type { ChestsPageConfig } from './ChestsImageBuilder';
  * Routes all canvas work through the WorkerPool.
  */
 export default class ImageService {
-
   private static serializeItemCache(): Record<number, IItemJSON> {
     const cache: Record<number, IItemJSON> = {};
     for (const [id, item] of ItemManager.cache) {
@@ -30,7 +32,10 @@ export default class ImageService {
     return WorkerPool.run('adventure', { data });
   }
 
-  public static profile(player: IPlayerJSON, discordUser: User): Promise<Buffer> {
+  public static profile(
+    player: IPlayerJSON,
+    discordUser: User
+  ): Promise<Buffer> {
     return WorkerPool.run('profile', {
       player,
       avatarUrl: discordUser.displayAvatarURL({ extension: 'png', size: 256 }),
@@ -38,7 +43,10 @@ export default class ImageService {
     });
   }
 
-  public static inventory(chunk: IInventoryItem[], player: IPlayerJSON): Promise<Buffer> {
+  public static inventory(
+    chunk: IInventoryItem[],
+    player: IPlayerJSON
+  ): Promise<Buffer> {
     return WorkerPool.run('inventory', {
       chunk,
       player,
@@ -50,23 +58,38 @@ export default class ImageService {
     return WorkerPool.run('item', { item: itemData });
   }
 
-  public static leaderboard(entries: LeaderboardEntry[], config: LeaderboardConfig): Promise<Buffer> {
+  public static leaderboard(
+    entries: LeaderboardEntry[],
+    config: LeaderboardConfig
+  ): Promise<Buffer> {
     return WorkerPool.run('leaderboard', { entries, config });
   }
 
-  public static market(listings: MarketListing[], config: MarketPageConfig): Promise<Buffer> {
+  public static market(
+    listings: MarketListing[],
+    config: MarketPageConfig
+  ): Promise<Buffer> {
     return WorkerPool.run('market', { listings, config });
   }
 
-  public static travel(playerLevel: number, currentZoneId: number): Promise<Buffer> {
+  public static travel(
+    playerLevel: number,
+    currentZoneId: number
+  ): Promise<Buffer> {
     return WorkerPool.run('travel', { playerLevel, currentZoneId });
   }
 
-  public static tasks(tasks: ITaskJSON[], config: TasksPageConfig): Promise<Buffer> {
+  public static tasks(
+    tasks: ITaskJSON[],
+    config: TasksPageConfig
+  ): Promise<Buffer> {
     return WorkerPool.run('tasks', { tasks, config });
   }
 
-  public static chests(chests: IChestSlot[], config: ChestsPageConfig): Promise<Buffer> {
+  public static chests(
+    chests: IChestSlot[],
+    config: ChestsPageConfig
+  ): Promise<Buffer> {
     return WorkerPool.run('chests', { chests, config });
   }
 }

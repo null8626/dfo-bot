@@ -2,9 +2,17 @@ import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { join } from 'path';
 import type { ITaskJSON } from '../interfaces/IGameJSON';
 
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
-const PERIOD_COLORS: Record<string, { bg: string; border: string; text: string }> = {
+const PERIOD_COLORS: Record<
+  string,
+  { bg: string; border: string; text: string }
+> = {
   daily: { bg: '#064e3b33', border: '#10b98144', text: '#34d399' },
   weekly: { bg: '#1e1b4b33', border: '#6366f144', text: '#818cf8' },
   monthly: { bg: '#4a044e33', border: '#c026d344', text: '#e879f9' }
@@ -17,7 +25,10 @@ export interface TasksPageConfig {
 }
 
 export default class TasksImageBuilder {
-  public static async build(tasks: ITaskJSON[], config: TasksPageConfig): Promise<Buffer> {
+  public static async build(
+    tasks: ITaskJSON[],
+    config: TasksPageConfig
+  ): Promise<Buffer> {
     const rowH = 90;
     const headerH = 100;
     const footerH = 40;
@@ -63,7 +74,8 @@ export default class TasksImageBuilder {
     // Reset timer
     const resetMin = Math.floor(config.resetIn / 60000);
     const resetH = Math.floor(resetMin / 60);
-    const resetStr = resetH > 0 ? `${resetH}h ${resetMin % 60}m` : `${resetMin}m`;
+    const resetStr =
+      resetH > 0 ? `${resetH}h ${resetMin % 60}m` : `${resetMin}m`;
     ctx.fillStyle = '#6b7280';
     ctx.font = '10px sans-serif';
     ctx.textAlign = 'right';
@@ -87,16 +99,27 @@ export default class TasksImageBuilder {
     let y = headerH;
 
     for (const task of tasks) {
-      const pct = Math.min(100, Math.floor(task.progress / task.target * 100));
+      const pct = Math.min(
+        100,
+        Math.floor((task.progress / task.target) * 100)
+      );
       const isComplete = task.progress >= task.target;
       const isClaimed = task.claimed;
 
       // Row background
-      ctx.fillStyle = isClaimed ? '#00000020' : isComplete ? '#064e3b22' : '#ffffff06';
+      ctx.fillStyle = isClaimed
+        ? '#00000020'
+        : isComplete
+          ? '#064e3b22'
+          : '#ffffff06';
       ctx.beginPath();
       ctx.roundRect(30, y, canvas.width - 60, rowH - 10, 10);
       ctx.fill();
-      ctx.strokeStyle = isClaimed ? '#ffffff0a' : isComplete ? '#10b98133' : '#ffffff10';
+      ctx.strokeStyle = isClaimed
+        ? '#ffffff0a'
+        : isComplete
+          ? '#10b98133'
+          : '#ffffff10';
       ctx.lineWidth = 1;
       ctx.stroke();
 
@@ -114,7 +137,11 @@ export default class TasksImageBuilder {
       // Progress text
       ctx.font = '11px monospace';
       ctx.fillStyle = isComplete ? '#34d399' : '#9ca3af';
-      ctx.fillText(`${task.progress.toLocaleString()} / ${task.target.toLocaleString()}`, 90, y + 50);
+      ctx.fillText(
+        `${task.progress.toLocaleString()} / ${task.target.toLocaleString()}`,
+        90,
+        y + 50
+      );
 
       // Progress bar
       const barX = 90;
@@ -128,7 +155,11 @@ export default class TasksImageBuilder {
       ctx.fill();
 
       if (pct > 0) {
-        ctx.fillStyle = isClaimed ? '#4b5563' : isComplete ? '#10b981' : '#3b82f6';
+        ctx.fillStyle = isClaimed
+          ? '#4b5563'
+          : isComplete
+            ? '#10b981'
+            : '#3b82f6';
         ctx.beginPath();
         ctx.roundRect(barX, barY, barW * (pct / 100), barH, 4);
         ctx.fill();
@@ -171,7 +202,11 @@ export default class TasksImageBuilder {
       ctx.fillStyle = '#6b7280';
       ctx.font = 'italic 16px sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('No tasks available for this period.', canvas.width / 2, headerH + 50);
+      ctx.fillText(
+        'No tasks available for this period.',
+        canvas.width / 2,
+        headerH + 50
+      );
     }
 
     return canvas.toBuffer('image/png');

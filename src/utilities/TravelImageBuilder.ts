@@ -2,11 +2,20 @@ import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { join } from 'path';
 import { ZONES, type ZoneInfo } from './ZoneData';
 
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
 const RARITY_COLORS: Record<string, string> = {
-  Uncommon: '#2ecc71', Rare: '#3498db', Elite: '#e67e22',
-  Epic: '#9b59b6', Legendary: '#f1c40f', Divine: '#00e5ff'
+  Uncommon: '#2ecc71',
+  Rare: '#3498db',
+  Elite: '#e67e22',
+  Epic: '#9b59b6',
+  Legendary: '#f1c40f',
+  Divine: '#00e5ff'
 };
 
 const TIER_COLORS: Record<string, string> = {
@@ -15,7 +24,7 @@ const TIER_COLORS: Record<string, string> = {
   'The Hero': '#e67e22',
   'The Ascendant': '#9b59b6',
   'The Cosmic': '#00e5ff',
-  'Beyond': '#ff00cc'
+  Beyond: '#ff00cc'
 };
 
 const ROW_HEIGHT = 52;
@@ -26,7 +35,10 @@ const PADDING = 30;
 const CANVAS_WIDTH = 800;
 
 export default class TravelImageBuilder {
-  public static async build(playerLevel: number, currentZoneId: number): Promise<Buffer> {
+  public static async build(
+    playerLevel: number,
+    currentZoneId: number
+  ): Promise<Buffer> {
     // Group zones by tier
     const tiers = new Map<string, ZoneInfo[]>();
     for (const zone of ZONES) {
@@ -43,7 +55,12 @@ export default class TravelImageBuilder {
       totalRows += zones.length;
     }
 
-    const canvasHeight = HEADER_HEIGHT + tierCount * TIER_HEADER_HEIGHT + totalRows * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
+    const canvasHeight =
+      HEADER_HEIGHT +
+      tierCount * TIER_HEADER_HEIGHT +
+      totalRows * ROW_HEIGHT +
+      FOOTER_HEIGHT +
+      PADDING;
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
@@ -56,7 +73,10 @@ export default class TravelImageBuilder {
     ctx.strokeStyle = '#ffffff05';
     ctx.lineWidth = 1;
     for (let i = 0; i < canvas.height; i += 20) {
-      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(canvas.width, i);
+      ctx.stroke();
     }
 
     // Header gradient
@@ -72,12 +92,13 @@ export default class TravelImageBuilder {
     ctx.font = 'bold 26px sans-serif';
     ctx.fillText('Zone Map', canvas.width / 2, 38);
 
-    const currentZone = ZONES.find(z => z.id === currentZoneId);
+    const currentZone = ZONES.find((z) => z.id === currentZoneId);
     ctx.fillStyle = '#6b7280';
     ctx.font = '13px sans-serif';
     ctx.fillText(
       `Current: ${currentZone?.name ?? 'Unknown'} • Level ${playerLevel}`,
-      canvas.width / 2, 62
+      canvas.width / 2,
+      62
     );
 
     // --- Zone rows grouped by tier ---
@@ -133,7 +154,9 @@ export default class TravelImageBuilder {
         ctx.font = `${isCurrentZone ? 'bold ' : ''}15px sans-serif`;
         ctx.fillText(
           `${isAccessible ? '' : '🔒 '}${zone.name}`,
-          textX, y + 22, 340
+          textX,
+          y + 22,
+          340
         );
 
         // Description
@@ -145,7 +168,11 @@ export default class TravelImageBuilder {
         ctx.textAlign = 'right';
         ctx.fillStyle = isAccessible ? '#4b5563' : '#ef4444';
         ctx.font = '11px sans-serif';
-        ctx.fillText(`Lvl ${zone.levelReq}+`, PADDING + contentWidth - 100, y + 22);
+        ctx.fillText(
+          `Lvl ${zone.levelReq}+`,
+          PADDING + contentWidth - 100,
+          y + 22
+        );
 
         // Rarity cap pill
         ctx.fillStyle = `${rarityColor}20`;

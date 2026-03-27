@@ -1,21 +1,24 @@
-import { type ChatInputCommandInteraction, type Client } from "discord.js";
-import SlashCommand from "../structures/SlashCommand";
-import { apiFetch } from "../utilities/ApiClient";
-import { formatError } from "../utilities/ErrorMessages";
-import Routes from "../utilities/Routes";
+import { type ChatInputCommandInteraction, type Client } from 'discord.js';
+import SlashCommand from '../structures/SlashCommand';
+import { apiFetch } from '../utilities/ApiClient';
+import { formatError } from '../utilities/ErrorMessages';
+import Routes from '../utilities/Routes';
 
 export default class RestCommand extends SlashCommand {
   constructor() {
     super({
-      name: "rest",
-      description: "Rest at the inn to restore HP (costs gold)",
-      category: "Gaming",
+      name: 'rest',
+      description: 'Rest at the inn to restore HP (costs gold)',
+      category: 'Gaming',
       cooldown: 5,
       isGlobalCommand: true
     });
   }
 
-  public async execute(interaction: ChatInputCommandInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ChatInputCommandInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply();
 
     try {
@@ -29,11 +32,18 @@ export default class RestCommand extends SlashCommand {
 
       if (!res.ok || !result.success) {
         // Handle full HP case gracefully
-        if (result.error?.includes('full') || result.error?.includes('already')) {
-          await interaction.editReply({ content: '❤️ You are already at full HP!' });
+        if (
+          result.error?.includes('full') ||
+          result.error?.includes('already')
+        ) {
+          await interaction.editReply({
+            content: '❤️ You are already at full HP!'
+          });
           return;
         }
-        await interaction.editReply({ content: formatError(result.error ?? 'Rest failed') });
+        await interaction.editReply({
+          content: formatError(result.error ?? 'Rest failed')
+        });
         return;
       }
 
@@ -47,7 +57,9 @@ export default class RestCommand extends SlashCommand {
         ].join('\n')
       });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code) });
+      await interaction.editReply({
+        content: formatError(err.message, err.code)
+      });
     }
   }
 }

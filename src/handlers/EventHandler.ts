@@ -14,7 +14,10 @@ export default class EventHandler {
   }
 
   private initialize(): void {
-    const eventFiles = readdirSync(filePath).filter(file => file.endsWith('.ts') || file.endsWith('.js') || !file.endsWith('.d.ts'));
+    const eventFiles = readdirSync(filePath).filter(
+      (file) =>
+        file.endsWith('.ts') || file.endsWith('.js') || !file.endsWith('.d.ts')
+    );
 
     for (const file of eventFiles) {
       let event = require(join(filePath, file));
@@ -22,9 +25,13 @@ export default class EventHandler {
       if (!(event instanceof Event)) continue;
 
       if (event.isOnce) {
-        this.client.once(event.name, (...args: any[]) => event.execute(...args, this.client));
+        this.client.once(event.name, (...args: any[]) =>
+          event.execute(...args, this.client)
+        );
       } else {
-        this.client.on(event.name, (...args: any[]) => event.execute(...args, this.client));
+        this.client.on(event.name, (...args: any[]) =>
+          event.execute(...args, this.client)
+        );
       }
     }
   }

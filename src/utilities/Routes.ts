@@ -1,6 +1,6 @@
 export default class Routes {
   public static HEADERS = () => ({
-    'Authorization': `Bearer ${process.env.BOT_TOKEN}`,
+    Authorization: `Bearer ${process.env.BOT_TOKEN}`,
     'Content-Type': 'application/json'
   });
 
@@ -136,12 +136,22 @@ export default class Routes {
 
   // ========== MARKET ==========
 
-  public static marketBrowse(discordId: string, params?: { page?: number; search?: string; rarity?: string; type?: string; sort?: string }): string {
+  public static marketBrowse(
+    discordId: string,
+    params?: {
+      page?: number;
+      search?: string;
+      rarity?: string;
+      type?: string;
+      sort?: string;
+    }
+  ): string {
     const base = `https://capi.gg/api/market?discordId=${discordId}&limit=8`;
     const qs = new URLSearchParams();
     if (params?.page) qs.set('page', String(params.page));
     if (params?.search) qs.set('search', params.search);
-    if (params?.rarity && params.rarity !== 'All') qs.set('rarity', params.rarity);
+    if (params?.rarity && params.rarity !== 'All')
+      qs.set('rarity', params.rarity);
     if (params?.type && params.type !== 'All') qs.set('type', params.type);
     if (params?.sort) qs.set('sort', params.sort);
     const extra = qs.toString();

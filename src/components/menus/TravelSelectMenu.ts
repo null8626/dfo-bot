@@ -1,14 +1,23 @@
-import { type AnySelectMenuInteraction, type Client, MessageFlags } from "discord.js";
-import SelectMenu from "../../structures/SelectMenu";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
-import { getZone } from "../../utilities/ZoneData";
+import {
+  type AnySelectMenuInteraction,
+  type Client,
+  MessageFlags
+} from 'discord.js';
+import SelectMenu from '../../structures/SelectMenu';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
+import { getZone } from '../../utilities/ZoneData';
 
 export default class TravelSelectMenu extends SelectMenu {
-  constructor() { super({ customId: "travel_select", cooldown: 5, isAuthorOnly: true }); }
+  constructor() {
+    super({ customId: 'travel_select', cooldown: 5, isAuthorOnly: true });
+  }
 
-  public async execute(interaction: AnySelectMenuInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: AnySelectMenuInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const zoneId = parseInt(interaction.values[0], 10);
@@ -29,7 +38,9 @@ export default class TravelSelectMenu extends SelectMenu {
       const body = await res.json();
 
       if (!res.ok || !body.success) {
-        await interaction.editReply({ content: formatError(body.error ?? 'Travel failed.') });
+        await interaction.editReply({
+          content: formatError(body.error ?? 'Travel failed.')
+        });
         return;
       }
 
@@ -37,7 +48,9 @@ export default class TravelSelectMenu extends SelectMenu {
         content: `🗺️ **Traveled to ${zone?.name ?? body.zoneName}!**\n\n> *${zone?.description ?? 'A new zone awaits.'}*\n\nUse \`/explore\` to begin adventuring here.`
       });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code) });
+      await interaction.editReply({
+        content: formatError(err.message, err.code)
+      });
     }
   }
 }

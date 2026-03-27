@@ -1,20 +1,29 @@
-import SelectMenu from "../structures/SelectMenu";
-import { type AnySelectMenuInteraction, Collection, type Client } from "discord.js";
+import SelectMenu from '../structures/SelectMenu';
+import {
+  type AnySelectMenuInteraction,
+  Collection,
+  type Client
+} from 'discord.js';
 import { readdirSync } from 'fs';
-import logger from "../utilities/Logger";
-import CooldownManager from "../managers/CooldownManager";
-import { join } from "path";
-const filePath = join(__dirname, "../components/menus");
+import logger from '../utilities/Logger';
+import CooldownManager from '../managers/CooldownManager';
+import { join } from 'path';
+const filePath = join(__dirname, '../components/menus');
 
 export default class SelectMenuHandler {
   private static _cache: Collection<string, SelectMenu> = new Collection();
 
   public static load(): void {
-    const menuFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const menuFiles = readdirSync(filePath).filter(
+      (file) =>
+        (file.endsWith('.ts') || file.endsWith('.js')) &&
+        !file.endsWith('.d.ts')
     );
 
     if (menuFiles.length < 1) {
-      logger.info(`[SelectMenuHandler] No select menu executable data to cache. Skipping step`);
+      logger.info(
+        `[SelectMenuHandler] No select menu executable data to cache. Skipping step`
+      );
       return;
     }
 
@@ -25,10 +34,16 @@ export default class SelectMenuHandler {
       this._cache.set(menu.customId, menu);
     }
 
-    logger.info(`[SelectMenuHandler] Cached ${this._cache.size} menu executables`);
+    logger.info(
+      `[SelectMenuHandler] Cached ${this._cache.size} menu executables`
+    );
   }
 
-  public static async handle(customId: string, interaction: AnySelectMenuInteraction, client: Client) {
+  public static async handle(
+    customId: string,
+    interaction: AnySelectMenuInteraction,
+    client: Client
+  ) {
     let id = customId;
     let target = null;
     if (customId.includes(':')) {
@@ -39,9 +54,16 @@ export default class SelectMenuHandler {
 
     try {
       const menu = this._cache.get(id);
-      if (!menu) throw new Error(`No executable data could be found for menu with ID: ${customId}`);
+      if (!menu)
+        throw new Error(
+          `No executable data could be found for menu with ID: ${customId}`
+        );
 
-      if (menu.isAuthorOnly && interaction.user.id !== interaction.message.interactionMetadata?.user.id) return;
+      if (
+        menu.isAuthorOnly &&
+        interaction.user.id !== interaction.message.interactionMetadata?.user.id
+      )
+        return;
 
       const key = `s-${customId}-${interaction.user.id}`;
 

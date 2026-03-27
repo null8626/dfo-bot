@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import { Collection } from 'discord.js';
 
 export default class CooldownManager {
   private static _cache: Collection<string, number> = new Collection();
@@ -11,10 +11,9 @@ export default class CooldownManager {
 
     if (expiration > Date.now()) {
       return true;
-    } 
+    }
     this._cache.delete(key);
     return false;
-    
   }
 
   public static getExpiration(key: string): number {

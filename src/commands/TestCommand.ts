@@ -1,24 +1,35 @@
-import { ButtonBuilder, ButtonStyle, ChannelType, type ChatInputCommandInteraction, type Client, ContainerBuilder, MessageFlags } from "discord.js";
-import SlashCommand from "../structures/SlashCommand";
-import logger from "../utilities/Logger";
+import {
+  ButtonBuilder,
+  ButtonStyle,
+  ChannelType,
+  type ChatInputCommandInteraction,
+  type Client,
+  ContainerBuilder,
+  MessageFlags
+} from 'discord.js';
+import SlashCommand from '../structures/SlashCommand';
+import logger from '../utilities/Logger';
 
 export default class TestCommand extends SlashCommand {
   constructor() {
     super({
-      name: "test",
-      description: "dev command",
-      category: "Developer",
+      name: 'test',
+      description: 'dev command',
+      category: 'Developer',
       cooldown: 5,
       isGlobalCommand: false
     });
   }
 
-  public async execute(interaction: ChatInputCommandInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ChatInputCommandInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply();
 
     const res = await fetch('https://capi.gg/api/facts/random', {
       headers: {
-        'Authorization': `Bearer ${process.env.API_KEY}`,
+        Authorization: `Bearer ${process.env.API_KEY}`,
         'Content-Type': 'application/json'
       }
     });

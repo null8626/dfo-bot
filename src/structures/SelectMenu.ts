@@ -1,5 +1,5 @@
-import { type AnySelectMenuInteraction, type Client } from "discord.js";
-import type IExecutable from "../interfaces/IExecutable";
+import { type AnySelectMenuInteraction, type Client } from 'discord.js';
+import type IExecutable from '../interfaces/IExecutable';
 
 export interface SelectMenuOptions {
   customId: string;
@@ -26,5 +26,9 @@ export default abstract class SelectMenu implements IExecutable {
     return this.options.isAuthorOnly;
   }
 
-  public abstract execute(interaction: AnySelectMenuInteraction, client: Client, args?: string[] | null): Promise<void>;
+  public abstract execute(
+    interaction: AnySelectMenuInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void>;
 }

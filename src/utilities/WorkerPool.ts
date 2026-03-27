@@ -28,7 +28,10 @@ export default class WorkerPool {
 
     // Resolve to the compiled .js worker in production, or .ts in development
     const isCompiled = __filename.endsWith('.js');
-    const workerFile = join(__dirname, isCompiled ? 'ImageWorker.js' : 'ImageWorker.ts');
+    const workerFile = join(
+      __dirname,
+      isCompiled ? 'ImageWorker.js' : 'ImageWorker.ts'
+    );
 
     for (let i = 0; i < poolSize; i++) {
       const worker = new Worker(workerFile, {
@@ -51,7 +54,9 @@ export default class WorkerPool {
     }
 
     this.isInitialized = true;
-    logger.info(`[WorkerPool] Initialized ${poolSize} workers (${coreCount} CPU cores detected)`);
+    logger.info(
+      `[WorkerPool] Initialized ${poolSize} workers (${coreCount} CPU cores detected)`
+    );
   }
 
   /**
@@ -60,7 +65,9 @@ export default class WorkerPool {
    */
   public static run(builderName: string, payload: any): Promise<Buffer> {
     if (!this.isInitialized) {
-      throw new Error('[WorkerPool] Pool not initialized — call WorkerPool.init() first');
+      throw new Error(
+        '[WorkerPool] Pool not initialized — call WorkerPool.init() first'
+      );
     }
 
     return new Promise<Buffer>((resolve, reject) => {
@@ -79,7 +86,11 @@ export default class WorkerPool {
    * Send a task to a specific worker and listen for the result.
    */
   private static execute(worker: Worker, task: QueuedTask): void {
-    const onMessage = (result: { success: boolean; buffer?: ArrayBuffer; error?: string }) => {
+    const onMessage = (result: {
+      success: boolean;
+      buffer?: ArrayBuffer;
+      error?: string;
+    }) => {
       // Clean up this specific listener
       worker.off('message', onMessage);
       worker.off('error', onError);

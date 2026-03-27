@@ -1,11 +1,11 @@
-import { Collection } from "discord.js";
-import { type IItemJSON } from "../interfaces/IItemJSON";
-import logger from "../utilities/Logger";
-import Routes from "../utilities/Routes";
+import { Collection } from 'discord.js';
+import { type IItemJSON } from '../interfaces/IItemJSON';
+import logger from '../utilities/Logger';
+import Routes from '../utilities/Routes';
 import 'dotenv/config';
 
 const REFRESH_INTERVAL = 300_000; // 5 minutes
-const FETCH_TIMEOUT = 15_000;     // 15 second timeout for API calls
+const FETCH_TIMEOUT = 15_000; // 15 second timeout for API calls
 
 export default class ItemManager {
   public static cache: Collection<number, IItemJSON> = new Collection();
@@ -34,7 +34,9 @@ export default class ItemManager {
       });
 
       if (!res.ok) {
-        logger.error(`[ItemManager] Failed to fetch items: HTTP ${res.status} ${res.statusText}`);
+        logger.error(
+          `[ItemManager] Failed to fetch items: HTTP ${res.status} ${res.statusText}`
+        );
         return;
       }
 
@@ -61,7 +63,9 @@ export default class ItemManager {
     } catch (error: any) {
       // Distinguish timeout from other errors for clearer debugging
       if (error.name === 'TimeoutError' || error.name === 'AbortError') {
-        logger.error(`[ItemManager] Fetch timed out after ${FETCH_TIMEOUT / 1000}s`);
+        logger.error(
+          `[ItemManager] Fetch timed out after ${FETCH_TIMEOUT / 1000}s`
+        );
       } else {
         logger.error(error, '[ItemManager] Critical fetch error:');
       }
@@ -103,7 +107,9 @@ export default class ItemManager {
    */
   public static get(itemId: number): IItemJSON | undefined {
     if (!this.isLoaded) {
-      logger.warn(`[ItemManager] Attempted to get item ${itemId} before cache was loaded`);
+      logger.warn(
+        `[ItemManager] Attempted to get item ${itemId} before cache was loaded`
+      );
     }
     return this.cache.get(itemId);
   }

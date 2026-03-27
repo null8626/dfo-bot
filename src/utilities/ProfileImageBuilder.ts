@@ -7,7 +7,10 @@ import { join } from 'path';
 
 // --- CRITICAL FIX: Load the font directly from the project files ---
 // process.cwd() ensures it always looks in the root folder, regardless of compiled dist/ paths
-GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji');
+GlobalFonts.registerFromPath(
+  join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+  'NotoEmoji'
+);
 
 export default class ProfileImageBuilder {
   /**
@@ -32,7 +35,7 @@ export default class ProfileImageBuilder {
     const ctx = canvas.getContext('2d');
 
     // --- Svelte Logic Conversions ---
-    const xpToNext = Math.floor(50 * (player.level || 1)**1.3);
+    const xpToNext = Math.floor(50 * (player.level || 1) ** 1.3);
     const xpProgress = Math.min(player.experience / xpToNext, 1);
     const totalAtk = player.stats?.atk || 0;
     const totalDef = player.stats?.def || 0;
@@ -56,20 +59,35 @@ export default class ProfileImageBuilder {
 
     ctx.save();
     ctx.beginPath();
-    ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2, true);
+    ctx.arc(
+      avatarX + avatarSize / 2,
+      avatarY + avatarSize / 2,
+      avatarSize / 2,
+      0,
+      Math.PI * 2,
+      true
+    );
     ctx.closePath();
     ctx.clip();
 
     // Support both a Discord User object (main thread) and a plain URL string (worker thread)
-    const avatarUrl = typeof discordUser === 'string'
-      ? discordUser
-      : discordUser.displayAvatarURL({ extension: 'png', size: 256 });
+    const avatarUrl =
+      typeof discordUser === 'string'
+        ? discordUser
+        : discordUser.displayAvatarURL({ extension: 'png', size: 256 });
     const avatarImage = await loadImage(avatarUrl);
     ctx.drawImage(avatarImage, avatarX, avatarY, avatarSize, avatarSize);
     ctx.restore();
 
     ctx.beginPath();
-    ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2, true);
+    ctx.arc(
+      avatarX + avatarSize / 2,
+      avatarY + avatarSize / 2,
+      avatarSize / 2,
+      0,
+      Math.PI * 2,
+      true
+    );
     ctx.lineWidth = 4;
     ctx.strokeStyle = '#10b981';
     ctx.stroke();
@@ -84,31 +102,63 @@ export default class ProfileImageBuilder {
 
     ctx.fillStyle = '#10b981';
     ctx.font = 'bold 16px sans-serif';
-    ctx.fillText(`[${player.privilege.toUpperCase()}]`, 180 + nameWidth + 15, 72);
+    ctx.fillText(
+      `[${player.privilege.toUpperCase()}]`,
+      180 + nameWidth + 15,
+      72
+    );
 
     ctx.fillStyle = '#9ca3af';
     ctx.font = '14px monospace';
     ctx.fillText(`ID: ${player.id}`, 180, 100);
 
     // --- 4. Stats Grid ---
-    const drawGridBox = (x: number, y: number, label: string, value: string, borderColor: string, valueColor: string) => {
+    const drawGridBox = (
+      x: number,
+      y: number,
+      label: string,
+      value: string,
+      borderColor: string,
+      valueColor: string
+    ) => {
       ctx.fillStyle = '#1a1a1a';
       ctx.fillRect(x, y, 180, 70);
       ctx.fillStyle = borderColor;
       ctx.fillRect(x, y, 4, 70);
-        
+
       ctx.fillStyle = '#6b7280';
       ctx.font = '12px sans-serif';
       ctx.fillText(label.toUpperCase(), x + 15, y + 25);
-        
+
       ctx.fillStyle = valueColor;
       ctx.font = 'bold 24px monospace';
       ctx.fillText(value, x + 15, y + 55);
     };
 
-    drawGridBox(180, 130, 'Level', player.level.toString(), '#eab308', '#ffffff');
-    drawGridBox(375, 130, 'Skill Points', player.skillPoints.toString(), '#3b82f6', '#ffffff');
-    drawGridBox(570, 130, 'Coins', player.coins.toLocaleString(), '#f59e0b', '#fbbf24');
+    drawGridBox(
+      180,
+      130,
+      'Level',
+      player.level.toString(),
+      '#eab308',
+      '#ffffff'
+    );
+    drawGridBox(
+      375,
+      130,
+      'Skill Points',
+      player.skillPoints.toString(),
+      '#3b82f6',
+      '#ffffff'
+    );
+    drawGridBox(
+      570,
+      130,
+      'Coins',
+      player.coins.toLocaleString(),
+      '#f59e0b',
+      '#fbbf24'
+    );
 
     // --- 5. XP Bar ---
     const barX = 180;
@@ -129,7 +179,11 @@ export default class ProfileImageBuilder {
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 12px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(`${player.experience.toLocaleString()} XP / ${xpToNext.toLocaleString()} XP`, barX + barWidth / 2, barY + 16);
+    ctx.fillText(
+      `${player.experience.toLocaleString()} XP / ${xpToNext.toLocaleString()} XP`,
+      barX + barWidth / 2,
+      barY + 16
+    );
     ctx.textAlign = 'left';
 
     // --- 6. Combat Stats Panel ---
@@ -156,7 +210,13 @@ export default class ProfileImageBuilder {
     ctx.roundRect(60, panelY + 45, 670 * hpProgress, 12, 6);
     ctx.fill();
 
-    const drawStatBox = (x: number, y: number, label: string, value: string, color: string) => {
+    const drawStatBox = (
+      x: number,
+      y: number,
+      label: string,
+      value: string,
+      color: string
+    ) => {
       ctx.fillStyle = '#00000066';
       ctx.beginPath();
       ctx.roundRect(x, y, 325, 50, 6);
@@ -193,15 +253,29 @@ export default class ProfileImageBuilder {
 
     // Grid Settings (4 columns, 3 rows)
     const equipSlots = [
-      { key: 'Head', icon: '⛑️' }, { key: 'Necklace', icon: '📿' }, { key: 'Chest', icon: '👕' }, { key: 'MainHand', icon: '⚔️' },
-      { key: 'Legs', icon: '👖' }, { key: 'OffHand', icon: '🛡️' }, { key: 'Hands', icon: '🧤' }, { key: 'RingA', icon: '💍' },
-      { key: 'Feet', icon: '👢' }, { key: 'RingB', icon: '💍' }, { key: 'Pet', icon: '🐾' }, { key: 'Special', icon: '✨' }
+      { key: 'Head', icon: '⛑️' },
+      { key: 'Necklace', icon: '📿' },
+      { key: 'Chest', icon: '👕' },
+      { key: 'MainHand', icon: '⚔️' },
+      { key: 'Legs', icon: '👖' },
+      { key: 'OffHand', icon: '🛡️' },
+      { key: 'Hands', icon: '🧤' },
+      { key: 'RingA', icon: '💍' },
+      { key: 'Feet', icon: '👢' },
+      { key: 'RingB', icon: '💍' },
+      { key: 'Pet', icon: '🐾' },
+      { key: 'Special', icon: '✨' }
     ];
 
     const RARITY_COLORS: Record<string, string> = {
-      Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
-      Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
-      Divine: '#00e5ff', Exotic: '#ff00cc'
+      Common: '#b0b0b0',
+      Uncommon: '#2ecc71',
+      Rare: '#3498db',
+      Elite: '#e67e22',
+      Epic: '#9b59b6',
+      Legendary: '#f1c40f',
+      Divine: '#00e5ff',
+      Exotic: '#ff00cc'
     };
 
     const gridStartX = 60;
@@ -220,7 +294,9 @@ export default class ProfileImageBuilder {
       const boxY = gridStartY + row * (boxHeight + gapY);
 
       // Fetch item data if equipped
-      const equippedRef = player.equipment ? (player.equipment as any)[slot.key] : null;
+      const equippedRef = player.equipment
+        ? (player.equipment as any)[slot.key]
+        : null;
       let itemData = null;
       if (equippedRef?.itemId) {
         itemData = getItem(equippedRef.itemId) ?? null;
@@ -251,11 +327,16 @@ export default class ProfileImageBuilder {
 
       if (itemData) {
         const color = RARITY_COLORS[itemData.rarity] || '#ffffff';
-            
+
         // Truncate name if it's too long (using canvas maxWidth param)
         ctx.fillStyle = color;
         ctx.font = 'bold 13px sans-serif';
-        ctx.fillText(itemData.name, boxX + boxWidth / 2, boxY + 65, boxWidth - 10);
+        ctx.fillText(
+          itemData.name,
+          boxX + boxWidth / 2,
+          boxY + 65,
+          boxWidth - 10
+        );
 
         // Item Level
         ctx.fillStyle = '#6b7280';

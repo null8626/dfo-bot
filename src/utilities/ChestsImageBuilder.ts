@@ -2,17 +2,31 @@ import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { join } from 'path';
 import type { IChestSlot } from '../interfaces/IGameJSON';
 
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
 const TIER_COLORS: Record<string, string> = {
-  Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
-  Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
+  Common: '#b0b0b0',
+  Uncommon: '#2ecc71',
+  Rare: '#3498db',
+  Elite: '#e67e22',
+  Epic: '#9b59b6',
+  Legendary: '#f1c40f',
   Divine: '#00e5ff'
 };
 
 const TIER_EMOJIS: Record<string, string> = {
-  Common: '📦', Uncommon: '🟢', Rare: '🔵', Elite: '🟠',
-  Epic: '🟣', Legendary: '⭐', Divine: '💎'
+  Common: '📦',
+  Uncommon: '🟢',
+  Rare: '🔵',
+  Elite: '🟠',
+  Epic: '🟣',
+  Legendary: '⭐',
+  Divine: '💎'
 };
 
 export interface ChestsPageConfig {
@@ -23,7 +37,10 @@ export interface ChestsPageConfig {
 }
 
 export default class ChestsImageBuilder {
-  public static async build(chests: IChestSlot[], config: ChestsPageConfig): Promise<Buffer> {
+  public static async build(
+    chests: IChestSlot[],
+    config: ChestsPageConfig
+  ): Promise<Buffer> {
     const slotW = 160;
     const slotH = 200;
     const cols = 4;
@@ -58,13 +75,21 @@ export default class ChestsImageBuilder {
     // Stats line
     ctx.fillStyle = '#6b7280';
     ctx.font = '11px sans-serif';
-    ctx.fillText(`${chests.length} / ${config.maxSlots} slots  •  ${config.totalOpened} opened`, padding, 70);
+    ctx.fillText(
+      `${chests.length} / ${config.maxSlots} slots  •  ${config.totalOpened} opened`,
+      padding,
+      70
+    );
 
     // Pity progress
     ctx.textAlign = 'right';
     ctx.fillStyle = '#00e5ff';
     ctx.font = 'bold 11px sans-serif';
-    ctx.fillText(`Divine Pity: ${config.divinePity}/${config.pityThreshold}`, canvas.width - padding, 40);
+    ctx.fillText(
+      `Divine Pity: ${config.divinePity}/${config.pityThreshold}`,
+      canvas.width - padding,
+      40
+    );
 
     // Pity bar
     const pityBarX = canvas.width - padding - 200;
@@ -156,9 +181,10 @@ export default class ChestsImageBuilder {
       } else if (chest.status === 'unlocking') {
         const remainSec = Math.max(0, Math.floor(chest.remainingMs / 1000));
         const h = Math.floor(remainSec / 3600);
-        const m = Math.floor(remainSec % 3600 / 60);
+        const m = Math.floor((remainSec % 3600) / 60);
         const s = remainSec % 60;
-        const timeStr = h > 0 ? `${h}h ${m}m ${s}s` : m > 0 ? `${m}m ${s}s` : `${s}s`;
+        const timeStr =
+          h > 0 ? `${h}h ${m}m ${s}s` : m > 0 ? `${m}m ${s}s` : `${s}s`;
 
         ctx.fillStyle = '#eab308';
         ctx.fillText(`⏳ ${timeStr}`, x + slotW / 2, y + 135);

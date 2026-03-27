@@ -2,7 +2,12 @@ import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { join } from 'path';
 
 // Load emoji font
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
 export interface LeaderboardEntry {
   username: string;
@@ -14,8 +19,8 @@ export interface LeaderboardConfig {
   title: string;
   stat: string;
   emoji: string;
-  accentColor: string;     // hex, e.g. '#eab308'
-  accentColorDim: string;  // hex with opacity, e.g. '#eab30833'
+  accentColor: string; // hex, e.g. '#eab308'
+  accentColorDim: string; // hex with opacity, e.g. '#eab30833'
 }
 
 const MEDAL_COLORS = ['#fbbf24', '#c0c0c0', '#cd7f32']; // Gold, Silver, Bronze
@@ -26,9 +31,13 @@ const PADDING = 40;
 const CANVAS_WIDTH = 800;
 
 export default class LeaderboardImageBuilder {
-  public static async build(entries: LeaderboardEntry[], config: LeaderboardConfig): Promise<Buffer> {
+  public static async build(
+    entries: LeaderboardEntry[],
+    config: LeaderboardConfig
+  ): Promise<Buffer> {
     const rowCount = Math.min(entries.length, 10);
-    const canvasHeight = HEADER_HEIGHT + rowCount * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
+    const canvasHeight =
+      HEADER_HEIGHT + rowCount * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
@@ -42,7 +51,10 @@ export default class LeaderboardImageBuilder {
     ctx.strokeStyle = '#ffffff05';
     ctx.lineWidth = 1;
     for (let i = 0; i < canvas.height; i += 20) {
-      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(canvas.width, i);
+      ctx.stroke();
     }
 
     // Top accent gradient
@@ -68,7 +80,11 @@ export default class LeaderboardImageBuilder {
     // Subtitle
     ctx.fillStyle = '#6b7280';
     ctx.font = '14px sans-serif';
-    ctx.fillText(`Top ${rowCount} Players — Ranked by ${config.stat}`, canvas.width / 2, 105);
+    ctx.fillText(
+      `Top ${rowCount} Players — Ranked by ${config.stat}`,
+      canvas.width / 2,
+      105
+    );
 
     // --- 3. Rows ---
     const startY = HEADER_HEIGHT + 10;
@@ -122,7 +138,11 @@ export default class LeaderboardImageBuilder {
       ctx.textAlign = 'right';
       ctx.fillStyle = isTop3 ? config.accentColor : '#9ca3af';
       ctx.font = `bold ${isTop3 ? '22' : '18'}px monospace`;
-      ctx.fillText(entry.value.toLocaleString(), PADDING + contentWidth - 15, rowY + 40);
+      ctx.fillText(
+        entry.value.toLocaleString(),
+        PADDING + contentWidth - 15,
+        rowY + 40
+      );
     }
 
     // --- 4. Footer ---
@@ -131,7 +151,11 @@ export default class LeaderboardImageBuilder {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#374151';
     ctx.font = '11px sans-serif';
-    ctx.fillText('⚔️ DFO Cross-Platform Integration — capi.gg', canvas.width / 2, footerY);
+    ctx.fillText(
+      '⚔️ DFO Cross-Platform Integration — capi.gg',
+      canvas.width / 2,
+      footerY
+    );
 
     return canvas.toBuffer('image/png');
   }

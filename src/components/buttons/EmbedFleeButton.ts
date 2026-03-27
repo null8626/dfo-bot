@@ -1,15 +1,20 @@
-import { type ButtonInteraction, type Client } from "discord.js";
-import Button from "../../structures/Button";
-import { type ICombatJSON } from "../../interfaces/ICombatJSON";
-import { apiFetch } from "../../utilities/ApiClient";
-import { buildCombatResponse } from "../../utilities/CombatResponseBuilder";
-import { formatError, formatCooldown } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client } from 'discord.js';
+import Button from '../../structures/Button';
+import { type ICombatJSON } from '../../interfaces/ICombatJSON';
+import { apiFetch } from '../../utilities/ApiClient';
+import { buildCombatResponse } from '../../utilities/CombatResponseBuilder';
+import { formatError, formatCooldown } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class EmbedFleeButton extends Button {
-  constructor() { super({ customId: "embedFlee", cooldown: 1.8, isAuthorOnly: true }); }
+  constructor() {
+    super({ customId: 'embedFlee', cooldown: 1.8, isAuthorOnly: true });
+  }
 
-  public async execute(interaction: ButtonInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     const res = await apiFetch(Routes.combat(), {
@@ -22,7 +27,7 @@ export default class EmbedFleeButton extends Button {
       return;
     }
 
-    const data = await res.json() as ICombatJSON;
+    const data = (await res.json()) as ICombatJSON;
 
     if (data.error) {
       await interaction.editReply({ content: formatError(data.error) });

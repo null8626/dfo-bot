@@ -1,9 +1,15 @@
-import { type AutocompleteInteraction, type ChatInputCommandInteraction, Collection, MessageFlags, type Client } from "discord.js";
+import {
+  type AutocompleteInteraction,
+  type ChatInputCommandInteraction,
+  Collection,
+  MessageFlags,
+  type Client
+} from 'discord.js';
 import { readdirSync } from 'fs';
-import { join } from "path";
-import SlashCommand from "../structures/SlashCommand";
-import logger from "../utilities/Logger";
-import CooldownManager from "../managers/CooldownManager";
+import { join } from 'path';
+import SlashCommand from '../structures/SlashCommand';
+import logger from '../utilities/Logger';
+import CooldownManager from '../managers/CooldownManager';
 const filePath = join(__dirname, '../commands');
 
 export default class SlashCommandHandler {
@@ -14,7 +20,10 @@ export default class SlashCommandHandler {
   }
 
   public static load(): void {
-    const commandFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const commandFiles = readdirSync(filePath).filter(
+      (file) =>
+        (file.endsWith('.ts') || file.endsWith('.js')) &&
+        !file.endsWith('.d.ts')
     );
 
     for (const file of commandFiles) {
@@ -24,16 +33,25 @@ export default class SlashCommandHandler {
       this._cache.set(command.data.name, command);
     }
 
-    logger.info(`[SlashCommandHandler] Cached a total of ${this._cache.size} commands`);
+    logger.info(
+      `[SlashCommandHandler] Cached a total of ${this._cache.size} commands`
+    );
   }
 
-  public static async handle(name: string, interaction: ChatInputCommandInteraction, client: Client): Promise<void> {
+  public static async handle(
+    name: string,
+    interaction: ChatInputCommandInteraction,
+    client: Client
+  ): Promise<void> {
     const startTime = Date.now();
 
     try {
       const command = this._cache.get(name);
       if (!command) {
-        await interaction.reply({ content: "This command is outdated or disabled", flags: MessageFlags.Ephemeral });
+        await interaction.reply({
+          content: 'This command is outdated or disabled',
+          flags: MessageFlags.Ephemeral
+        });
         return;
       }
 
@@ -41,20 +59,29 @@ export default class SlashCommandHandler {
 
       if (CooldownManager.onCooldown(key)) {
         const expiresAt = CooldownManager.getExpiration(key);
-        await interaction.reply({ content: `⏳ You can use this command again <t:${expiresAt}:R>.`, flags: MessageFlags.Ephemeral });
+        await interaction.reply({
+          content: `⏳ You can use this command again <t:${expiresAt}:R>.`,
+          flags: MessageFlags.Ephemeral
+        });
         return;
       }
 
       await command.execute(interaction, client);
 
       CooldownManager.addCooldown(key, command.cooldown);
-      logger.command(`/${name} | ${interaction.user.username} (${interaction.user.id}) | ${interaction.guild?.name ?? 'DM'} | ${Date.now() - startTime}ms`);
+      logger.command(
+        `/${name} | ${interaction.user.username} (${interaction.user.id}) | ${interaction.guild?.name ?? 'DM'} | ${Date.now() - startTime}ms`
+      );
     } catch (err) {
       throw err;
     }
   }
 
-  public static async autocomplete(name: string, interaction: AutocompleteInteraction, client: Client): Promise<void> {
+  public static async autocomplete(
+    name: string,
+    interaction: AutocompleteInteraction,
+    client: Client
+  ): Promise<void> {
     const command = this._cache.get(name);
     if (!command) return;
 

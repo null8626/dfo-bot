@@ -40,7 +40,9 @@ export default class PresenceManager {
 
   private static async fetchStats(): Promise<void> {
     try {
-      const telemetryRes = await apiFetch('https://capi.gg/api/telemetry/db-stats');
+      const telemetryRes = await apiFetch(
+        'https://capi.gg/api/telemetry/db-stats'
+      );
 
       if (telemetryRes.ok) {
         const data = await telemetryRes.json();
@@ -59,8 +61,13 @@ export default class PresenceManager {
       const cluster = (this.client as any).cluster;
       if (cluster) {
         try {
-          const results = await cluster.broadcastEval((c: any) => c.guilds.cache.size);
-          this.totalGuilds = results.reduce((acc: number, val: number) => acc + val, 0);
+          const results = await cluster.broadcastEval(
+            (c: any) => c.guilds.cache.size
+          );
+          this.totalGuilds = results.reduce(
+            (acc: number, val: number) => acc + val,
+            0
+          );
         } catch {
           this.totalGuilds = this.client.guilds.cache.size;
         }
@@ -76,11 +83,23 @@ export default class PresenceManager {
     if (!this.client.user) return;
 
     const activities = [
-      { type: ActivityType.Watching, name: `${this.stats.players.toLocaleString()} players` },
-      { type: ActivityType.Watching, name: `${this.totalGuilds.toLocaleString()} servers` },
-      { type: ActivityType.Watching, name: `${this.stats.items.toLocaleString()} items` },
-      { type: ActivityType.Watching, name: `${this.stats.scenarios.toLocaleString()} scenarios` },
-      { type: ActivityType.Playing,  name: `capi.gg` }
+      {
+        type: ActivityType.Watching,
+        name: `${this.stats.players.toLocaleString()} players`
+      },
+      {
+        type: ActivityType.Watching,
+        name: `${this.totalGuilds.toLocaleString()} servers`
+      },
+      {
+        type: ActivityType.Watching,
+        name: `${this.stats.items.toLocaleString()} items`
+      },
+      {
+        type: ActivityType.Watching,
+        name: `${this.stats.scenarios.toLocaleString()} scenarios`
+      },
+      { type: ActivityType.Playing, name: `capi.gg` }
     ];
 
     const current = activities[this.rotationIndex % activities.length];

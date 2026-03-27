@@ -13,18 +13,20 @@
    limitations under the License.
    */
 
-import logger, { flushAndClose } from "./utilities/Logger";
-import { Client, GatewayIntentBits } from "discord.js";
+import logger, { flushAndClose } from './utilities/Logger';
+import { Client, GatewayIntentBits } from 'discord.js';
 import 'dotenv/config';
-import EventHandler from "./handlers/EventHandler";
-import SlashCommandHandler from "./handlers/SlashCommandHandler";
-import ButtonHandler from "./handlers/ButtonHandler";
-import SelectMenuHandler from "./handlers/SelectMenuHandler";
-import ModalSubmitHandler from "./handlers/ModalSubmitHandler";
-import WorkerPool from "./utilities/WorkerPool";
-import PresenceManager from "./managers/PresenceManager";
+import EventHandler from './handlers/EventHandler';
+import SlashCommandHandler from './handlers/SlashCommandHandler';
+import ButtonHandler from './handlers/ButtonHandler';
+import SelectMenuHandler from './handlers/SelectMenuHandler';
+import ModalSubmitHandler from './handlers/ModalSubmitHandler';
+import WorkerPool from './utilities/WorkerPool';
+import PresenceManager from './managers/PresenceManager';
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
+});
 
 (async () => {
   try {

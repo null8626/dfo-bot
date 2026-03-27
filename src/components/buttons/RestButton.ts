@@ -1,15 +1,19 @@
-import { type ButtonInteraction, type Client } from "discord.js";
-import Button from "../../structures/Button";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client } from 'discord.js';
+import Button from '../../structures/Button';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class RestButton extends Button {
   constructor() {
-    super({ customId: "rest", cooldown: 5, isAuthorOnly: true });
+    super({ customId: 'rest', cooldown: 5, isAuthorOnly: true });
   }
 
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     try {
@@ -21,7 +25,12 @@ export default class RestButton extends Button {
       const result = await res.json();
 
       if (!res.ok || !result.success) {
-        await interaction.editReply({ content: formatError(result.error ?? 'Rest failed'), files: [], components: [], embeds: [] });
+        await interaction.editReply({
+          content: formatError(result.error ?? 'Rest failed'),
+          files: [],
+          components: [],
+          embeds: []
+        });
         return;
       }
 
@@ -31,10 +40,17 @@ export default class RestButton extends Button {
           `❤️ Restored **${result.healedAmount.toLocaleString()} HP** → ${result.newHp.toLocaleString()} / ${result.maxHp.toLocaleString()}`,
           `🪙 Cost: **${result.goldSpent.toLocaleString()}** Gold  •  💰 Balance: **${result.newBalance.toLocaleString()}** Gold`
         ].join('\n'),
-        files: [], components: [], embeds: []
+        files: [],
+        components: [],
+        embeds: []
       });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: formatError(err.message, err.code),
+        files: [],
+        components: [],
+        embeds: []
+      });
     }
   }
 }

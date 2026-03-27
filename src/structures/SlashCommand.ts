@@ -1,6 +1,10 @@
-import { type AutocompleteInteraction, type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import type IExecutable from "../interfaces/IExecutable";
-import { type Client } from "discord.js";
+import {
+  type AutocompleteInteraction,
+  type ChatInputCommandInteraction,
+  SlashCommandBuilder
+} from 'discord.js';
+import type IExecutable from '../interfaces/IExecutable';
+import { type Client } from 'discord.js';
 
 export interface SlashCommandOptions {
   name: string;
@@ -45,7 +49,13 @@ export default abstract class SlashCommand implements IExecutable {
     return this.builder;
   }
 
-  public abstract execute(interaction: ChatInputCommandInteraction, client: Client): Promise<void>;
+  public abstract execute(
+    interaction: ChatInputCommandInteraction,
+    client: Client
+  ): Promise<void>;
 
-  public async autocomplete?(interaction: AutocompleteInteraction, client: Client): Promise<void>;
+  public async autocomplete?(
+    interaction: AutocompleteInteraction,
+    client: Client
+  ): Promise<void>;
 }

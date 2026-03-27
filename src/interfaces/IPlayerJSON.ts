@@ -1,11 +1,11 @@
-import { type IEnemyJSON } from "./IEnemyJSON";
+import { type IEnemyJSON } from './IEnemyJSON';
 
 export type Privilege =
-    | 'Member'
-    | 'Donator'
-    | 'Moderator'
-    | 'Administrator'
-    | 'Developer';
+  | 'Member'
+  | 'Donator'
+  | 'Moderator'
+  | 'Administrator'
+  | 'Developer';
 
 export interface IPlayerJSON {
   id: string;

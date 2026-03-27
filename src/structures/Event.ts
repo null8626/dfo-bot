@@ -1,4 +1,4 @@
-import type IExecutable from "../interfaces/IExecutable";
+import type IExecutable from '../interfaces/IExecutable';
 
 export interface EventOptions {
   name: string;

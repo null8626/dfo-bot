@@ -1,15 +1,20 @@
-import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
-import Button from "../../structures/Button";
-import { type ICombatJSON } from "../../interfaces/ICombatJSON";
-import { apiFetch } from "../../utilities/ApiClient";
-import { buildCombatResponse } from "../../utilities/CombatResponseBuilder";
-import { formatError, formatCooldown } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client, MessageFlags } from 'discord.js';
+import Button from '../../structures/Button';
+import { type ICombatJSON } from '../../interfaces/ICombatJSON';
+import { apiFetch } from '../../utilities/ApiClient';
+import { buildCombatResponse } from '../../utilities/CombatResponseBuilder';
+import { formatError, formatCooldown } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class AttackButton extends Button {
-  constructor() { super({ customId: "attack", cooldown: 1.8, isAuthorOnly: false }); }
+  constructor() {
+    super({ customId: 'attack', cooldown: 1.8, isAuthorOnly: false });
+  }
 
-  public async execute(interaction: ButtonInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const res = await apiFetch(Routes.combat(), {
@@ -22,7 +27,7 @@ export default class AttackButton extends Button {
       return;
     }
 
-    const data = await res.json() as ICombatJSON;
+    const data = (await res.json()) as ICombatJSON;
 
     if (data.error) {
       await interaction.editReply({ content: formatError(data.error) });

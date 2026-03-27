@@ -1,27 +1,51 @@
 import { createCanvas, GlobalFonts } from '@napi-rs/canvas';
 import { join } from 'path';
 
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
 const RARITY_COLORS: Record<string, string> = {
-  Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
-  Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
-  Divine: '#00e5ff', Exotic: '#ff00cc'
+  Common: '#b0b0b0',
+  Uncommon: '#2ecc71',
+  Rare: '#3498db',
+  Elite: '#e67e22',
+  Epic: '#9b59b6',
+  Legendary: '#f1c40f',
+  Divine: '#00e5ff',
+  Exotic: '#ff00cc'
 };
 
 const SLOT_ICONS: Record<string, string> = {
-  'Head': '⛑️', 'Necklace': '📿', 'Chest': '👕', 'MainHand': '⚔️',
-  'Legs': '👖', 'OffHand': '🛡️', 'Hands': '🧤', 'RingA': '💍',
-  'RingB': '💍', 'Feet': '👢', 'Pet': '🐾', 'Special': '✨'
+  Head: '⛑️',
+  Necklace: '📿',
+  Chest: '👕',
+  MainHand: '⚔️',
+  Legs: '👖',
+  OffHand: '🛡️',
+  Hands: '🧤',
+  RingA: '💍',
+  RingB: '💍',
+  Feet: '👢',
+  Pet: '🐾',
+  Special: '✨'
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
-  'Weapon': '⚔️', 'Armor': '🛡️', 'Accessory': '💍',
-  'Consumable': '🧪', 'Material': '🪵', 'Collectible': '🗿'
+  Weapon: '⚔️',
+  Armor: '🛡️',
+  Accessory: '💍',
+  Consumable: '🧪',
+  Material: '🪵',
+  Collectible: '🗿'
 };
 
 function getItemIcon(item: any): string {
-  if (item.slot && item.slot !== 'None' && SLOT_ICONS[item.slot]) return SLOT_ICONS[item.slot];
+  if (item.slot && item.slot !== 'None' && SLOT_ICONS[item.slot])
+    return SLOT_ICONS[item.slot];
   return CATEGORY_ICONS[item.type] || '📦';
 }
 
@@ -55,9 +79,16 @@ const PADDING = 30;
 const CANVAS_WIDTH = 850;
 
 export default class MarketImageBuilder {
-  public static async build(listings: MarketListing[], config: MarketPageConfig): Promise<Buffer> {
+  public static async build(
+    listings: MarketListing[],
+    config: MarketPageConfig
+  ): Promise<Buffer> {
     const rowCount = listings.length;
-    const canvasHeight = HEADER_HEIGHT + Math.max(rowCount, 1) * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
+    const canvasHeight =
+      HEADER_HEIGHT +
+      Math.max(rowCount, 1) * ROW_HEIGHT +
+      FOOTER_HEIGHT +
+      PADDING;
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
@@ -70,7 +101,10 @@ export default class MarketImageBuilder {
     ctx.strokeStyle = '#ffffff05';
     ctx.lineWidth = 1;
     for (let i = 0; i < canvas.height; i += 20) {
-      ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(0, i);
+      ctx.lineTo(canvas.width, i);
+      ctx.stroke();
     }
 
     const accentColor = config.mode === 'my_listings' ? '#3b82f6' : '#10b981';
@@ -84,13 +118,18 @@ export default class MarketImageBuilder {
     ctx.textAlign = 'center';
     ctx.fillStyle = accentColor;
     ctx.font = 'bold 28px sans-serif';
-    ctx.fillText(config.mode === 'my_listings' ? 'My Listings' : 'Global Market', canvas.width / 2, 42);
+    ctx.fillText(
+      config.mode === 'my_listings' ? 'My Listings' : 'Global Market',
+      canvas.width / 2,
+      42
+    );
 
     ctx.fillStyle = '#6b7280';
     ctx.font = '13px sans-serif';
     ctx.fillText(
       `${config.totalItems.toLocaleString()} listing${config.totalItems !== 1 ? 's' : ''} — Page ${config.page} of ${Math.max(1, config.totalPages)}`,
-      canvas.width / 2, 68
+      canvas.width / 2,
+      68
     );
 
     // --- Empty state ---
@@ -101,8 +140,11 @@ export default class MarketImageBuilder {
       ctx.font = 'italic 18px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(
-        config.mode === 'my_listings' ? 'You have no active listings.' : 'No listings found.',
-        canvas.width / 2, startY + 36
+        config.mode === 'my_listings'
+          ? 'You have no active listings.'
+          : 'No listings found.',
+        canvas.width / 2,
+        startY + 36
       );
     }
 
@@ -174,12 +216,20 @@ export default class MarketImageBuilder {
       ctx.textAlign = 'right';
       ctx.font = 'bold 18px monospace';
       ctx.fillStyle = '#fbbf24';
-      ctx.fillText(`${listing.pricePerUnit.toLocaleString()}g`, PADDING + contentWidth - 12, rowY + 34);
+      ctx.fillText(
+        `${listing.pricePerUnit.toLocaleString()}g`,
+        PADDING + contentWidth - 12,
+        rowY + 34
+      );
 
       if (listing.quantity > 1) {
         ctx.fillStyle = '#6b7280';
         ctx.font = '11px sans-serif';
-        ctx.fillText(`Total: ${(listing.pricePerUnit * listing.quantity).toLocaleString()}g`, PADDING + contentWidth - 12, rowY + 52);
+        ctx.fillText(
+          `Total: ${(listing.pricePerUnit * listing.quantity).toLocaleString()}g`,
+          PADDING + contentWidth - 12,
+          rowY + 52
+        );
       }
     }
 
@@ -188,7 +238,11 @@ export default class MarketImageBuilder {
     ctx.textAlign = 'center';
     ctx.fillStyle = '#374151';
     ctx.font = '11px sans-serif';
-    ctx.fillText('⚔️ DFO Cross-Platform Market — capi.gg', canvas.width / 2, footerY);
+    ctx.fillText(
+      '⚔️ DFO Cross-Platform Market — capi.gg',
+      canvas.width / 2,
+      footerY
+    );
 
     return canvas.toBuffer('image/png');
   }

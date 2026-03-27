@@ -1,26 +1,35 @@
-import { type AnySelectMenuInteraction, type Client } from "discord.js";
-import SelectMenu from "../../structures/SelectMenu";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
-import { buildItemView } from "../../utilities/ItemViewBuilder";
-import type { IInventoryItem } from "../../interfaces/IInventoryJSON";
-import type { IPlayerJSON } from "../../interfaces/IPlayerJSON";
+import { type AnySelectMenuInteraction, type Client } from 'discord.js';
+import SelectMenu from '../../structures/SelectMenu';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
+import { buildItemView } from '../../utilities/ItemViewBuilder';
+import type { IInventoryItem } from '../../interfaces/IInventoryJSON';
+import type { IPlayerJSON } from '../../interfaces/IPlayerJSON';
 
 export default class InvSelectMenu extends SelectMenu {
   constructor() {
-    super({ customId: "inv_select", cooldown: 3, isAuthorOnly: true });
+    super({ customId: 'inv_select', cooldown: 3, isAuthorOnly: true });
   }
 
   // customId format: inv_select:<pageOffset> — value is the _id of the selected item
-  public async execute(interaction: AnySelectMenuInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: AnySelectMenuInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     const docId = interaction.values[0]; // The MongoDB _id
     const discordId = interaction.user.id;
 
     if (!docId) {
-      await interaction.editReply({ content: 'No item selected!', files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: 'No item selected!',
+        files: [],
+        components: [],
+        embeds: []
+      });
       return;
     }
 
@@ -30,7 +39,12 @@ export default class InvSelectMenu extends SelectMenu {
       const body = await res.json();
 
       if (!res.ok || !body.success) {
-        await interaction.editReply({ content: formatError(body.error ?? 'Failed to load inventory'), files: [], components: [], embeds: [] });
+        await interaction.editReply({
+          content: formatError(body.error ?? 'Failed to load inventory'),
+          files: [],
+          components: [],
+          embeds: []
+        });
         return;
       }
 
@@ -41,7 +55,12 @@ export default class InvSelectMenu extends SelectMenu {
       const item = inventory.find((inv: IInventoryItem) => inv._id === docId);
 
       if (!item) {
-        await interaction.editReply({ content: 'Item not found in your inventory!', files: [], components: [], embeds: [] });
+        await interaction.editReply({
+          content: 'Item not found in your inventory!',
+          files: [],
+          components: [],
+          embeds: []
+        });
         return;
       }
 
@@ -49,7 +68,12 @@ export default class InvSelectMenu extends SelectMenu {
       const viewer = await buildItemView(player, item);
       await interaction.editReply({ ...viewer, embeds: viewer.embeds });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: formatError(err.message, err.code),
+        files: [],
+        components: [],
+        embeds: []
+      });
     }
   }
 }

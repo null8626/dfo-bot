@@ -5,7 +5,7 @@ import globals from 'globals'
 
 export default [
   {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'bin/*.ts'],
 
     plugins: {
       '@typescript-eslint': typescriptEslint,
@@ -130,7 +130,6 @@ export default [
       'no-dupe-keys': 'error',
       'no-duplicate-case': 'error',
       'no-else-return': 'error',
-      'no-empty': 'error',
       'no-empty-pattern': 'error',
       'no-eval': 'error',
       'no-ex-assign': 'error',

@@ -1,15 +1,20 @@
-import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
-import Button from "../../structures/Button";
-import { type IStepJSON } from "../../interfaces/IStepJSON";
-import { apiFetch } from "../../utilities/ApiClient";
-import { buildCombatResponse } from "../../utilities/CombatResponseBuilder";
-import { formatError, formatCooldown } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client, MessageFlags } from 'discord.js';
+import Button from '../../structures/Button';
+import { type IStepJSON } from '../../interfaces/IStepJSON';
+import { apiFetch } from '../../utilities/ApiClient';
+import { buildCombatResponse } from '../../utilities/CombatResponseBuilder';
+import { formatError, formatCooldown } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class ExploreButton extends Button {
-  constructor() { super({ customId: "explore", cooldown: 7, isAuthorOnly: false }); }
+  constructor() {
+    super({ customId: 'explore', cooldown: 7, isAuthorOnly: false });
+  }
 
-  public async execute(interaction: ButtonInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const res = await apiFetch(Routes.explore(), {
@@ -17,15 +22,19 @@ export default class ExploreButton extends Button {
       body: JSON.stringify({ discordId: interaction.user.id })
     });
 
-    const data = await res.json() as IStepJSON;
+    const data = (await res.json()) as IStepJSON;
 
     if (res.status === 429) {
-      await interaction.editReply({ content: formatCooldown('step', data.cooldownRemaining) });
+      await interaction.editReply({
+        content: formatCooldown('step', data.cooldownRemaining)
+      });
       return;
     }
 
     if (res.status === 404) {
-      await interaction.editReply({ content: formatError('', 'PLAYER_NOT_FOUND') });
+      await interaction.editReply({
+        content: formatError('', 'PLAYER_NOT_FOUND')
+      });
       return;
     }
 

@@ -1,5 +1,5 @@
-import type IExecutable from "../interfaces/IExecutable";
-import { type ButtonInteraction, type Client } from "discord.js";
+import type IExecutable from '../interfaces/IExecutable';
+import { type ButtonInteraction, type Client } from 'discord.js';
 
 export interface ButtonOptions {
   customId: string;
@@ -26,5 +26,9 @@ export default abstract class Button implements IExecutable {
     return this.options.isAuthorOnly;
   }
 
-  public abstract execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void>;
+  public abstract execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void>;
 }

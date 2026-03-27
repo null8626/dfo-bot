@@ -1,36 +1,54 @@
-import { type ButtonInteraction, type Client } from "discord.js";
-import Button from "../../structures/Button";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client } from 'discord.js';
+import Button from '../../structures/Button';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class EnhanceButton extends Button {
   constructor() {
-    super({ customId: "enhance", cooldown: 3, isAuthorOnly: true });
+    super({ customId: 'enhance', cooldown: 3, isAuthorOnly: true });
   }
 
   // customId format: enhance:<docId>:<itemId>
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     const docId = args?.[0];
     const itemId = parseInt(args?.[1] ?? '-1', 10);
 
     if (!docId || isNaN(itemId)) {
-      await interaction.editReply({ content: 'Error parsing item data!', files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: 'Error parsing item data!',
+        files: [],
+        components: [],
+        embeds: []
+      });
       return;
     }
 
     try {
       const res = await apiFetch(Routes.enhance(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, itemId, inventoryId: docId })
+        body: JSON.stringify({
+          discordId: interaction.user.id,
+          itemId,
+          inventoryId: docId
+        })
       });
 
       const body = await res.json();
 
       if (!res.ok || !body.success) {
-        await interaction.editReply({ content: formatError(body.error ?? 'Enhancement failed'), files: [], components: [], embeds: [] });
+        await interaction.editReply({
+          content: formatError(body.error ?? 'Enhancement failed'),
+          files: [],
+          components: [],
+          embeds: []
+        });
         return;
       }
 
@@ -50,12 +68,27 @@ export default class EnhanceButton extends Button {
         }
       }
 
-      lines.push(``, `🪙 Gold spent: **${result.goldCost?.toLocaleString() ?? '???'}**`);
-      lines.push(`🔥 Embers spent: **${result.emberCost?.toLocaleString() ?? '???'}**`);
+      lines.push(
+        ``,
+        `🪙 Gold spent: **${result.goldCost?.toLocaleString() ?? '???'}**`
+      );
+      lines.push(
+        `🔥 Embers spent: **${result.emberCost?.toLocaleString() ?? '???'}**`
+      );
 
-      await interaction.editReply({ content: lines.join('\n'), files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: lines.join('\n'),
+        files: [],
+        components: [],
+        embeds: []
+      });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: formatError(err.message, err.code),
+        files: [],
+        components: [],
+        embeds: []
+      });
     }
   }
 }

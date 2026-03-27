@@ -23,7 +23,11 @@ const additionalLevels = {
 
 // --- File destination (reopenable for rotation) ---
 // minLength: 0 ensures writes flush quickly — prevents sonic-boom "not ready" on exit
-const fileDestination = pino.destination({ dest: LOG_FILE, sync: false, minLength: 0 });
+const fileDestination = pino.destination({
+  dest: LOG_FILE,
+  sync: false,
+  minLength: 0
+});
 
 /**
  * Rotates log files when bot.log exceeds MAX_SIZE_BYTES.
@@ -50,7 +54,9 @@ function rotateIfNeeded(): void {
     renameSync(LOG_FILE, join(LOG_DIR, 'bot.1.log'));
     fileDestination.reopen();
 
-    logger.info(`[Logger] Log rotated. Previous file exceeded ${MAX_SIZE_BYTES / 1024 / 1024}MB`);
+    logger.info(
+      `[Logger] Log rotated. Previous file exceeded ${MAX_SIZE_BYTES / 1024 / 1024}MB`
+    );
   } catch (err) {
     console.error('[Logger] Rotation failed:', err);
   }
@@ -73,7 +79,8 @@ const logger = pino(
           ignore: 'pid,hostname',
           levelFirst: true,
           customLevels: 'dev:35,command:34,player:33,button:32',
-          customColors: 'dev:magenta,command:magenta,player:magenta,button:magenta',
+          customColors:
+            'dev:magenta,command:magenta,player:magenta,button:magenta',
           useOnlyCustomProps: false
         }
       })
@@ -103,7 +110,15 @@ export function flushAndClose(): void {
 }
 
 // Safely handle exit — wrap in try-catch to silence sonic-boom errors
-process.on('beforeExit', () => { try { fileDestination.flushSync(); } catch {} });
-process.on('exit', () => { try { fileDestination.flushSync(); } catch {} });
+process.on('beforeExit', () => {
+  try {
+    fileDestination.flushSync();
+  } catch {}
+});
+process.on('exit', () => {
+  try {
+    fileDestination.flushSync();
+  } catch {}
+});
 
 export default logger;

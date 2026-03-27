@@ -5,23 +5,46 @@ import { type IItemJSON } from '../interfaces/IItemJSON';
 import ItemManager from '../managers/ItemManager';
 import { join } from 'path';
 
-try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
+try {
+  GlobalFonts.registerFromPath(
+    join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'),
+    'NotoEmoji'
+  );
+} catch (e) {}
 
 const RARITY_COLORS: Record<string, string> = {
-  Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
-  Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
-  Divine: '#00e5ff', Exotic: '#ff00cc'
+  Common: '#b0b0b0',
+  Uncommon: '#2ecc71',
+  Rare: '#3498db',
+  Elite: '#e67e22',
+  Epic: '#9b59b6',
+  Legendary: '#f1c40f',
+  Divine: '#00e5ff',
+  Exotic: '#ff00cc'
 };
 
 const SLOT_ICONS: Record<string, string> = {
-  'Head': '⛑️', 'Necklace': '📿', 'Chest': '👕', 'MainHand': '⚔️',
-  'Legs': '👖', 'OffHand': '🛡️', 'Hands': '🧤', 'RingA': '💍', 
-  'RingB': '💍', 'Feet': '👢', 'Pet': '🐾', 'Special': '✨'
+  Head: '⛑️',
+  Necklace: '📿',
+  Chest: '👕',
+  MainHand: '⚔️',
+  Legs: '👖',
+  OffHand: '🛡️',
+  Hands: '🧤',
+  RingA: '💍',
+  RingB: '💍',
+  Feet: '👢',
+  Pet: '🐾',
+  Special: '✨'
 };
 
 const CATEGORY_ICONS: Record<string, string> = {
-  'Weapon': '⚔️', 'Armor': '🛡️', 'Accessory': '💍',
-  'Consumable': '🧪', 'Material': '🪵', 'Collectible': '🗿'
+  Weapon: '⚔️',
+  Armor: '🛡️',
+  Accessory: '💍',
+  Consumable: '🧪',
+  Material: '🪵',
+  Collectible: '🗿'
 };
 
 function getItemIcon(item: any) {
@@ -64,7 +87,9 @@ export default class InventoryImageBuilder {
     ctx.fillStyle = '#10b981';
     ctx.font = 'bold 14px sans-serif';
     ctx.textAlign = 'right';
-    const goldFormatted = new Intl.NumberFormat('en-US').format(player.coins || 0);
+    const goldFormatted = new Intl.NumberFormat('en-US').format(
+      player.coins || 0
+    );
     ctx.fillText(`LVL ${player.level}  •  ${goldFormatted} GOLD`, 860, 55);
 
     // Divider
@@ -86,7 +111,7 @@ export default class InventoryImageBuilder {
     for (let i = 0; i < chunk.length; i++) {
       const invEntry = chunk[i];
       const itemData = getItem(invEntry.itemId);
-        
+
       const col = i % 5;
       const row = Math.floor(i / 5);
       const boxX = startX + col * (boxW + gapX);
@@ -119,7 +144,7 @@ export default class InventoryImageBuilder {
           const badgeText = `+${enhanceLevel}`;
           ctx.font = 'bold 10px sans-serif';
           const badgeW = ctx.measureText(badgeText).width + 8;
-                
+
           ctx.fillStyle = '#92400e88'; // amber-900/50
           ctx.beginPath();
           ctx.roundRect(badgeX, boxY + 10, badgeW, 16, 3);
@@ -127,7 +152,7 @@ export default class InventoryImageBuilder {
           ctx.strokeStyle = '#f59e0b66';
           ctx.lineWidth = 1;
           ctx.stroke();
-                
+
           ctx.fillStyle = '#fbbf24';
           ctx.textAlign = 'center';
           ctx.fillText(badgeText, badgeX + badgeW / 2, boxY + 22);
@@ -152,25 +177,38 @@ export default class InventoryImageBuilder {
         // Bottom Panel BG
         ctx.fillStyle = '#00000099';
         ctx.beginPath();
-        ctx.roundRect(boxX, boxY + 110, boxW, 70, [0, 0, 12, 12]); 
+        ctx.roundRect(boxX, boxY + 110, boxW, 70, [0, 0, 12, 12]);
         ctx.fill();
 
         // Item Name (with +level suffix if enhanced)
         ctx.fillStyle = color;
         ctx.font = 'bold 12px sans-serif';
-        const displayName = enhanceLevel > 0 ? `${itemData.name} +${enhanceLevel}` : itemData.name;
+        const displayName =
+          enhanceLevel > 0
+            ? `${itemData.name} +${enhanceLevel}`
+            : itemData.name;
         ctx.fillText(displayName, boxX + boxW / 2, boxY + 132, boxW - 10);
 
         // Type & Level
         ctx.fillStyle = '#6b7280';
         ctx.font = '10px sans-serif';
-        ctx.fillText(`${itemData.type.toUpperCase()}  |  LVL ${itemData.level}`, boxX + boxW / 2, boxY + 148);
+        ctx.fillText(
+          `${itemData.type.toUpperCase()}  |  LVL ${itemData.level}`,
+          boxX + boxW / 2,
+          boxY + 148
+        );
 
         // Value
         ctx.fillStyle = '#eab308';
         ctx.font = '10px sans-serif';
-        const totalValue = Math.floor((itemData.value || 0) * invEntry.quantity);
-        ctx.fillText(`${totalValue.toLocaleString()}g`, boxX + boxW / 2, boxY + 164);
+        const totalValue = Math.floor(
+          (itemData.value || 0) * invEntry.quantity
+        );
+        ctx.fillText(
+          `${totalValue.toLocaleString()}g`,
+          boxX + boxW / 2,
+          boxY + 164
+        );
 
         // Bottom Rarity Border
         ctx.beginPath();

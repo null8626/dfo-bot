@@ -1,8 +1,15 @@
-import { type ButtonInteraction, type Client } from "discord.js";
-import Button from "../../structures/Button";
+import { type ButtonInteraction, type Client } from 'discord.js';
+import Button from '../../structures/Button';
 
-const SECTIONS: Record<string, { title: string; emoji: string; content: string }> = {
-  basics: { title: 'Getting Started', emoji: '📖', content: 'Use `/guide basics` to see full content.' },
+const SECTIONS: Record<
+  string,
+  { title: string; emoji: string; content: string }
+> = {
+  basics: {
+    title: 'Getting Started',
+    emoji: '📖',
+    content: 'Use `/guide basics` to see full content.'
+  },
   combat: { title: 'Combat & Enemies', emoji: '⚔️', content: '' },
   workshop: { title: 'Workshop', emoji: '🔨', content: '' },
   economy: { title: 'Economy & Gold Sinks', emoji: '🪙', content: '' },
@@ -14,15 +21,26 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
 // so we duplicate the content lookup here. In practice, you'd extract SECTIONS to a shared file.
 // For now, this button just re-invokes the guide display logic.
 
-const SECTION_ORDER = ['basics', 'combat', 'workshop', 'economy', 'tasks', 'zones'];
+const SECTION_ORDER = [
+  'basics',
+  'combat',
+  'workshop',
+  'economy',
+  'tasks',
+  'zones'
+];
 
 export default class GuideNavButton extends Button {
   constructor() {
-    super({ customId: "guide_nav", cooldown: 1, isAuthorOnly: false });
+    super({ customId: 'guide_nav', cooldown: 1, isAuthorOnly: false });
   }
 
   // customId format: guide_nav:<sectionKey>
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     const section = args?.[0] ?? 'basics';
 
     // Re-trigger the guide command programmatically isn't possible with buttons,

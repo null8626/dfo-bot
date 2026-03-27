@@ -1,13 +1,24 @@
-import { type ButtonInteraction, type Client, Colors, ContainerBuilder, MessageFlags } from "discord.js";
-import Button from "../../structures/Button";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import {
+  type ButtonInteraction,
+  type Client,
+  Colors,
+  ContainerBuilder,
+  MessageFlags
+} from 'discord.js';
+import Button from '../../structures/Button';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class RegisterAcceptButton extends Button {
-  constructor() { super({ customId: "register_accept", cooldown: 5, isAuthorOnly: true }); }
+  constructor() {
+    super({ customId: 'register_accept', cooldown: 5, isAuthorOnly: true });
+  }
 
-  public async execute(interaction: ButtonInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     const discordId = interaction.user.id;
@@ -22,7 +33,8 @@ export default class RegisterAcceptButton extends Button {
 
       if (res.status === 409) {
         await interaction.editReply({
-          content: '✅ **You\'re already registered!** Use `/profile` to see your character.',
+          content:
+            "✅ **You're already registered!** Use `/profile` to see your character.",
           embeds: [],
           components: []
         });
@@ -44,19 +56,25 @@ export default class RegisterAcceptButton extends Button {
 
       container.addTextDisplayComponents(
         (textDisplay) => textDisplay.setContent('## ⚔️ Character Created!'),
-        (textDisplay) => textDisplay.setContent(`Welcome to Dragon's Fall Online, **${username}**! Your adventure begins now.`),
-        (textDisplay) => textDisplay.setContent(
-          '**Get started:**\n' +
-            '> `/explore` — Venture into the world\n' +
-            '> `/profile` — View your character\n' +
-            '> `/help` — See all commands'
-        )
+        (textDisplay) =>
+          textDisplay.setContent(
+            `Welcome to Dragon's Fall Online, **${username}**! Your adventure begins now.`
+          ),
+        (textDisplay) =>
+          textDisplay.setContent(
+            '**Get started:**\n' +
+              '> `/explore` — Venture into the world\n' +
+              '> `/profile` — View your character\n' +
+              '> `/help` — See all commands'
+          )
       );
 
       container.addSeparatorComponents((s) => s);
 
-      container.addTextDisplayComponents(
-        (textDisplay) => textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration • To request data deletion, contact the developer')
+      container.addTextDisplayComponents((textDisplay) =>
+        textDisplay.setContent(
+          '-# ⚔️ DFO Cross-Platform Integration • To request data deletion, contact the developer'
+        )
       );
 
       await interaction.editReply({

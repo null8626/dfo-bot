@@ -1,13 +1,17 @@
-import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
-import Button from "../../structures/Button";
+import { type ButtonInteraction, type Client, MessageFlags } from 'discord.js';
+import Button from '../../structures/Button';
 
 export default class MarketRedirectButton extends Button {
   constructor() {
-    super({ customId: "market_redirect", cooldown: 2, isAuthorOnly: true });
+    super({ customId: 'market_redirect', cooldown: 2, isAuthorOnly: true });
   }
 
   // customId format: market_redirect:<itemId>
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     const itemId = args?.[0] ?? 'unknown';
 
     await interaction.reply({

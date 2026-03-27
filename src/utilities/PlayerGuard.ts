@@ -1,11 +1,15 @@
-import { type ChatInputCommandInteraction, type ButtonInteraction, MessageFlags } from 'discord.js';
+import {
+  type ChatInputCommandInteraction,
+  type ButtonInteraction,
+  MessageFlags
+} from 'discord.js';
 import Routes from './Routes';
 import { apiFetch } from './ApiClient';
 
 /**
  * Checks if a player is registered before allowing a gameplay command to proceed.
  * Returns the API response data if registered, or null if not (after sending an error reply).
- * 
+ *
  * Usage:
  *   const playerData = await PlayerGuard.check(interaction);
  *   if (!playerData) return; // Guard already replied with a helpful message
@@ -25,7 +29,8 @@ export default class PlayerGuard {
       const res = await apiFetch(Routes.player(id));
 
       if (res.status === 404) {
-        const content = '📜 **Adventurer not found!**\nYou need to register before you can play. Use the `/register` command to begin your journey!';
+        const content =
+          '📜 **Adventurer not found!**\nYou need to register before you can play. Use the `/register` command to begin your journey!';
 
         if (interaction.deferred || interaction.replied) {
           await interaction.editReply({ content });

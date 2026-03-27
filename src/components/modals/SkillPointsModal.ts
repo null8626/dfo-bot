@@ -1,13 +1,22 @@
-import { type ModalSubmitInteraction, type Client, MessageFlags } from "discord.js";
-import ModalSubmit from "../../structures/ModalSubmit";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import {
+  type ModalSubmitInteraction,
+  type Client,
+  MessageFlags
+} from 'discord.js';
+import ModalSubmit from '../../structures/ModalSubmit';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class SkillPointsModal extends ModalSubmit {
-  constructor() { super({ customId: "skillpoints_modal", cooldown: 5, isAuthorOnly: true }); }
+  constructor() {
+    super({ customId: 'skillpoints_modal', cooldown: 5, isAuthorOnly: true });
+  }
 
-  public async execute(interaction: ModalSubmitInteraction, client: Client): Promise<void> {
+  public async execute(
+    interaction: ModalSubmitInteraction,
+    client: Client
+  ): Promise<void> {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const atkRaw = interaction.fields.getTextInputValue('sp_atk').trim();
@@ -17,12 +26,17 @@ export default class SkillPointsModal extends ModalSubmit {
     const defAmount = parseInt(defRaw, 10) || 0;
 
     if (atkAmount < 0 || defAmount < 0) {
-      await interaction.editReply({ content: '❌ Point values cannot be negative.' });
+      await interaction.editReply({
+        content: '❌ Point values cannot be negative.'
+      });
       return;
     }
 
     if (atkAmount === 0 && defAmount === 0) {
-      await interaction.editReply({ content: '❌ You didn\'t allocate any points. Enter a number in at least one field.' });
+      await interaction.editReply({
+        content:
+          "❌ You didn't allocate any points. Enter a number in at least one field."
+      });
       return;
     }
 
@@ -39,7 +53,9 @@ export default class SkillPointsModal extends ModalSubmit {
         const body = await res.json();
 
         if (!res.ok || !body.success) {
-          await interaction.editReply({ content: formatError(body.error ?? 'Failed to allocate ATK points') });
+          await interaction.editReply({
+            content: formatError(body.error ?? 'Failed to allocate ATK points')
+          });
           return;
         }
         results.push(`⚔️ **+${atkAmount} ATK** → Now: ${body.newStats.atk}`);
@@ -54,7 +70,9 @@ export default class SkillPointsModal extends ModalSubmit {
         const body = await res.json();
 
         if (!res.ok || !body.success) {
-          await interaction.editReply({ content: formatError(body.error ?? 'Failed to allocate DEF points') });
+          await interaction.editReply({
+            content: formatError(body.error ?? 'Failed to allocate DEF points')
+          });
           return;
         }
         results.push(`🛡️ **+${defAmount} DEF** → Now: ${body.newStats.def}`);
@@ -64,7 +82,9 @@ export default class SkillPointsModal extends ModalSubmit {
         content: `⭐ **Skill Points Allocated!**\n\n${results.join('\n')}\n\nRun \`/profile\` to see your updated stats.`
       });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code) });
+      await interaction.editReply({
+        content: formatError(err.message, err.code)
+      });
     }
   }
 }

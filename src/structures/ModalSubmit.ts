@@ -1,5 +1,5 @@
-import { type ModalSubmitInteraction, type Client } from "discord.js";
-import type IExecutable from "../interfaces/IExecutable";
+import { type ModalSubmitInteraction, type Client } from 'discord.js';
+import type IExecutable from '../interfaces/IExecutable';
 
 export interface ModalSubmitOptions {
   customId: string;
@@ -26,5 +26,9 @@ export default abstract class ModalSubmit implements IExecutable {
     return this.options.isAuthorOnly;
   }
 
-  public abstract execute(interaction: ModalSubmitInteraction, client: Client, args?: string[] | null): Promise<void>;
+  public abstract execute(
+    interaction: ModalSubmitInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void>;
 }

@@ -1,16 +1,20 @@
-import { type ButtonInteraction, type Client } from "discord.js";
-import Button from "../../structures/Button";
-import { apiFetch } from "../../utilities/ApiClient";
-import { formatError } from "../../utilities/ErrorMessages";
-import Routes from "../../utilities/Routes";
+import { type ButtonInteraction, type Client } from 'discord.js';
+import Button from '../../structures/Button';
+import { apiFetch } from '../../utilities/ApiClient';
+import { formatError } from '../../utilities/ErrorMessages';
+import Routes from '../../utilities/Routes';
 
 export default class DismantleButton extends Button {
   constructor() {
-    super({ customId: "dismantle", cooldown: 3, isAuthorOnly: true });
+    super({ customId: 'dismantle', cooldown: 3, isAuthorOnly: true });
   }
 
   // customId format: dismantle:<docId>:<itemId>:<maxQuantity>
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     await interaction.deferUpdate();
 
     const docId = args?.[0];
@@ -18,7 +22,12 @@ export default class DismantleButton extends Button {
     const maxQty = parseInt(args?.[2] ?? '1', 10);
 
     if (!docId || isNaN(itemId)) {
-      await interaction.editReply({ content: 'Error parsing item data!', files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: 'Error parsing item data!',
+        files: [],
+        components: [],
+        embeds: []
+      });
       return;
     }
 
@@ -39,7 +48,12 @@ export default class DismantleButton extends Button {
       const body = await res.json();
 
       if (!res.ok || !body.success) {
-        await interaction.editReply({ content: formatError(body.error ?? 'Dismantle failed'), files: [], components: [], embeds: [] });
+        await interaction.editReply({
+          content: formatError(body.error ?? 'Dismantle failed'),
+          files: [],
+          components: [],
+          embeds: []
+        });
         return;
       }
 
@@ -50,10 +64,17 @@ export default class DismantleButton extends Button {
           `🔥 Embers gained: **+${body.embersGained?.toLocaleString() ?? '???'}**`,
           `🔥 Total embers: **${body.newEmbers?.toLocaleString() ?? '???'}**`
         ].join('\n'),
-        files: [], components: [], embeds: []
+        files: [],
+        components: [],
+        embeds: []
       });
     } catch (err: any) {
-      await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });
+      await interaction.editReply({
+        content: formatError(err.message, err.code),
+        files: [],
+        components: [],
+        embeds: []
+      });
     }
   }
 }

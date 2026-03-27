@@ -1,22 +1,32 @@
 import {
-  type ButtonInteraction, type Client, ActionRowBuilder,
-  StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
+  type ButtonInteraction,
+  type Client,
+  ActionRowBuilder,
+  StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder,
   MessageFlags
-} from "discord.js";
-import Button from "../../structures/Button";
+} from 'discord.js';
+import Button from '../../structures/Button';
 
 export default class ReforgeButton extends Button {
   constructor() {
-    super({ customId: "reforge", cooldown: 3, isAuthorOnly: true });
+    super({ customId: 'reforge', cooldown: 3, isAuthorOnly: true });
   }
 
   // customId format: reforge:<docId>:<itemId>
-  public async execute(interaction: ButtonInteraction, client: Client, args?: string[] | null): Promise<void> {
+  public async execute(
+    interaction: ButtonInteraction,
+    client: Client,
+    args?: string[] | null
+  ): Promise<void> {
     const docId = args?.[0];
     const itemId = args?.[1];
 
     if (!docId || !itemId) {
-      await interaction.reply({ content: 'Error parsing item data!', flags: MessageFlags.Ephemeral });
+      await interaction.reply({
+        content: 'Error parsing item data!',
+        flags: MessageFlags.Ephemeral
+      });
       return;
     }
 
@@ -41,10 +51,13 @@ export default class ReforgeButton extends Button {
           .setValue('full')
       );
 
-    const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selectMenu);
+    const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(
+      selectMenu
+    );
 
     await interaction.reply({
-      content: '🔄 **Select Reforge Type**\nChoose what to reroll on this item:',
+      content:
+        '🔄 **Select Reforge Type**\nChoose what to reroll on this item:',
       components: [row],
       ephemeral: true
     });
