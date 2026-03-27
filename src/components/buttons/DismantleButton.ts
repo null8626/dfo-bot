@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -32,8 +32,8 @@ export default class DismantleButton extends Button {
           discordId: interaction.user.id,
           itemId,
           inventoryId: docId,
-          amount,
-        }),
+          amount
+        })
       });
 
       const body = await res.json();
@@ -48,7 +48,7 @@ export default class DismantleButton extends Button {
           `🔥 **${body.message}**`,
           ``,
           `🔥 Embers gained: **+${body.embersGained?.toLocaleString() ?? '???'}**`,
-          `🔥 Total embers: **${body.newEmbers?.toLocaleString() ?? '???'}**`,
+          `🔥 Total embers: **${body.newEmbers?.toLocaleString() ?? '???'}**`
         ].join('\n'),
         files: [], components: [], embeds: []
       });

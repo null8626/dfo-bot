@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, Client } from "discord.js";
+import { type AnySelectMenuInteraction, type Client } from "discord.js";
 import SelectMenu from "../../structures/SelectMenu";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";

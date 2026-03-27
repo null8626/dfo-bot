@@ -1,7 +1,7 @@
 import {
   ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle,
-  ChatInputCommandInteraction, Client, EmbedBuilder, StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
+  type ChatInputCommandInteraction, type Client, EmbedBuilder, type StringSelectMenuBuilder,
+  StringSelectMenuOptionBuilder
 } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
@@ -19,15 +19,14 @@ export default class TasksCommand extends SlashCommand {
       cooldown: 5,
       isGlobalCommand: true
     });
-    this.builder.addStringOption((o) =>
-      o.setName('period')
-        .setDescription('Task period to view')
-        .setRequired(false)
-        .addChoices(
-          { name: 'Daily', value: 'daily' },
-          { name: 'Weekly', value: 'weekly' },
-          { name: 'Monthly', value: 'monthly' },
-        )
+    this.builder.addStringOption((o) => o.setName('period')
+      .setDescription('Task period to view')
+      .setRequired(false)
+      .addChoices(
+        { name: 'Daily', value: 'daily' },
+        { name: 'Weekly', value: 'weekly' },
+        { name: 'Monthly', value: 'monthly' }
+      )
     );
   }
 
@@ -60,7 +59,7 @@ export default class TasksCommand extends SlashCommand {
       const imageBuffer = await ImageService.tasks(tasks, {
         period,
         resetIn,
-        playerEmbers,
+        playerEmbers
       });
 
       const attachment = new AttachmentBuilder(imageBuffer, { name: 'tasks.png' });
@@ -101,7 +100,7 @@ export default class TasksCommand extends SlashCommand {
           .setCustomId(`tasks_tab:monthly`)
           .setLabel('Monthly')
           .setStyle(period === 'monthly' ? ButtonStyle.Primary : ButtonStyle.Secondary)
-          .setDisabled(period === 'monthly'),
+          .setDisabled(period === 'monthly')
       );
       components.push(periodRow);
 

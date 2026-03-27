@@ -1,4 +1,4 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Client, Colors, ContainerBuilder, EmbedBuilder, Events, Guild, MessageFlags, TextChannel } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, type Client, Colors, ContainerBuilder, EmbedBuilder, Events, type Guild, MessageFlags, type TextChannel } from "discord.js";
 import Event from "../structures/Event";
 import logger from "../utilities/Logger";
 
@@ -17,15 +17,11 @@ export default class GuildCreateEvent extends Event {
       if (logChannel && guild) {
         const container = new ContainerBuilder().setAccentColor(Colors.Green)
           .addSectionComponents(
-            (section) =>
-              section.setThumbnailAccessory((t) => t.setURL(guild.iconURL() ?? client.user?.avatarURL()!))
+            (section) => section.setThumbnailAccessory((t) => t.setURL(guild.iconURL() ?? client.user?.avatarURL()!))
               .addTextDisplayComponents(
-                (textDisplay) =>
-                  textDisplay.setContent('## I Joined A New Server!'),
-                (textDisplay) =>
-                  textDisplay.setContent(`Joined the ${guild.name} server! It has ${guild.memberCount.toLocaleString()} members.`),
-                (textDisplay) =>
-                  textDisplay.setContent(`-# ID: \`${guild.id}\``)
+                (textDisplay) => textDisplay.setContent('## I Joined A New Server!'),
+                (textDisplay) => textDisplay.setContent(`Joined the ${guild.name} server! It has ${guild.memberCount.toLocaleString()} members.`),
+                (textDisplay) => textDisplay.setContent(`-# ID: \`${guild.id}\``)
               )
           );
 
@@ -70,7 +66,7 @@ export default class GuildCreateEvent extends Event {
           .setLabel('Support Server')
           .setStyle(ButtonStyle.Link)
           .setURL('https://discord.gg/3MJkKkh99q')
-          .setEmoji('💬'),
+          .setEmoji('💬')
       );
 
       await targetChannel.send({ embeds: [embed], components: [row] });

@@ -1,5 +1,5 @@
 import ModalSubmit from "../structures/ModalSubmit";
-import { ModalSubmitInteraction, Collection, Client } from "discord.js";
+import { type ModalSubmitInteraction, Collection, type Client } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import logger from "../utilities/Logger";
@@ -10,8 +10,7 @@ export default class ModalSubmitHandler {
   private static _cache: Collection<string, ModalSubmit> = new Collection();
 
   public static load(): void {
-    const modalFiles = readdirSync(filePath).filter(file =>
-      (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const modalFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
     );
 
     if (modalFiles.length < 1) {

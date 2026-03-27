@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 
 const SECTIONS: Record<string, { title: string; emoji: string; content: string }> = {
@@ -18,8 +18,8 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '> HP regenerates passively — 10% of max HP every 5 minutes.',
       '> Use `/rest` to heal instantly at an inn (costs gold).',
       '> Consumable items can also restore HP.',
-      '> HP is fully restored on level up.',
-    ].join('\n'),
+      '> HP is fully restored on level up.'
+    ].join('\n')
   },
   combat: {
     title: 'Combat & Enemies',
@@ -35,8 +35,8 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '',
       '**Affixes** on your gear give combat bonuses:',
       '> Crit Chance (cap: 75%) • Life Steal (cap: 25%) • Dodge (cap: 75%)',
-      '> Gold Find (cap: 100%) • XP Bonus (cap: 100%) • Thorns (flat damage)',
-    ].join('\n'),
+      '> Gold Find (cap: 100%) • XP Bonus (cap: 100%) • Thorns (flat damage)'
+    ].join('\n')
   },
   workshop: {
     title: 'Workshop — Enhance, Reforge, Dismantle',
@@ -57,8 +57,8 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '',
       '🔥 **Dismantle** — Destroy items to earn **Embers**.',
       '> Enhanced items return 50% of the embers invested in them.',
-      '> Embers are used for enhancement and other upgrades.',
-    ].join('\n'),
+      '> Embers are used for enhancement and other upgrades.'
+    ].join('\n')
   },
   economy: {
     title: 'Economy & Gold Sinks',
@@ -80,8 +80,8 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '**Collection** (`/inventory` → Collect)',
       '> ⚠️ Permanent action! Items are removed from inventory.',
       '> Hit milestones for gold, XP, embers, and chests.',
-      '> Modified items cannot be collected.',
-    ].join('\n'),
+      '> Modified items cannot be collected.'
+    ].join('\n')
   },
   tasks: {
     title: 'Tasks & Chests',
@@ -96,8 +96,8 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '> Earn chests from exploring, milestones, or buy from the shop.',
       '> Some chests unlock instantly; others take time.',
       '> Open chests for items, gold, and embers.',
-      '> **Divine Pity**: After opening many chests without a Divine drop, one is guaranteed.',
-    ].join('\n'),
+      '> **Divine Pity**: After opening many chests without a Divine drop, one is guaranteed.'
+    ].join('\n')
   },
   zones: {
     title: 'Zones & Travel',
@@ -112,9 +112,9 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
       '> **Toll Cost** — Gold charged per step (Zones 7+)',
       '',
       'Higher zones have tougher enemies but better rewards and rarer drops.',
-      'Zone XP multipliers are capped at 3.0× to prevent runaway leveling.',
-    ].join('\n'),
-  },
+      'Zone XP multipliers are capped at 3.0× to prevent runaway leveling.'
+    ].join('\n')
+  }
 };
 
 const SECTION_ORDER = ['basics', 'combat', 'workshop', 'economy', 'tasks', 'zones'];
@@ -128,16 +128,15 @@ export default class GuideCommand extends SlashCommand {
       cooldown: 3,
       isGlobalCommand: true
     });
-    this.builder.addStringOption((o) =>
-      o.setName('section')
-        .setDescription('Jump to a specific section')
-        .setRequired(false)
-        .addChoices(
-          ...SECTION_ORDER.map(key => ({
-            name: `${SECTIONS[key].emoji} ${SECTIONS[key].title}`,
-            value: key,
-          }))
-        )
+    this.builder.addStringOption((o) => o.setName('section')
+      .setDescription('Jump to a specific section')
+      .setRequired(false)
+      .addChoices(
+        ...SECTION_ORDER.map(key => ({
+          name: `${SECTIONS[key].emoji} ${SECTIONS[key].title}`,
+          value: key
+        }))
+      )
     );
   }
 
@@ -179,7 +178,7 @@ export default class GuideCommand extends SlashCommand {
 
     await interaction.reply({
       embeds: [embed],
-      components: navRow.components.length > 0 ? [navRow] : [],
+      components: navRow.components.length > 0 ? [navRow] : []
     });
   }
 }

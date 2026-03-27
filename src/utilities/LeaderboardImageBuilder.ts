@@ -28,11 +28,11 @@ const CANVAS_WIDTH = 800;
 export default class LeaderboardImageBuilder {
   public static async build(entries: LeaderboardEntry[], config: LeaderboardConfig): Promise<Buffer> {
     const rowCount = Math.min(entries.length, 10);
-    const canvasHeight = HEADER_HEIGHT + (rowCount * ROW_HEIGHT) + FOOTER_HEIGHT + PADDING;
+    const canvasHeight = HEADER_HEIGHT + rowCount * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
-    const contentWidth = CANVAS_WIDTH - (PADDING * 2);
+    const contentWidth = CANVAS_WIDTH - PADDING * 2;
 
     // --- 1. Background ---
     ctx.fillStyle = '#0a0a0a';
@@ -75,7 +75,7 @@ export default class LeaderboardImageBuilder {
 
     for (let i = 0; i < rowCount; i++) {
       const entry = entries[i];
-      const rowY = startY + (i * ROW_HEIGHT);
+      const rowY = startY + i * ROW_HEIGHT;
       const isTop3 = i < 3;
 
       // Row background — alternating subtle stripes
@@ -126,7 +126,7 @@ export default class LeaderboardImageBuilder {
     }
 
     // --- 4. Footer ---
-    const footerY = startY + (rowCount * ROW_HEIGHT) + 15;
+    const footerY = startY + rowCount * ROW_HEIGHT + 15;
 
     ctx.textAlign = 'center';
     ctx.fillStyle = '#374151';

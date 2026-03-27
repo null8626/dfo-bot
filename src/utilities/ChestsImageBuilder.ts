@@ -7,12 +7,12 @@ try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji
 const TIER_COLORS: Record<string, string> = {
   Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
   Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
-  Divine: '#00e5ff',
+  Divine: '#00e5ff'
 };
 
 const TIER_EMOJIS: Record<string, string> = {
   Common: '📦', Uncommon: '🟢', Rare: '🔵', Elite: '🟠',
-  Epic: '🟣', Legendary: '⭐', Divine: '💎',
+  Epic: '🟣', Legendary: '⭐', Divine: '💎'
 };
 
 export interface ChestsPageConfig {
@@ -156,7 +156,7 @@ export default class ChestsImageBuilder {
       } else if (chest.status === 'unlocking') {
         const remainSec = Math.max(0, Math.floor(chest.remainingMs / 1000));
         const h = Math.floor(remainSec / 3600);
-        const m = Math.floor((remainSec % 3600) / 60);
+        const m = Math.floor(remainSec % 3600 / 60);
         const s = remainSec % 60;
         const timeStr = h > 0 ? `${h}h ${m}m ${s}s` : m > 0 ? `${m}m ${s}s` : `${s}s`;
 

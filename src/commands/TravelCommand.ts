@@ -1,6 +1,6 @@
 import {
-  ActionRowBuilder, AttachmentBuilder, ChatInputCommandInteraction,
-  Client, EmbedBuilder, MessageFlags, StringSelectMenuBuilder, StringSelectMenuOptionBuilder
+  ActionRowBuilder, AttachmentBuilder, type ChatInputCommandInteraction,
+  type Client, EmbedBuilder, MessageFlags, StringSelectMenuBuilder, StringSelectMenuOptionBuilder
 } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
@@ -54,11 +54,10 @@ export default class TravelCommand extends SlashCommand {
       const components: ActionRowBuilder<StringSelectMenuBuilder>[] = [];
 
       if (accessible.length > 0) {
-        const options = accessible.map(zone =>
-          new StringSelectMenuOptionBuilder()
-            .setLabel(zone.name)
-            .setDescription(`Lvl ${zone.levelReq}+ • ${zone.rarityCap} cap • ${zone.combatChance}% combat`)
-            .setValue(String(zone.id))
+        const options = accessible.map(zone => new StringSelectMenuOptionBuilder()
+          .setLabel(zone.name)
+          .setDescription(`Lvl ${zone.levelReq}+ • ${zone.rarityCap} cap • ${zone.combatChance}% combat`)
+          .setValue(String(zone.id))
         );
 
         const selectMenu = new StringSelectMenuBuilder()

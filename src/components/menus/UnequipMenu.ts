@@ -1,11 +1,11 @@
-import { ActionRowBuilder, AnySelectMenuInteraction, AttachmentBuilder, Client, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
+import { ActionRowBuilder, type AnySelectMenuInteraction, AttachmentBuilder, type Client, StringSelectMenuBuilder, StringSelectMenuOptionBuilder } from "discord.js";
 import SelectMenu from "../../structures/SelectMenu";
 import Routes from "../../utilities/Routes";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
-import { IPlayerJSON } from "../../interfaces/IPlayerJSON";
+import { type IPlayerJSON } from "../../interfaces/IPlayerJSON";
 import ImageService from "../../utilities/ImageService";
-import { EquipmentSlot } from "../../interfaces/IItemJSON";
+import { type EquipmentSlot } from "../../interfaces/IItemJSON";
 
 export default class UnequipMenu extends SelectMenu {
   constructor() {
@@ -24,7 +24,7 @@ export default class UnequipMenu extends SelectMenu {
       body: JSON.stringify({ discordId, slot })
     });
 
-    const { success, error, player }: { success?: boolean, error?: string, player?: IPlayerJSON } = await res.json();
+    const { success, error, player }: { success?: boolean; error?: string; player?: IPlayerJSON } = await res.json();
 
     if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
       await interaction.editReply({ content: formatError(error ?? `Unequip failed (Code: ${res.status})`), files: [], components: [], embeds: [] });
@@ -59,11 +59,11 @@ export default class UnequipMenu extends SelectMenu {
 
       await interaction.editReply({
         files: [profileAttachment],
-        components: extraMenu,
+        components: extraMenu
       });
     } else {
       await interaction.editReply({ content: 'Unknown error!', components: [], embeds: [], files: [] });
-      return;
+      
     }
   }
 }

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 
 export default class RegisterCommand extends SlashCommand {
@@ -43,7 +43,7 @@ export default class RegisterCommand extends SlashCommand {
         .setLabel('Privacy Policy & ToS')
         .setStyle(ButtonStyle.Link)
         .setURL('https://capi.gg/legal')
-        .setEmoji('📜'),
+        .setEmoji('📜')
     );
 
     await interaction.reply({ embeds: [embed], components: [row], flags: MessageFlags.Ephemeral });

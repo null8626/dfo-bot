@@ -1,6 +1,6 @@
 import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js';
-import { ICombatJSON } from '../interfaces/ICombatJSON';
-import { IStepJSON } from '../interfaces/IStepJSON';
+import { type ICombatJSON } from '../interfaces/ICombatJSON';
+import { type IStepJSON } from '../interfaces/IStepJSON';
 import ImageService from './ImageService';
 
 export interface CombatResponse {
@@ -32,8 +32,8 @@ export async function buildCombatResponse(data: ICombatJSON | IStepJSON): Promis
   const playerStats = isStepData.playerStats;
 
   const showCombatButtons =
-    (isCombatData.combatEnded === false) ||
-    (isStepData.combatTrigger === true);
+    isCombatData.combatEnded === false ||
+    isStepData.combatTrigger === true;
 
   if (showCombatButtons) {
     const row = new ActionRowBuilder<ButtonBuilder>().setComponents(
@@ -44,7 +44,7 @@ export async function buildCombatResponse(data: ICombatJSON | IStepJSON): Promis
       new ButtonBuilder()
         .setCustomId('embedFlee')
         .setLabel('Flee')
-        .setStyle(ButtonStyle.Secondary),
+        .setStyle(ButtonStyle.Secondary)
     );
     components.push(row);
   } else {

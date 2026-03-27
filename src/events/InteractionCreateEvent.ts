@@ -1,4 +1,4 @@
-import { BaseInteraction, InteractionReplyOptions, MessageFlags, Client } from "discord.js";
+import { type BaseInteraction, type InteractionReplyOptions, MessageFlags, type Client } from "discord.js";
 import Event from "../structures/Event";
 import SlashCommandHandler from "../handlers/SlashCommandHandler";
 import logger from "../utilities/Logger";
@@ -23,7 +23,7 @@ export default class InteractionCreateEvent extends Event {
     if (!interaction.isRepliable()) return;
 
     // Use themed error messages for API errors, fallback for unknown errors
-    const message = (err instanceof ApiError)
+    const message = err instanceof ApiError
       ? formatError(err.message, err.code)
       : formatError(err.message || String(err));
 

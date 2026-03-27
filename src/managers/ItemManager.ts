@@ -1,5 +1,5 @@
 import { Collection } from "discord.js";
-import { IItemJSON } from "../interfaces/IItemJSON";
+import { type IItemJSON } from "../interfaces/IItemJSON";
 import logger from "../utilities/Logger";
 import Routes from "../utilities/Routes";
 import 'dotenv/config';
@@ -30,7 +30,7 @@ export default class ItemManager {
     try {
       const res = await fetch(Routes.items(), {
         headers: Routes.HEADERS(),
-        signal: AbortSignal.timeout(FETCH_TIMEOUT),
+        signal: AbortSignal.timeout(FETCH_TIMEOUT)
       });
 
       if (!res.ok) {

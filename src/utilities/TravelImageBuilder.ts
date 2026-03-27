@@ -6,7 +6,7 @@ try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji
 
 const RARITY_COLORS: Record<string, string> = {
   Uncommon: '#2ecc71', Rare: '#3498db', Elite: '#e67e22',
-  Epic: '#9b59b6', Legendary: '#f1c40f', Divine: '#00e5ff',
+  Epic: '#9b59b6', Legendary: '#f1c40f', Divine: '#00e5ff'
 };
 
 const TIER_COLORS: Record<string, string> = {
@@ -15,7 +15,7 @@ const TIER_COLORS: Record<string, string> = {
   'The Hero': '#e67e22',
   'The Ascendant': '#9b59b6',
   'The Cosmic': '#00e5ff',
-  'Beyond': '#ff00cc',
+  'Beyond': '#ff00cc'
 };
 
 const ROW_HEIGHT = 52;
@@ -43,11 +43,11 @@ export default class TravelImageBuilder {
       totalRows += zones.length;
     }
 
-    const canvasHeight = HEADER_HEIGHT + (tierCount * TIER_HEADER_HEIGHT) + (totalRows * ROW_HEIGHT) + FOOTER_HEIGHT + PADDING;
+    const canvasHeight = HEADER_HEIGHT + tierCount * TIER_HEADER_HEIGHT + totalRows * ROW_HEIGHT + FOOTER_HEIGHT + PADDING;
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
-    const contentWidth = CANVAS_WIDTH - (PADDING * 2);
+    const contentWidth = CANVAS_WIDTH - PADDING * 2;
 
     // --- Background ---
     ctx.fillStyle = '#0a0a0a';
@@ -87,7 +87,7 @@ export default class TravelImageBuilder {
       const tierColor = TIER_COLORS[tierName] || '#ffffff';
 
       // Tier header
-      ctx.fillStyle = tierColor + '15';
+      ctx.fillStyle = `${tierColor}15`;
       ctx.fillRect(PADDING, y, contentWidth, TIER_HEADER_HEIGHT - 2);
 
       ctx.fillStyle = tierColor;
@@ -148,7 +148,7 @@ export default class TravelImageBuilder {
         ctx.fillText(`Lvl ${zone.levelReq}+`, PADDING + contentWidth - 100, y + 22);
 
         // Rarity cap pill
-        ctx.fillStyle = rarityColor + '20';
+        ctx.fillStyle = `${rarityColor}20`;
         ctx.font = '10px sans-serif';
         const pillText = zone.rarityCap;
         const pillWidth = ctx.measureText(pillText).width + 14;

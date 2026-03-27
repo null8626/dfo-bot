@@ -1,4 +1,4 @@
-import { ActivityType, Client } from 'discord.js';
+import { ActivityType, type Client } from 'discord.js';
 import logger from '../utilities/Logger';
 import Routes from '../utilities/Routes';
 import ItemManager from './ItemManager';
@@ -23,7 +23,7 @@ export default class PresenceManager {
   private static stats: GameStats = {
     players: 0,
     items: 0,
-    scenarios: 0,
+    scenarios: 0
   };
 
   public static async init(client: Client): Promise<void> {
@@ -80,14 +80,14 @@ export default class PresenceManager {
       { type: ActivityType.Watching, name: `${this.totalGuilds.toLocaleString()} servers` },
       { type: ActivityType.Watching, name: `${this.stats.items.toLocaleString()} items` },
       { type: ActivityType.Watching, name: `${this.stats.scenarios.toLocaleString()} scenarios` },
-      { type: ActivityType.Playing,  name: `capi.gg` },
+      { type: ActivityType.Playing,  name: `capi.gg` }
     ];
 
     const current = activities[this.rotationIndex % activities.length];
 
     this.client.user.setPresence({
       activities: [{ name: current.name, type: current.type }],
-      status: 'online',
+      status: 'online'
     });
 
     this.rotationIndex++;

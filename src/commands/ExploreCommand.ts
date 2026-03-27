@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, Client } from "discord.js";
+import { type ChatInputCommandInteraction, type Client } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
-import { IStepJSON } from "../interfaces/IStepJSON";
+import { type IStepJSON } from "../interfaces/IStepJSON";
 import { apiFetch } from "../utilities/ApiClient";
 import { buildCombatResponse } from "../utilities/CombatResponseBuilder";
 import { formatError, formatCooldown } from "../utilities/ErrorMessages";
@@ -22,7 +22,7 @@ export default class ExploreCommand extends SlashCommand {
 
     const res = await apiFetch(Routes.explore(), {
       method: 'POST',
-      body: JSON.stringify({ discordId: interaction.user.id }),
+      body: JSON.stringify({ discordId: interaction.user.id })
     });
 
     const data = await res.json() as IStepJSON;

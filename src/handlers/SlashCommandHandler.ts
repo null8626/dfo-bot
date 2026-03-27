@@ -1,4 +1,4 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, Collection, MessageFlags, Client } from "discord.js";
+import { type AutocompleteInteraction, type ChatInputCommandInteraction, Collection, MessageFlags, type Client } from "discord.js";
 import { readdirSync } from 'fs';
 import { join } from "path";
 import SlashCommand from "../structures/SlashCommand";
@@ -14,8 +14,7 @@ export default class SlashCommandHandler {
   }
 
   public static load(): void {
-    const commandFiles = readdirSync(filePath).filter(file =>
-      (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const commandFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
     );
 
     for (const file of commandFiles) {

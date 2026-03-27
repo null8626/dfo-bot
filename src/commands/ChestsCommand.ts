@@ -1,6 +1,6 @@
 import {
   ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle,
-  ChatInputCommandInteraction, Client, EmbedBuilder,
+  type ChatInputCommandInteraction, type Client, EmbedBuilder
 } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
@@ -54,7 +54,7 @@ export default class ChestsCommand extends SlashCommand {
         maxSlots,
         divinePity,
         pityThreshold,
-        totalOpened,
+        totalOpened
       });
 
       const attachment = new AttachmentBuilder(imageBuffer, { name: 'chests.png' });
@@ -103,7 +103,7 @@ export default class ChestsCommand extends SlashCommand {
           new ButtonBuilder()
             .setCustomId('chest_buy:Rare')
             .setLabel('🔵 Buy Rare')
-            .setStyle(ButtonStyle.Secondary),
+            .setStyle(ButtonStyle.Secondary)
         );
         components.push(shopRow);
       }

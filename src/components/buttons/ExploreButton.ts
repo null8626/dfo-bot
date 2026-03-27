@@ -1,6 +1,6 @@
-import { ButtonInteraction, Client, MessageFlags } from "discord.js";
+import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
 import Button from "../../structures/Button";
-import { IStepJSON } from "../../interfaces/IStepJSON";
+import { type IStepJSON } from "../../interfaces/IStepJSON";
 import { apiFetch } from "../../utilities/ApiClient";
 import { buildCombatResponse } from "../../utilities/CombatResponseBuilder";
 import { formatError, formatCooldown } from "../../utilities/ErrorMessages";
@@ -14,7 +14,7 @@ export default class ExploreButton extends Button {
 
     const res = await apiFetch(Routes.explore(), {
       method: 'POST',
-      body: JSON.stringify({ discordId: interaction.user.id }),
+      body: JSON.stringify({ discordId: interaction.user.id })
     });
 
     const data = await res.json() as IStepJSON;

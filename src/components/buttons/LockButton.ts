@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -27,8 +27,8 @@ export default class LockButton extends Button {
         body: JSON.stringify({
           discordId: interaction.user.id,
           inventoryId: docId,
-          isLocked: !currentlyLocked, // Toggle
-        }),
+          isLocked: !currentlyLocked // Toggle
+        })
       });
 
       const { success, isLocked, error } = await res.json();
@@ -40,7 +40,7 @@ export default class LockButton extends Button {
 
       await interaction.editReply({
         content: isLocked ? '🔒 Item locked!' : '🔓 Item unlocked!',
-        files: [], components: [], embeds: [],
+        files: [], components: [], embeds: []
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });

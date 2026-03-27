@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, LabelBuilder, ModalBuilder, TextDisplayBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
+import { type ButtonInteraction, type Client, LabelBuilder, ModalBuilder, TextDisplayBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class SkillPointsButton extends Button {

@@ -1,9 +1,9 @@
-import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
-import { IInventoryItem } from "../interfaces/IInventoryJSON";
+import { ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle, type EmbedBuilder } from "discord.js";
+import { type IInventoryItem } from "../interfaces/IInventoryJSON";
 import ItemManager from "../managers/ItemManager";
 import ImageService from "./ImageService";
-import { IPlayerJSON } from "../interfaces/IPlayerJSON";
-import { IItemJSON } from "../interfaces/IItemJSON";
+import { type IPlayerJSON } from "../interfaces/IPlayerJSON";
+import { type IItemJSON } from "../interfaces/IItemJSON";
 
 export interface ItemViewResponse {
   embeds: EmbedBuilder[];
@@ -40,7 +40,7 @@ export async function buildItemView(player: IPlayerJSON, item: IInventoryItem): 
   const hasSlot = hydratedItem.slot !== 'None';
   const isConsumable = hydratedItem.type === 'Consumable';
   const isLocked = item.isLocked;
-  const isModified = (item.enhanceLevel > 0) || !!item.statOverrides || !!item.affixOverrides;
+  const isModified = item.enhanceLevel > 0 || !!item.statOverrides || !!item.affixOverrides;
   const docId = item._id; // MongoDB document _id for variant targeting
 
   // === ROW 1: Equip / Consume + Lock ===
@@ -68,7 +68,7 @@ export async function buildItemView(player: IPlayerJSON, item: IInventoryItem): 
   // === ROW 2: Sell + Collect ===
   // Modified items can't be vendor-sold or collected
   let sellText = `🪙 Sell (${Math.floor(hydratedItem.value * item.quantity).toLocaleString()}g)`;
-  let sellDisabled = isConsumable || isLocked;
+  const sellDisabled = isConsumable || isLocked;
   let collectText = 'Add to Collection';
   let collectDisabled = isConsumable || isLocked;
 

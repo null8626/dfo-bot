@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction, Client, MessageFlags } from "discord.js";
+import { type ModalSubmitInteraction, type Client, MessageFlags } from "discord.js";
 import ModalSubmit from "../../structures/ModalSubmit";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -34,7 +34,7 @@ export default class SkillPointsModal extends ModalSubmit {
       if (atkAmount > 0) {
         const res = await apiFetch(Routes.allocate(), {
           method: 'POST',
-          body: JSON.stringify({ discordId, stat: 'atk', amount: atkAmount }),
+          body: JSON.stringify({ discordId, stat: 'atk', amount: atkAmount })
         });
         const body = await res.json();
 
@@ -49,7 +49,7 @@ export default class SkillPointsModal extends ModalSubmit {
       if (defAmount > 0) {
         const res = await apiFetch(Routes.allocate(), {
           method: 'POST',
-          body: JSON.stringify({ discordId, stat: 'def', amount: defAmount }),
+          body: JSON.stringify({ discordId, stat: 'def', amount: defAmount })
         });
         const body = await res.json();
 

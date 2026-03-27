@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, LabelBuilder, MessageFlags, ModalBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextDisplayBuilder } from "discord.js";
+import { type ButtonInteraction, type Client, LabelBuilder, MessageFlags, ModalBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, TextDisplayBuilder } from "discord.js";
 import Button from "../../structures/Button";
 import ItemManager from "../../managers/ItemManager";
 import { apiFetch } from "../../utilities/ApiClient";

@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, MessageFlags } from "discord.js";
+import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class MarketRedirectButton extends Button {
@@ -12,7 +12,7 @@ export default class MarketRedirectButton extends Button {
 
     await interaction.reply({
       content: `📢 **Modified items cannot be vendor-sold.**\n\nUse \`/market sell item:${itemId} quantity:1 price:<your price>\` to list this item on the Global Market.\n\nAlternatively, you can **🔥 Dismantle** it for Embers.`,
-      flags: MessageFlags.Ephemeral,
+      flags: MessageFlags.Ephemeral
     });
   }
 }

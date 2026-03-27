@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 
 const SECTIONS: Record<string, { title: string; emoji: string; content: string }> = {
@@ -7,7 +7,7 @@ const SECTIONS: Record<string, { title: string; emoji: string; content: string }
   workshop: { title: 'Workshop', emoji: '🔨', content: '' },
   economy: { title: 'Economy & Gold Sinks', emoji: '🪙', content: '' },
   tasks: { title: 'Tasks & Chests', emoji: '📋', content: '' },
-  zones: { title: 'Zones & Travel', emoji: '🗺️', content: '' },
+  zones: { title: 'Zones & Travel', emoji: '🗺️', content: '' }
 };
 
 // Import the full sections from GuideCommand would create circular dependency,
@@ -29,7 +29,7 @@ export default class GuideNavButton extends Button {
     // so we tell the user to use the command
     await interaction.reply({
       content: `📖 Use \`/guide ${section}\` to view the **${SECTIONS[section]?.title ?? section}** section.`,
-      ephemeral: true,
+      ephemeral: true
     });
   } // Anyone can navigate the guide
 }

@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, Client } from "discord.js";
+import { type AnySelectMenuInteraction, type Client } from "discord.js";
 import SelectMenu from "../../structures/SelectMenu";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -29,8 +29,8 @@ export default class ReforgeSelectMenu extends SelectMenu {
           discordId: interaction.user.id,
           itemId,
           inventoryId: docId,
-          reforgeType,
-        }),
+          reforgeType
+        })
       });
 
       const body = await res.json();
@@ -45,7 +45,7 @@ export default class ReforgeSelectMenu extends SelectMenu {
         `📦 **${body.itemName}**`,
         `🪙 Cost: **${body.goldSpent?.toLocaleString() ?? '???'}** gold`,
         `💰 Balance: **${body.newBalance?.toLocaleString() ?? '???'}** gold`,
-        ``,
+        ``
       ];
 
       // Show stat comparison if stats were reforged

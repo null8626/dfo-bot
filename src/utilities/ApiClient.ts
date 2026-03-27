@@ -48,9 +48,9 @@ export async function apiFetch(url: string, options?: RequestInit): Promise<Resp
       ...options,
       headers: {
         ...Routes.HEADERS(),
-        ...options?.headers,
+        ...options?.headers
       },
-      signal: AbortSignal.timeout(DEFAULT_TIMEOUT),
+      signal: AbortSignal.timeout(DEFAULT_TIMEOUT)
     });
 
     if (res.ok || res.status === 429 || res.status === 409 || res.status === 404) {

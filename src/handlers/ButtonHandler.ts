@@ -1,4 +1,4 @@
-import { ButtonInteraction, Collection, MessageFlags, Client } from "discord.js";
+import { type ButtonInteraction, Collection, MessageFlags, type Client } from "discord.js";
 import { readdirSync } from 'fs';
 import { join } from "path";
 import Button from "../structures/Button";
@@ -10,8 +10,7 @@ export default class ButtonHandler {
   private static _cache: Collection<string, Button> = new Collection();
 
   public static load(): void {
-    const buttonFiles = readdirSync(filePath).filter(file =>
-      (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const buttonFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
     );
 
     if (buttonFiles.length < 1) {

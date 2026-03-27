@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, ModalBuilder, TextInputStyle } from "discord.js";
+import { type ButtonInteraction, type Client, ModalBuilder, TextInputStyle } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class CollectButton extends Button {
@@ -15,8 +15,7 @@ export default class CollectButton extends Button {
       .setCustomId(`collect:${docId}`)
       .setTitle('⚠️ Collect Item (Permanent)')
       .addLabelComponents(
-        (label) =>
-          label.setLabel('Amount').setDescription(`⚠️ This is PERMANENT and cannot be undone. Items are removed from inventory and added to your Collection Book. (Max: ${maxQty})`)
+        (label) => label.setLabel('Amount').setDescription(`⚠️ This is PERMANENT and cannot be undone. Items are removed from inventory and added to your Collection Book. (Max: ${maxQty})`)
           .setTextInputComponent((ti) => ti.setCustomId('ti1').setRequired(true).setStyle(TextInputStyle.Short).setPlaceholder(maxQty))
       );
 

@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -24,7 +24,7 @@ export default class TaskClaimButton extends Button {
     try {
       const res = await apiFetch(Routes.tasks(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, action: 'claim', taskId, period }),
+        body: JSON.stringify({ discordId: interaction.user.id, action: 'claim', taskId, period })
       });
 
       const body = await res.json();
@@ -37,7 +37,7 @@ export default class TaskClaimButton extends Button {
       const reward = body.reward;
       const lines = [
         `✅ **Task Claimed!**`,
-        ``,
+        ``
       ];
 
       if (reward) {

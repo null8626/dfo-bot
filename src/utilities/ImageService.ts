@@ -1,10 +1,10 @@
-import { User } from 'discord.js';
-import { IStepJSON } from '../interfaces/IStepJSON';
-import { ICombatJSON } from '../interfaces/ICombatJSON';
-import { IPlayerJSON } from '../interfaces/IPlayerJSON';
-import { IItemJSON } from '../interfaces/IItemJSON';
-import { IInventoryItem } from '../interfaces/IInventoryJSON';
-import { ITaskJSON, IChestSlot } from '../interfaces/IGameJSON';
+import { type User } from 'discord.js';
+import { type IStepJSON } from '../interfaces/IStepJSON';
+import { type ICombatJSON } from '../interfaces/ICombatJSON';
+import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
+import { type IItemJSON } from '../interfaces/IItemJSON';
+import { type IInventoryItem } from '../interfaces/IInventoryJSON';
+import { type ITaskJSON, type IChestSlot } from '../interfaces/IGameJSON';
 import ItemManager from '../managers/ItemManager';
 import WorkerPool from './WorkerPool';
 import type { LeaderboardEntry, LeaderboardConfig } from './LeaderboardImageBuilder';
@@ -34,7 +34,7 @@ export default class ImageService {
     return WorkerPool.run('profile', {
       player,
       avatarUrl: discordUser.displayAvatarURL({ extension: 'png', size: 256 }),
-      itemCache: this.serializeItemCache(),
+      itemCache: this.serializeItemCache()
     });
   }
 
@@ -42,7 +42,7 @@ export default class ImageService {
     return WorkerPool.run('inventory', {
       chunk,
       player,
-      itemCache: this.serializeItemCache(),
+      itemCache: this.serializeItemCache()
     });
   }
 

@@ -1,10 +1,10 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { buildCombatResponse } from "../../utilities/CombatResponseBuilder";
 import { formatError, formatCooldown } from "../../utilities/ErrorMessages";
 import Routes from "../../utilities/Routes";
-import { IStepJSON } from "../../interfaces/IStepJSON";
+import { type IStepJSON } from "../../interfaces/IStepJSON";
 
 export default class ExploreAgainButton extends Button {
   constructor() {
@@ -17,7 +17,7 @@ export default class ExploreAgainButton extends Button {
     try {
       const res = await apiFetch(Routes.explore(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id }),
+        body: JSON.stringify({ discordId: interaction.user.id })
       });
 
       const data = await res.json() as IStepJSON;

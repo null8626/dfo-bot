@@ -1,4 +1,4 @@
-import { IEnemyJSON } from "./IEnemyJSON";
+import { type IEnemyJSON } from "./IEnemyJSON";
 
 export type Privilege =
     | 'Member'
@@ -36,12 +36,12 @@ export interface IPlayerJSON {
   collections: {
     uniqueClaimed: number;
     totalClaimed: number;
-  }
+  };
   discordRoleData?: {
     accessToken: any;
     refreshToken: any;
     expiresAt: any;
-  }
+  };
   activeEncounter: IEnemyJSON | null;
   cooldowns: {
     step: Date;

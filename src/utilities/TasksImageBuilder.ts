@@ -5,9 +5,9 @@ import type { ITaskJSON } from '../interfaces/IGameJSON';
 try { GlobalFonts.registerFromPath(join(process.cwd(), 'assets', 'NotoColorEmoji-Regular.ttf'), 'NotoEmoji'); } catch(e) {}
 
 const PERIOD_COLORS: Record<string, { bg: string; border: string; text: string }> = {
-  daily:   { bg: '#064e3b33', border: '#10b98144', text: '#34d399' },
-  weekly:  { bg: '#1e1b4b33', border: '#6366f144', text: '#818cf8' },
-  monthly: { bg: '#4a044e33', border: '#c026d344', text: '#e879f9' },
+  daily: { bg: '#064e3b33', border: '#10b98144', text: '#34d399' },
+  weekly: { bg: '#1e1b4b33', border: '#6366f144', text: '#818cf8' },
+  monthly: { bg: '#4a044e33', border: '#c026d344', text: '#e879f9' }
 };
 
 export interface TasksPageConfig {
@@ -21,7 +21,7 @@ export default class TasksImageBuilder {
     const rowH = 90;
     const headerH = 100;
     const footerH = 40;
-    const canvasH = headerH + (tasks.length * rowH) + footerH + 20;
+    const canvasH = headerH + tasks.length * rowH + footerH + 20;
     const canvas = createCanvas(800, Math.max(300, canvasH));
     const ctx = canvas.getContext('2d');
 
@@ -87,7 +87,7 @@ export default class TasksImageBuilder {
     let y = headerH;
 
     for (const task of tasks) {
-      const pct = Math.min(100, Math.floor((task.progress / task.target) * 100));
+      const pct = Math.min(100, Math.floor(task.progress / task.target * 100));
       const isComplete = task.progress >= task.target;
       const isClaimed = task.claimed;
 

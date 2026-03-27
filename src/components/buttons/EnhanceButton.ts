@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -24,7 +24,7 @@ export default class EnhanceButton extends Button {
     try {
       const res = await apiFetch(Routes.enhance(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, itemId, inventoryId: docId }),
+        body: JSON.stringify({ discordId: interaction.user.id, itemId, inventoryId: docId })
       });
 
       const body = await res.json();
@@ -38,7 +38,7 @@ export default class EnhanceButton extends Button {
       const lines = [
         `⬆️ **Enhancement ${result.succeeded ? 'Succeeded' : 'Failed'}!**`,
         ``,
-        `📦 **${result.itemName}** → +${result.newLevel}`,
+        `📦 **${result.itemName}** → +${result.newLevel}`
       ];
 
       if (result.succeeded) {

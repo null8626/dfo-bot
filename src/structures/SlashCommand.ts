@@ -1,6 +1,6 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import IExecutable from "../interfaces/IExecutable";
-import { Client } from "discord.js";
+import { type AutocompleteInteraction, type ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import type IExecutable from "../interfaces/IExecutable";
+import { type Client } from "discord.js";
 
 export interface SlashCommandOptions {
   name: string;

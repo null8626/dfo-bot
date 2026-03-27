@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 
 export default class VoteCommand extends SlashCommand {
@@ -34,7 +34,7 @@ export default class VoteCommand extends SlashCommand {
         .setLabel('Play on Web')
         .setStyle(ButtonStyle.Link)
         .setURL('https://capi.gg/dfo')
-        .setEmoji('🌐'),
+        .setEmoji('🌐')
     );
 
     await interaction.reply({ embeds: [embed], components: [row] });

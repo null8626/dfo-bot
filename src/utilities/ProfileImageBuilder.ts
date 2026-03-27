@@ -1,7 +1,7 @@
 import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
-import { IPlayerJSON } from '../interfaces/IPlayerJSON';
-import { IItemJSON } from '../interfaces/IItemJSON';
-import { User } from 'discord.js';
+import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
+import { type IItemJSON } from '../interfaces/IItemJSON';
+import { type User } from 'discord.js';
 import ItemManager from '../managers/ItemManager';
 import { join } from 'path';
 
@@ -32,8 +32,8 @@ export default class ProfileImageBuilder {
     const ctx = canvas.getContext('2d');
 
     // --- Svelte Logic Conversions ---
-    const xpToNext = Math.floor(50 * Math.pow((player.level || 1), 1.3));
-    const xpProgress = Math.min((player.experience / xpToNext), 1);
+    const xpToNext = Math.floor(50 * (player.level || 1)**1.3);
+    const xpProgress = Math.min(player.experience / xpToNext, 1);
     const totalAtk = player.stats?.atk || 0;
     const totalDef = player.stats?.def || 0;
     const currentHp = Math.floor(player.stats?.hp || 0);
@@ -92,18 +92,18 @@ export default class ProfileImageBuilder {
 
     // --- 4. Stats Grid ---
     const drawGridBox = (x: number, y: number, label: string, value: string, borderColor: string, valueColor: string) => {
-        ctx.fillStyle = '#1a1a1a';
-        ctx.fillRect(x, y, 180, 70);
-        ctx.fillStyle = borderColor;
-        ctx.fillRect(x, y, 4, 70);
+      ctx.fillStyle = '#1a1a1a';
+      ctx.fillRect(x, y, 180, 70);
+      ctx.fillStyle = borderColor;
+      ctx.fillRect(x, y, 4, 70);
         
-        ctx.fillStyle = '#6b7280';
-        ctx.font = '12px sans-serif';
-        ctx.fillText(label.toUpperCase(), x + 15, y + 25);
+      ctx.fillStyle = '#6b7280';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(label.toUpperCase(), x + 15, y + 25);
         
-        ctx.fillStyle = valueColor;
-        ctx.font = 'bold 24px monospace';
-        ctx.fillText(value, x + 15, y + 55);
+      ctx.fillStyle = valueColor;
+      ctx.font = 'bold 24px monospace';
+      ctx.fillText(value, x + 15, y + 55);
     };
 
     drawGridBox(180, 130, 'Level', player.level.toString(), '#eab308', '#ffffff');
@@ -129,7 +129,7 @@ export default class ProfileImageBuilder {
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 12px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText(`${player.experience.toLocaleString()} XP / ${xpToNext.toLocaleString()} XP`, barX + (barWidth / 2), barY + 16);
+    ctx.fillText(`${player.experience.toLocaleString()} XP / ${xpToNext.toLocaleString()} XP`, barX + barWidth / 2, barY + 16);
     ctx.textAlign = 'left';
 
     // --- 6. Combat Stats Panel ---
@@ -146,7 +146,7 @@ export default class ProfileImageBuilder {
     ctx.fillText(`${currentHp} / ${maxHp}`, 730, panelY + 30);
     ctx.textAlign = 'left';
 
-    const hpProgress = Math.min((currentHp / maxHp), 1);
+    const hpProgress = Math.min(currentHp / maxHp, 1);
     ctx.fillStyle = '#1f2937';
     ctx.beginPath();
     ctx.roundRect(60, panelY + 45, 670, 12, 6);
@@ -157,18 +157,18 @@ export default class ProfileImageBuilder {
     ctx.fill();
 
     const drawStatBox = (x: number, y: number, label: string, value: string, color: string) => {
-        ctx.fillStyle = '#00000066';
-        ctx.beginPath();
-        ctx.roundRect(x, y, 325, 50, 6);
-        ctx.fill();
+      ctx.fillStyle = '#00000066';
+      ctx.beginPath();
+      ctx.roundRect(x, y, 325, 50, 6);
+      ctx.fill();
 
-        ctx.fillStyle = '#6b7280';
-        ctx.font = 'bold 14px sans-serif';
-        ctx.fillText(label, x + 15, y + 30);
+      ctx.fillStyle = '#6b7280';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText(label, x + 15, y + 30);
 
-        ctx.fillStyle = color;
-        ctx.font = 'bold 22px monospace';
-        ctx.fillText(value, x + 100, y + 33);
+      ctx.fillStyle = color;
+      ctx.font = 'bold 22px monospace';
+      ctx.fillText(value, x + 100, y + 33);
     };
 
     drawStatBox(60, panelY + 70, 'ATK', totalAtk.toString(), '#f87171');
@@ -193,15 +193,15 @@ export default class ProfileImageBuilder {
 
     // Grid Settings (4 columns, 3 rows)
     const equipSlots = [
-        { key: 'Head', icon: '⛑️' }, { key: 'Necklace', icon: '📿' }, { key: 'Chest', icon: '👕' }, { key: 'MainHand', icon: '⚔️' },
-        { key: 'Legs', icon: '👖' }, { key: 'OffHand', icon: '🛡️' }, { key: 'Hands', icon: '🧤' }, { key: 'RingA', icon: '💍' },
-        { key: 'Feet', icon: '👢' }, { key: 'RingB', icon: '💍' }, { key: 'Pet', icon: '🐾' }, { key: 'Special', icon: '✨' }
+      { key: 'Head', icon: '⛑️' }, { key: 'Necklace', icon: '📿' }, { key: 'Chest', icon: '👕' }, { key: 'MainHand', icon: '⚔️' },
+      { key: 'Legs', icon: '👖' }, { key: 'OffHand', icon: '🛡️' }, { key: 'Hands', icon: '🧤' }, { key: 'RingA', icon: '💍' },
+      { key: 'Feet', icon: '👢' }, { key: 'RingB', icon: '💍' }, { key: 'Pet', icon: '🐾' }, { key: 'Special', icon: '✨' }
     ];
 
     const RARITY_COLORS: Record<string, string> = {
-        Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
-        Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
-        Divine: '#00e5ff', Exotic: '#ff00cc'
+      Common: '#b0b0b0', Uncommon: '#2ecc71', Rare: '#3498db',
+      Elite: '#e67e22', Epic: '#9b59b6', Legendary: '#f1c40f',
+      Divine: '#00e5ff', Exotic: '#ff00cc'
     };
 
     const gridStartX = 60;
@@ -212,71 +212,71 @@ export default class ProfileImageBuilder {
     const gapY = 15;
 
     for (let i = 0; i < equipSlots.length; i++) {
-        const slot = equipSlots[i];
-        const col = i % 4;
-        const row = Math.floor(i / 4);
+      const slot = equipSlots[i];
+      const col = i % 4;
+      const row = Math.floor(i / 4);
 
-        const boxX = gridStartX + col * (boxWidth + gapX);
-        const boxY = gridStartY + row * (boxHeight + gapY);
+      const boxX = gridStartX + col * (boxWidth + gapX);
+      const boxY = gridStartY + row * (boxHeight + gapY);
 
-        // Fetch item data if equipped
-        const equippedRef = player.equipment ? (player.equipment as any)[slot.key] : null;
-        let itemData = null;
-        if (equippedRef && equippedRef.itemId) {
-            itemData = getItem(equippedRef.itemId) ?? null;
-        }
+      // Fetch item data if equipped
+      const equippedRef = player.equipment ? (player.equipment as any)[slot.key] : null;
+      let itemData = null;
+      if (equippedRef?.itemId) {
+        itemData = getItem(equippedRef.itemId) ?? null;
+      }
 
-        // Box BG & Outline
-        ctx.fillStyle = '#00000066'; // bg-black/40
-        ctx.beginPath();
-        ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 8);
-        ctx.fill();
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#ffffff11';
-        ctx.stroke();
+      // Box BG & Outline
+      ctx.fillStyle = '#00000066'; // bg-black/40
+      ctx.beginPath();
+      ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 8);
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#ffffff11';
+      ctx.stroke();
 
-        ctx.textAlign = 'center';
+      ctx.textAlign = 'center';
 
-        // --- UPDATED EMOJI RENDERING ---
-        ctx.fillStyle = '#ffffff66'; // Muted icon
-        // Use the NotoEmoji font we registered above
-        ctx.font = '20px "NotoEmoji", sans-serif';
-        ctx.fillText(slot.icon, boxX + boxWidth / 2, boxY + 30);
+      // --- UPDATED EMOJI RENDERING ---
+      ctx.fillStyle = '#ffffff66'; // Muted icon
+      // Use the NotoEmoji font we registered above
+      ctx.font = '20px "NotoEmoji", sans-serif';
+      ctx.fillText(slot.icon, boxX + boxWidth / 2, boxY + 30);
 
-        // Slot Key
-        ctx.fillStyle = '#4b5563'; // text-gray-600
-        // Instantly reset the font back to standard sans-serif for regular text
-        ctx.font = 'bold 10px sans-serif';
-        ctx.fillText(slot.key.toUpperCase(), boxX + boxWidth / 2, boxY + 45);
+      // Slot Key
+      ctx.fillStyle = '#4b5563'; // text-gray-600
+      // Instantly reset the font back to standard sans-serif for regular text
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText(slot.key.toUpperCase(), boxX + boxWidth / 2, boxY + 45);
 
-        if (itemData) {
-            const color = RARITY_COLORS[itemData.rarity] || '#ffffff';
+      if (itemData) {
+        const color = RARITY_COLORS[itemData.rarity] || '#ffffff';
             
-            // Truncate name if it's too long (using canvas maxWidth param)
-            ctx.fillStyle = color;
-            ctx.font = 'bold 13px sans-serif';
-            ctx.fillText(itemData.name, boxX + boxWidth / 2, boxY + 65, boxWidth - 10);
+        // Truncate name if it's too long (using canvas maxWidth param)
+        ctx.fillStyle = color;
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText(itemData.name, boxX + boxWidth / 2, boxY + 65, boxWidth - 10);
 
-            // Item Level
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '10px sans-serif';
-            ctx.fillText(`Lvl ${itemData.level}`, boxX + boxWidth / 2, boxY + 80);
+        // Item Level
+        ctx.fillStyle = '#6b7280';
+        ctx.font = '10px sans-serif';
+        ctx.fillText(`Lvl ${itemData.level}`, boxX + boxWidth / 2, boxY + 80);
 
-            // Bottom Border (matches rarity)
-            ctx.beginPath();
-            ctx.moveTo(boxX + 15, boxY + boxHeight);
-            ctx.lineTo(boxX + boxWidth - 15, boxY + boxHeight);
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = color;
-            ctx.stroke();
-        } else {
-            // Empty State
-            ctx.fillStyle = '#374151'; // text-gray-700
-            ctx.font = 'italic 12px sans-serif';
-            ctx.fillText('Empty', boxX + boxWidth / 2, boxY + 70);
-        }
+        // Bottom Border (matches rarity)
+        ctx.beginPath();
+        ctx.moveTo(boxX + 15, boxY + boxHeight);
+        ctx.lineTo(boxX + boxWidth - 15, boxY + boxHeight);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = color;
+        ctx.stroke();
+      } else {
+        // Empty State
+        ctx.fillStyle = '#374151'; // text-gray-700
+        ctx.font = 'italic 12px sans-serif';
+        ctx.fillText('Empty', boxX + boxWidth / 2, boxY + 70);
+      }
 
-        ctx.textAlign = 'left'; // Reset alignment for next loop iteration
+      ctx.textAlign = 'left'; // Reset alignment for next loop iteration
     }
 
     return canvas.toBuffer('image/png');

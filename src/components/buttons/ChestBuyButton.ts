@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -22,7 +22,7 @@ export default class ChestBuyButton extends Button {
     try {
       const res = await apiFetch(Routes.chests(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, action: 'buy', tier }),
+        body: JSON.stringify({ discordId: interaction.user.id, action: 'buy', tier })
       });
 
       const body = await res.json();
@@ -34,7 +34,7 @@ export default class ChestBuyButton extends Button {
 
       await interaction.editReply({
         content: `🛒 **Purchased a ${tier} Chest!**\n🪙 Cost: **${body.goldCost?.toLocaleString() ?? '???'}** gold\n💰 Balance: **${body.newBalance?.toLocaleString() ?? '???'}** gold\n\nRun \`/chests\` to view your vault.`,
-        files: [], components: [], embeds: [],
+        files: [], components: [], embeds: []
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });

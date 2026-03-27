@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, MessageFlags } from "discord.js";
+import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -19,7 +19,7 @@ export default class MarketBuyButton extends Button {
     try {
       const res = await apiFetch(Routes.marketBuy(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, listingId, quantity: 1 }),
+        body: JSON.stringify({ discordId: interaction.user.id, listingId, quantity: 1 })
       });
 
       const body = await res.json();

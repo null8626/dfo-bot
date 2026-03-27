@@ -3,11 +3,11 @@ import {
   ButtonBuilder,
   ButtonStyle,
   EmbedBuilder,
-  CommandInteraction,
-  MessageComponentInteraction,
+  type CommandInteraction,
+  type MessageComponentInteraction,
   ComponentType,
-  AttachmentBuilder,
-  MessageActionRowComponentBuilder
+  type AttachmentBuilder,
+  type MessageActionRowComponentBuilder
 } from 'discord.js';
 
 export default class PaginatorBuilder {
@@ -92,7 +92,7 @@ export default class PaginatorBuilder {
       const embed = EmbedBuilder.from(originalEmbed);
       const currentFooter = originalEmbed.data.footer?.text || '';
       return embed.setFooter({ 
-        text: (currentFooter ? `${currentFooter} | Page ${index + 1} of ${this.pages.length}` : `Page ${index + 1} of ${this.pages.length}`) + ' | ⚔️ DFO Cross-Platform',
+        text: `${currentFooter ? `${currentFooter} | Page ${index + 1} of ${this.pages.length}` : `Page ${index + 1} of ${this.pages.length}`} | ⚔️ DFO Cross-Platform`,
         iconURL: originalEmbed.data.footer?.icon_url
       });
     };
@@ -130,10 +130,10 @@ export default class PaginatorBuilder {
     collector.on('collect', async (i) => {
       collector.resetTimer();
       switch (i.customId) {
-        case 'page_first': currentPage = 0; break;
-        case 'page_prev': currentPage = Math.max(0, currentPage - 1); break;
-        case 'page_next': currentPage = Math.min(this.pages.length - 1, currentPage + 1); break;
-        case 'page_last': currentPage = this.pages.length - 1; break;
+      case 'page_first': currentPage = 0; break;
+      case 'page_prev': currentPage = Math.max(0, currentPage - 1); break;
+      case 'page_next': currentPage = Math.min(this.pages.length - 1, currentPage + 1); break;
+      case 'page_last': currentPage = this.pages.length - 1; break;
       }
       await i.update({
         embeds: [getEmbed(currentPage)],

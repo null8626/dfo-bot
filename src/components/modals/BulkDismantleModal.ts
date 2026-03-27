@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction, Client, MessageFlags } from "discord.js";
+import { type ModalSubmitInteraction, type Client, MessageFlags } from "discord.js";
 import ModalSubmit from "../../structures/ModalSubmit";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -33,7 +33,7 @@ export default class BulkDismantleModal extends ModalSubmit {
     try {
       const res = await apiFetch(Routes.bulkDismantle(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, items }),
+        body: JSON.stringify({ discordId: interaction.user.id, items })
       });
 
       const body = await res.json();

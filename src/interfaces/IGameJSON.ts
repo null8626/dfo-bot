@@ -58,7 +58,7 @@ export interface IChestOpenResult {
   success: boolean;
   message: string;
   loot: {
-    items: Array<{ name: string; rarity: string; level: number; type: string }>;
+    items: { name: string; rarity: string; level: number; type: string }[];
     gold: number;
     embers: number;
     isPity: boolean;

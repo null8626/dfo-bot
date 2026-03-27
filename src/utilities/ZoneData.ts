@@ -20,7 +20,7 @@ const TIER_NAMES: Record<number, string> = {
   2: 'The Adventurer',
   3: 'The Hero',
   4: 'The Ascendant',
-  5: 'The Cosmic',
+  5: 'The Cosmic'
 };
 
 function getTier(zoneId: number): string {
@@ -52,7 +52,7 @@ export const ZONES: ZoneInfo[] = [
   { id: 17, name: 'Nebula of Souls',        description: 'The spirits of the ancients watch your every step.',                         levelReq: 600,  tier: getTier(17), rarityCap: 'Divine',    combatChance: 40, tollCost: 650 },
   { id: 18, name: 'Black Hole Horizon',     description: 'Light cannot escape. Hope struggles to survive.',                            levelReq: 700,  tier: getTier(18), rarityCap: 'Divine',    combatChance: 50, tollCost: 800 },
   { id: 19, name: "Creation's Forge",       description: 'Where worlds are made and destroyed.',                                       levelReq: 800,  tier: getTier(19), rarityCap: 'Divine',    combatChance: 55, tollCost: 1000 },
-  { id: 20, name: 'The Absolute',           description: 'The end of all things. The beginning of eternity.',                          levelReq: 900,  tier: getTier(20), rarityCap: 'Divine',    combatChance: 60, tollCost: 1200 },
+  { id: 20, name: 'The Absolute',           description: 'The end of all things. The beginning of eternity.',                          levelReq: 900,  tier: getTier(20), rarityCap: 'Divine',    combatChance: 60, tollCost: 1200 }
 ];
 
 export function getZone(id: number): ZoneInfo | undefined {

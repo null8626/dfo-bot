@@ -61,7 +61,7 @@ export default class MarketImageBuilder {
 
     const canvas = createCanvas(CANVAS_WIDTH, canvasHeight);
     const ctx = canvas.getContext('2d');
-    const contentWidth = CANVAS_WIDTH - (PADDING * 2);
+    const contentWidth = CANVAS_WIDTH - PADDING * 2;
 
     // --- Background ---
     ctx.fillStyle = '#0a0a0a';
@@ -75,7 +75,7 @@ export default class MarketImageBuilder {
 
     const accentColor = config.mode === 'my_listings' ? '#3b82f6' : '#10b981';
     const headerGrad = ctx.createLinearGradient(0, 0, 0, HEADER_HEIGHT);
-    headerGrad.addColorStop(0, accentColor + '25');
+    headerGrad.addColorStop(0, `${accentColor}25`);
     headerGrad.addColorStop(1, '#0a0a0a00');
     ctx.fillStyle = headerGrad;
     ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
@@ -110,7 +110,7 @@ export default class MarketImageBuilder {
     for (let i = 0; i < rowCount; i++) {
       const listing = listings[i];
       const item = listing.item;
-      const rowY = startY + (i * ROW_HEIGHT);
+      const rowY = startY + i * ROW_HEIGHT;
       const rarityColor = RARITY_COLORS[item.rarity] || '#ffffff';
       const displayIndex = i + 1;
 

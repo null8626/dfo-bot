@@ -11,10 +11,10 @@ export default class CooldownManager {
 
     if (expiration > Date.now()) {
       return true;
-    } else {
-      this._cache.delete(key);
-      return false;
-    }
+    } 
+    this._cache.delete(key);
+    return false;
+    
   }
 
   public static getExpiration(key: string): number {
@@ -27,7 +27,7 @@ export default class CooldownManager {
   public static addCooldown(key: string, durationInSeconds: number): void {
     if (this.onCooldown(key)) return;
 
-    const expiresAt = Date.now() + (durationInSeconds * 1000);
+    const expiresAt = Date.now() + durationInSeconds * 1000;
     this._cache.set(key, expiresAt);
   }
 

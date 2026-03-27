@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, ModalBuilder, TextInputStyle } from "discord.js";
+import { type ButtonInteraction, type Client, ModalBuilder, TextInputStyle } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class SellButton extends Button {
@@ -15,8 +15,7 @@ export default class SellButton extends Button {
       .setCustomId(`sell:${docId}`)
       .setTitle('Sell Item')
       .addLabelComponents(
-        (label) =>
-          label.setLabel('Amount').setDescription(`Enter amount to sell. (Max: ${maxQty})`)
+        (label) => label.setLabel('Amount').setDescription(`Enter amount to sell. (Max: ${maxQty})`)
           .setTextInputComponent((ti) => ti.setCustomId('ti1').setRequired(true).setStyle(TextInputStyle.Short))
       );
 

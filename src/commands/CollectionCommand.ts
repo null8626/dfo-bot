@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, EmbedBuilder } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
-import { ICollectionJSON } from "../interfaces/ICollectionJSON";
+import { type ICollectionJSON } from "../interfaces/ICollectionJSON";
 import ItemManager from "../managers/ItemManager";
 import PaginatorBuilder from "../utilities/PaginatorBuilder";
 import Routes from "../utilities/Routes";
@@ -17,10 +17,9 @@ export default class CollectionCommand extends SlashCommand {
       isGlobalCommand: true
     });
 
-    this.builder.addUserOption((o) => 
-        o.setName('user')
-         .setDescription('Select a user')
-         .setRequired(false)
+    this.builder.addUserOption((o) => o.setName('user')
+      .setDescription('Select a user')
+      .setRequired(false)
     );
   }
 
@@ -47,11 +46,11 @@ export default class CollectionCommand extends SlashCommand {
     // Safely parse the "Map" from JSON into an array of [itemId, quantity]
     let collectionItems: [string, number][] = [];
     if (collection?.items) {
-        if (typeof collection.items === 'object' && !Array.isArray(collection.items)) {
-            collectionItems = Object.entries(collection.items);
-        } else if (collection.items instanceof Map) {
-            collectionItems = Array.from(collection.items.entries());
-        }
+      if (typeof collection.items === 'object' && !Array.isArray(collection.items)) {
+        collectionItems = Object.entries(collection.items);
+      } else if (collection.items instanceof Map) {
+        collectionItems = Array.from(collection.items.entries());
+      }
     }
 
     if (collectionItems.length === 0) {

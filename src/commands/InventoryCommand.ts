@@ -1,11 +1,11 @@
 import {
-  ChatInputCommandInteraction, Client, EmbedBuilder, AttachmentBuilder,
+  type ChatInputCommandInteraction, type Client, EmbedBuilder, AttachmentBuilder,
   ButtonBuilder, ButtonStyle, ActionRowBuilder, StringSelectMenuBuilder,
-  StringSelectMenuOptionBuilder,
+  StringSelectMenuOptionBuilder
 } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
-import { IInventoryItem } from "../interfaces/IInventoryJSON";
-import { IPlayerJSON } from "../interfaces/IPlayerJSON";
+import { type IInventoryItem } from "../interfaces/IInventoryJSON";
+import { type IPlayerJSON } from "../interfaces/IPlayerJSON";
 import PaginatorBuilder from "../utilities/PaginatorBuilder";
 import Routes from "../utilities/Routes";
 import { apiFetch } from "../utilities/ApiClient";
@@ -30,7 +30,7 @@ export default class InventoryCommand extends SlashCommand {
 
     const res = await apiFetch(Routes.inventory(interaction.user.id));
 
-    const { success, data, error }: { success: boolean, data: any, error?: string } = await res.json();
+    const { success, data, error }: { success: boolean; data: any; error?: string } = await res.json();
 
     if (res.status === 400 || res.status === 401 || res.status === 404 || res.status === 500) {
       await interaction.editReply({ content: formatError(error ?? 'Unknown error') });
@@ -113,7 +113,7 @@ export default class InventoryCommand extends SlashCommand {
             new ButtonBuilder()
               .setCustomId(`bulk_dismantle:${i}`)
               .setLabel(`🔥 Bulk Dismantle (${eligibleCount})`)
-              .setStyle(ButtonStyle.Danger),
+              .setStyle(ButtonStyle.Danger)
           )
         );
       }

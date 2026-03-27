@@ -1,7 +1,7 @@
 import {
-  ButtonInteraction, Client, ActionRowBuilder,
+  type ButtonInteraction, type Client, ActionRowBuilder,
   StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
-  MessageFlags,
+  MessageFlags
 } from "discord.js";
 import Button from "../../structures/Button";
 
@@ -38,7 +38,7 @@ export default class ReforgeButton extends Button {
         new StringSelectMenuOptionBuilder()
           .setLabel('Full Reforge')
           .setDescription('Reroll both stats and affixes (costs more)')
-          .setValue('full'),
+          .setValue('full')
       );
 
     const row = new ActionRowBuilder<StringSelectMenuBuilder>().setComponents(selectMenu);
@@ -46,7 +46,7 @@ export default class ReforgeButton extends Button {
     await interaction.reply({
       content: '🔄 **Select Reforge Type**\nChoose what to reroll on this item:',
       components: [row],
-      ephemeral: true,
+      ephemeral: true
     });
   }
 }

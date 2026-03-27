@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, Client, MessageFlags } from "discord.js";
+import { type AnySelectMenuInteraction, type Client, MessageFlags } from "discord.js";
 import SelectMenu from "../../structures/SelectMenu";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -23,7 +23,7 @@ export default class TravelSelectMenu extends SelectMenu {
     try {
       const res = await apiFetch(Routes.travel(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, zoneId }),
+        body: JSON.stringify({ discordId: interaction.user.id, zoneId })
       });
 
       const body = await res.json();

@@ -53,7 +53,7 @@ export interface IItemJSON {
     def: number;
     hp: number;
   };
-  affixes?: Array<{ type: ItemAffixes, value: number }>;
+  affixes?: { type: ItemAffixes; value: number }[];
   action: {
     effect: EffectType;
     amount: number;

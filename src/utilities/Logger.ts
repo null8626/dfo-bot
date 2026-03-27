@@ -18,12 +18,12 @@ const additionalLevels = {
   dev: 35,
   command: 34,
   player: 33,
-  button: 32,
+  button: 32
 };
 
 // --- File destination (reopenable for rotation) ---
 // minLength: 0 ensures writes flush quickly — prevents sonic-boom "not ready" on exit
-let fileDestination = pino.destination({ dest: LOG_FILE, sync: false, minLength: 0 });
+const fileDestination = pino.destination({ dest: LOG_FILE, sync: false, minLength: 0 });
 
 /**
  * Rotates log files when bot.log exceeds MAX_SIZE_BYTES.
@@ -60,7 +60,7 @@ function rotateIfNeeded(): void {
 const logger = pino(
   {
     customLevels: additionalLevels,
-    level: 'debug',
+    level: 'debug'
   },
   pino.multistream([
     {
@@ -74,14 +74,14 @@ const logger = pino(
           levelFirst: true,
           customLevels: 'dev:35,command:34,player:33,button:32',
           customColors: 'dev:magenta,command:magenta,player:magenta,button:magenta',
-          useOnlyCustomProps: false,
-        },
-      }),
+          useOnlyCustomProps: false
+        }
+      })
     },
     {
       level: 'debug',
-      stream: fileDestination,
-    },
+      stream: fileDestination
+    }
   ])
 );
 

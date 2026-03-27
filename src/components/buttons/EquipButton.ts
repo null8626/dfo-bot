@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -24,7 +24,7 @@ export default class EquipButton extends Button {
     try {
       const res = await apiFetch(Routes.equip(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, itemId, inventoryId: docId }),
+        body: JSON.stringify({ discordId: interaction.user.id, itemId, inventoryId: docId })
       });
 
       const { success, error, message } = await res.json();

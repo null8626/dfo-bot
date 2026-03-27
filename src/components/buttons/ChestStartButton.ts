@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -22,7 +22,7 @@ export default class ChestStartButton extends Button {
     try {
       const res = await apiFetch(Routes.chests(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, action: 'start', chestId }),
+        body: JSON.stringify({ discordId: interaction.user.id, action: 'start', chestId })
       });
 
       const body = await res.json();
@@ -34,7 +34,7 @@ export default class ChestStartButton extends Button {
 
       await interaction.editReply({
         content: `⏳ **Chest unlocking!** It will be ready to open in **${body.unlockTime ?? 'a while'}**.\n\nRun \`/chests\` again later to open it.`,
-        files: [], components: [],
+        files: [], components: []
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });

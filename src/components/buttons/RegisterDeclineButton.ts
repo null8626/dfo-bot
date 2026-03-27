@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class RegisterDeclineButton extends Button {
@@ -10,7 +10,7 @@ export default class RegisterDeclineButton extends Button {
     await interaction.editReply({
       content: '👋 **No problem!** No data has been stored. You can run `/register` again anytime if you change your mind.',
       embeds: [],
-      components: [],
+      components: []
     });
   }
 }

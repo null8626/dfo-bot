@@ -1,4 +1,4 @@
-import { ButtonBuilder, ButtonStyle, ChannelType, ChatInputCommandInteraction, Client, ContainerBuilder, MessageFlags } from "discord.js";
+import { ButtonBuilder, ButtonStyle, ChannelType, type ChatInputCommandInteraction, type Client, ContainerBuilder, MessageFlags } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import logger from "../utilities/Logger";
 

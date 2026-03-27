@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, AttachmentBuilder } from "discord.js";
+import { type ButtonInteraction, type Client, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, AttachmentBuilder } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -39,7 +39,7 @@ export default class TasksTabButton extends Button {
       const imageBuffer = await ImageService.tasks(tasks, {
         period,
         resetIn,
-        playerEmbers,
+        playerEmbers
       });
 
       const attachment = new AttachmentBuilder(imageBuffer, { name: 'tasks.png' });
@@ -69,11 +69,11 @@ export default class TasksTabButton extends Button {
         new ActionRowBuilder<ButtonBuilder>().setComponents(
           new ButtonBuilder().setCustomId('tasks_tab:daily').setLabel('Daily').setStyle(period === 'daily' ? ButtonStyle.Primary : ButtonStyle.Secondary).setDisabled(period === 'daily'),
           new ButtonBuilder().setCustomId('tasks_tab:weekly').setLabel('Weekly').setStyle(period === 'weekly' ? ButtonStyle.Primary : ButtonStyle.Secondary).setDisabled(period === 'weekly'),
-          new ButtonBuilder().setCustomId('tasks_tab:monthly').setLabel('Monthly').setStyle(period === 'monthly' ? ButtonStyle.Primary : ButtonStyle.Secondary).setDisabled(period === 'monthly'),
+          new ButtonBuilder().setCustomId('tasks_tab:monthly').setLabel('Monthly').setStyle(period === 'monthly' ? ButtonStyle.Primary : ButtonStyle.Secondary).setDisabled(period === 'monthly')
         )
       );
 
-      await interaction.editReply({ embeds: [embed], files: [attachment], components: components });
+      await interaction.editReply({ embeds: [embed], files: [attachment], components });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code) });
     }

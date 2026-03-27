@@ -1,4 +1,4 @@
-import { AttachmentBuilder, ChatInputCommandInteraction, Client, EmbedBuilder } from "discord.js";
+import { AttachmentBuilder, type ChatInputCommandInteraction, type Client, EmbedBuilder } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
 import Routes from "../utilities/Routes";
@@ -10,7 +10,7 @@ const STAT_OPTIONS = [
   { name: 'Level', value: 'level' },
   { name: 'Gold', value: 'coins' },
   { name: 'Enemies Defeated', value: 'enemiesDefeated' },
-  { name: 'Days Explored', value: 'daysPassed' },
+  { name: 'Days Explored', value: 'daysPassed' }
 ];
 
 const STAT_DISPLAY: Record<string, LeaderboardConfig> = {
@@ -19,29 +19,29 @@ const STAT_DISPLAY: Record<string, LeaderboardConfig> = {
     stat: 'Level',
     emoji: '⭐',
     accentColor: '#eab308',
-    accentColorDim: '#eab30825',
+    accentColorDim: '#eab30825'
   },
   'coins': {
     title: 'Leaderboard — Gold',
     stat: 'Gold',
     emoji: '🪙',
     accentColor: '#f59e0b',
-    accentColorDim: '#f59e0b25',
+    accentColorDim: '#f59e0b25'
   },
   'enemiesDefeated': {
     title: 'Leaderboard — Enemies Defeated',
     stat: 'Enemies Defeated',
     emoji: '💀',
     accentColor: '#ef4444',
-    accentColorDim: '#ef444425',
+    accentColorDim: '#ef444425'
   },
   'daysPassed': {
     title: 'Leaderboard — Days Explored',
     stat: 'Days Explored',
     emoji: '📅',
     accentColor: '#3b82f6',
-    accentColorDim: '#3b82f625',
-  },
+    accentColorDim: '#3b82f625'
+  }
 };
 
 export default class LeaderboardCommand extends SlashCommand {
@@ -54,11 +54,10 @@ export default class LeaderboardCommand extends SlashCommand {
       isGlobalCommand: true
     });
 
-    this.builder.addStringOption((o) =>
-      o.setName('stat')
-        .setDescription('Which stat to rank by')
-        .setChoices(STAT_OPTIONS)
-        .setRequired(false)
+    this.builder.addStringOption((o) => o.setName('stat')
+      .setDescription('Which stat to rank by')
+      .setChoices(STAT_OPTIONS)
+      .setRequired(false)
     );
   }
 
@@ -66,7 +65,7 @@ export default class LeaderboardCommand extends SlashCommand {
     await interaction.deferReply();
 
     const stat = interaction.options.getString('stat', false) ?? 'level';
-    const config = STAT_DISPLAY[stat] ?? STAT_DISPLAY['level'];
+    const config = STAT_DISPLAY[stat] ?? STAT_DISPLAY.level;
 
     try {
       const res = await apiFetch(Routes.leaderboard(stat));
@@ -96,7 +95,7 @@ export default class LeaderboardCommand extends SlashCommand {
         return {
           username: player.username,
           value,
-          level: player.level ?? 1,
+          level: player.level ?? 1
         };
       });
 

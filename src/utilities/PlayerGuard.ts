@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, ButtonInteraction, MessageFlags } from 'discord.js';
+import { type ChatInputCommandInteraction, type ButtonInteraction, MessageFlags } from 'discord.js';
 import Routes from './Routes';
 import { apiFetch } from './ApiClient';
 

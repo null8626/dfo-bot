@@ -1,6 +1,6 @@
-import { ChatInputCommandInteraction, Client } from "discord.js";
+import { type ChatInputCommandInteraction, type Client } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
-import { ICombatJSON } from "../interfaces/ICombatJSON";
+import { type ICombatJSON } from "../interfaces/ICombatJSON";
 import { apiFetch } from "../utilities/ApiClient";
 import { buildCombatResponse } from "../utilities/CombatResponseBuilder";
 import { formatError, formatCooldown } from "../utilities/ErrorMessages";

@@ -1,5 +1,5 @@
 import SelectMenu from "../structures/SelectMenu";
-import { AnySelectMenuInteraction, Collection, Client } from "discord.js";
+import { type AnySelectMenuInteraction, Collection, type Client } from "discord.js";
 import { readdirSync } from 'fs';
 import logger from "../utilities/Logger";
 import CooldownManager from "../managers/CooldownManager";
@@ -10,8 +10,7 @@ export default class SelectMenuHandler {
   private static _cache: Collection<string, SelectMenu> = new Collection();
 
   public static load(): void {
-    const menuFiles = readdirSync(filePath).filter(file =>
-      (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
+    const menuFiles = readdirSync(filePath).filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && !file.endsWith('.d.ts')
     );
 
     if (menuFiles.length < 1) {

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, EmbedBuilder, Colors } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, EmbedBuilder, Colors } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import SlashCommandHandler from "../handlers/SlashCommandHandler";
 import PaginatorBuilder from "../utilities/PaginatorBuilder";
@@ -7,14 +7,14 @@ const CATEGORY_ICONS: Record<string, string> = {
   'General': '📋',
   'Gaming': '⚔️',
   'Moderator': '🛡️',
-  'Developer': '🔧',
+  'Developer': '🔧'
 };
 
 const CATEGORY_COLORS: Record<string, number> = {
   'General': 0x3b82f6,
   'Gaming': 0xef4444,
   'Moderator': 0xf59e0b,
-  'Developer': 0x6b7280,
+  'Developer': 0x6b7280
 };
 
 export default class HelpCommand extends SlashCommand {

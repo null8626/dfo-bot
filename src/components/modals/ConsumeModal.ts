@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction, Client } from "discord.js";
+import { type ModalSubmitInteraction, type Client } from "discord.js";
 import ModalSubmit from "../../structures/ModalSubmit";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -25,7 +25,7 @@ export default class ConsumeModal extends ModalSubmit {
     try {
       const res = await apiFetch(Routes.consume(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, inventoryId: docId, amount: parsedAmount }),
+        body: JSON.stringify({ discordId: interaction.user.id, inventoryId: docId, amount: parsedAmount })
       });
 
       const { success, message, error } = await res.json();

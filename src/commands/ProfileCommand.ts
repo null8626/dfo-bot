@@ -1,12 +1,12 @@
-import { ChatInputCommandInteraction, Client, AttachmentBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { type ChatInputCommandInteraction, type Client, AttachmentBuilder, ActionRowBuilder, StringSelectMenuBuilder, StringSelectMenuOptionBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
-import { IPlayerJSON } from "../interfaces/IPlayerJSON";
-import { IInventoryItem } from "../interfaces/IInventoryJSON";
-import { ICollectionJSON } from "../interfaces/ICollectionJSON";
+import { type IPlayerJSON } from "../interfaces/IPlayerJSON";
+import { type IInventoryItem } from "../interfaces/IInventoryJSON";
+import { type ICollectionJSON } from "../interfaces/ICollectionJSON";
 import Routes from "../utilities/Routes";
 import { apiFetch } from "../utilities/ApiClient";
 import { formatError } from "../utilities/ErrorMessages";
-import { EquipmentSlot } from "../interfaces/IItemJSON";
+import { type EquipmentSlot } from "../interfaces/IItemJSON";
 import ImageService from "../utilities/ImageService";
 
 export default class ProfileCommand extends SlashCommand {
@@ -81,7 +81,7 @@ export default class ProfileCommand extends SlashCommand {
 
     await interaction.editReply({
       files: [profileAttachment],
-      components,
+      components
     });
   }
 }

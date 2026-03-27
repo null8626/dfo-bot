@@ -136,7 +136,7 @@ export default class Routes {
 
   // ========== MARKET ==========
 
-  public static marketBrowse(discordId: string, params?: { page?: number, search?: string, rarity?: string, type?: string, sort?: string }): string {
+  public static marketBrowse(discordId: string, params?: { page?: number; search?: string; rarity?: string; type?: string; sort?: string }): string {
     const base = `https://capi.gg/api/market?discordId=${discordId}&limit=8`;
     const qs = new URLSearchParams();
     if (params?.page) qs.set('page', String(params.page));

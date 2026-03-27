@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client } from "discord.js";
+import { type ChatInputCommandInteraction, type Client } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
 import { formatError } from "../utilities/ErrorMessages";
@@ -22,7 +22,7 @@ export default class RestCommand extends SlashCommand {
       // Go straight to POST — the endpoint returns appropriate errors for full HP, no gold, etc.
       const res = await apiFetch(Routes.rest(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id }),
+        body: JSON.stringify({ discordId: interaction.user.id })
       });
 
       const result = await res.json();
@@ -43,8 +43,8 @@ export default class RestCommand extends SlashCommand {
           ``,
           `❤️ Restored **${result.healedAmount?.toLocaleString() ?? '???'} HP** → ${result.newHp?.toLocaleString() ?? '???'} / ${result.maxHp?.toLocaleString() ?? '???'}`,
           `🪙 Cost: **${result.goldSpent?.toLocaleString() ?? '???'}** Gold`,
-          `💰 Balance: **${result.newBalance?.toLocaleString() ?? '???'}** Gold`,
-        ].join('\n'),
+          `💰 Balance: **${result.newBalance?.toLocaleString() ?? '???'}** Gold`
+        ].join('\n')
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code) });

@@ -1,4 +1,4 @@
-import { Client } from "discord.js";
+import { type Client } from "discord.js";
 import Event from "../structures/Event";
 import logger from "../utilities/Logger";
 import ItemManager from "../managers/ItemManager";
@@ -26,14 +26,14 @@ export default class ClientReadyEvent extends Event {
     WorkerPool.init();
 
     // Stagger API requests by cluster ID to prevent slamming capi.gg
-    const delayMs = 1500 + (clusterId * 2500); 
+    const delayMs = 1500 + clusterId * 2500; 
     
     setTimeout(async () => {
-        logger.info(`[Cluster ${clusterId}] Initiating staggered ItemManager sync...`);
-        await ItemManager.refresh();
+      logger.info(`[Cluster ${clusterId}] Initiating staggered ItemManager sync...`);
+      await ItemManager.refresh();
 
-        // Start rotating presence after items are loaded
-        await PresenceManager.init(client);
+      // Start rotating presence after items are loaded
+      await PresenceManager.init(client);
     }, delayMs);
   }
 }

@@ -33,7 +33,7 @@ export default class WorkerPool {
     for (let i = 0; i < poolSize; i++) {
       const worker = new Worker(workerFile, {
         // If running raw TypeScript, we need ts-node to compile the worker file
-        execArgv: isCompiled ? [] : ['-r', 'ts-node/register'],
+        execArgv: isCompiled ? [] : ['-r', 'ts-node/register']
       });
 
       worker.on('error', (err) => {
@@ -107,7 +107,7 @@ export default class WorkerPool {
 
     worker.postMessage({
       builderName: task.builderName,
-      payload: task.payload,
+      payload: task.payload
     });
   }
 
@@ -143,7 +143,7 @@ export default class WorkerPool {
     return {
       total: this.workers.length,
       available: this.available.length,
-      queued: this.queue.length,
+      queued: this.queue.length
     };
   }
 }

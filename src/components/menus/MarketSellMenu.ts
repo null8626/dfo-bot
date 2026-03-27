@@ -1,4 +1,4 @@
-import { AnySelectMenuInteraction, Client, MessageFlags, ModalBuilder, TextInputStyle } from "discord.js";
+import { type AnySelectMenuInteraction, type Client, MessageFlags, ModalBuilder, TextInputStyle } from "discord.js";
 import SelectMenu from "../../structures/SelectMenu";
 import ItemManager from "../../managers/ItemManager";
 
@@ -30,23 +30,19 @@ export default class MarketSellMenu extends SelectMenu {
       .setCustomId(`mkt_sell_modal:${docId}:${itemId}`)
       .setTitle(`🏪 List: ${itemName.slice(0, 30)}`)
       .addLabelComponents(
-        (label) =>
-          label.setLabel('Quantity').setDescription(`How many to list (Max: ${maxQty})`)
-          .setTextInputComponent((ti) =>
-            ti.setCustomId('quantity')
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-              .setPlaceholder(`1 - ${maxQty}`)
+        (label) => label.setLabel('Quantity').setDescription(`How many to list (Max: ${maxQty})`)
+          .setTextInputComponent((ti) => ti.setCustomId('quantity')
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder(`1 - ${maxQty}`)
           )
       )
       .addLabelComponents(
-        (label) =>
-          label.setLabel('Price per unit (gold)').setDescription(`Suggested: ${baseValue.toLocaleString()}g (base value)`)
-          .setTextInputComponent((ti) =>
-            ti.setCustomId('price')
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-              .setPlaceholder(`e.g. ${baseValue || 100}`)
+        (label) => label.setLabel('Price per unit (gold)').setDescription(`Suggested: ${baseValue.toLocaleString()}g (base value)`)
+          .setTextInputComponent((ti) => ti.setCustomId('price')
+            .setRequired(true)
+            .setStyle(TextInputStyle.Short)
+            .setPlaceholder(`e.g. ${baseValue || 100}`)
           )
       );
 

@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction, Client, MessageFlags } from "discord.js";
+import { type ModalSubmitInteraction, type Client, MessageFlags } from "discord.js";
 import ModalSubmit from "../../structures/ModalSubmit";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -46,8 +46,8 @@ export default class MarketSellModal extends ModalSubmit {
           itemId,
           inventoryId: docId,
           quantity,
-          pricePerUnit,
-        }),
+          pricePerUnit
+        })
       });
 
       const body = await res.json();
@@ -70,8 +70,8 @@ export default class MarketSellModal extends ModalSubmit {
           `🪙 Price: **${pricePerUnit.toLocaleString()}** gold each`,
           `💰 Total if sold: **${totalGold.toLocaleString()}** gold (5% tax applies)`,
           ``,
-          `Use \`/market listings\` to view or cancel your listings.`,
-        ].join('\n'),
+          `Use \`/market listings\` to view or cancel your listings.`
+        ].join('\n')
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code) });

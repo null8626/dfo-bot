@@ -1,4 +1,4 @@
-import { AttachmentBuilder, ButtonInteraction, Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from "discord.js";
+import { AttachmentBuilder, type ButtonInteraction, type Client, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -39,7 +39,7 @@ export async function handleMarketPage(interaction: ButtonInteraction, args: str
         search: search || undefined,
         rarity: rarity || 'All',
         type: type || 'All',
-        sort: sort || 'newest',
+        sort: sort || 'newest'
       });
     }
 
@@ -82,7 +82,7 @@ export async function handleMarketPage(interaction: ButtonInteraction, args: str
     if (config.totalPages > 1) {
       rows.push(new ActionRowBuilder<ButtonBuilder>().setComponents(
         new ButtonBuilder().setCustomId(`mkt_prev:${config.page}:${filterKey}:${mode}`).setLabel('◀ Prev').setStyle(ButtonStyle.Secondary).setDisabled(config.page <= 1),
-        new ButtonBuilder().setCustomId(`mkt_next:${config.page}:${filterKey}:${mode}`).setLabel('Next ▶').setStyle(ButtonStyle.Secondary).setDisabled(config.page >= config.totalPages),
+        new ButtonBuilder().setCustomId(`mkt_next:${config.page}:${filterKey}:${mode}`).setLabel('Next ▶').setStyle(ButtonStyle.Secondary).setDisabled(config.page >= config.totalPages)
       ));
     }
 

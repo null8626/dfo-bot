@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, MessageFlags } from "discord.js";
+import { type ButtonInteraction, type Client, MessageFlags } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -19,7 +19,7 @@ export default class MarketCancelButton extends Button {
     try {
       const res = await apiFetch(Routes.marketCancel(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, listingId }),
+        body: JSON.stringify({ discordId: interaction.user.id, listingId })
       });
 
       const body = await res.json();

@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -6,7 +6,7 @@ import Routes from "../../utilities/Routes";
 
 const RARITY_EMOJIS: Record<string, string> = {
   Common: '⬜', Uncommon: '🟩', Rare: '🟦', Elite: '🟧',
-  Epic: '🟪', Legendary: '🟡', Divine: '💎', Exotic: '💜',
+  Epic: '🟪', Legendary: '🟡', Divine: '💎', Exotic: '💜'
 };
 
 export default class ChestOpenButton extends Button {
@@ -27,7 +27,7 @@ export default class ChestOpenButton extends Button {
     try {
       const res = await apiFetch(Routes.chests(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, action: 'open', chestId }),
+        body: JSON.stringify({ discordId: interaction.user.id, action: 'open', chestId })
       });
 
       const body = await res.json();
@@ -40,7 +40,7 @@ export default class ChestOpenButton extends Button {
       const loot = body.loot;
       const lines = [
         `🎉 **Chest Opened!**`,
-        ``,
+        ``
       ];
 
       if (loot.isPity) {

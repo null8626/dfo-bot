@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { formatError } from "../../utilities/ErrorMessages";
 import { buildSellPage } from "../../commands/MarketCommand";

@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client, ModalBuilder, TextInputStyle } from "discord.js";
+import { type ButtonInteraction, type Client, ModalBuilder, TextInputStyle } from "discord.js";
 import Button from "../../structures/Button";
 
 export default class ConsumeButton extends Button {
@@ -15,8 +15,7 @@ export default class ConsumeButton extends Button {
       .setTitle('Consume Item')
       .setCustomId(`consume:${docId}`)
       .addLabelComponents(
-        (label) =>
-          label.setLabel('Amount').setDescription(`Enter amount to consume (Max: ${maxQty})`)
+        (label) => label.setLabel('Amount').setDescription(`Enter amount to consume (Max: ${maxQty})`)
           .setTextInputComponent((ti) => ti.setCustomId('ti1').setRequired(true).setStyle(TextInputStyle.Short))
       );
 

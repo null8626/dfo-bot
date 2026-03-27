@@ -1,4 +1,4 @@
-import { ButtonInteraction, Client } from "discord.js";
+import { type ButtonInteraction, type Client } from "discord.js";
 import Button from "../../structures/Button";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -15,7 +15,7 @@ export default class RestButton extends Button {
     try {
       const res = await apiFetch(Routes.rest(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id }),
+        body: JSON.stringify({ discordId: interaction.user.id })
       });
 
       const result = await res.json();
@@ -29,7 +29,7 @@ export default class RestButton extends Button {
         content: [
           `🏨 **Rested at the Inn**`,
           `❤️ Restored **${result.healedAmount.toLocaleString()} HP** → ${result.newHp.toLocaleString()} / ${result.maxHp.toLocaleString()}`,
-          `🪙 Cost: **${result.goldSpent.toLocaleString()}** Gold  •  💰 Balance: **${result.newBalance.toLocaleString()}** Gold`,
+          `🪙 Cost: **${result.goldSpent.toLocaleString()}** Gold  •  💰 Balance: **${result.newBalance.toLocaleString()}** Gold`
         ].join('\n'),
         files: [], components: [], embeds: []
       });

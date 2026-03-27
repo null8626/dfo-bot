@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction, Client } from "discord.js";
+import { type ModalSubmitInteraction, type Client } from "discord.js";
 import ModalSubmit from "../../structures/ModalSubmit";
 import { apiFetch } from "../../utilities/ApiClient";
 import { formatError } from "../../utilities/ErrorMessages";
@@ -25,7 +25,7 @@ export default class SellModal extends ModalSubmit {
     try {
       const res = await apiFetch(Routes.sell(), {
         method: 'POST',
-        body: JSON.stringify({ discordId: interaction.user.id, inventoryId: docId, amount: parsedAmount }),
+        body: JSON.stringify({ discordId: interaction.user.id, inventoryId: docId, amount: parsedAmount })
       });
 
       const { success, message, newBalance, error } = await res.json();
@@ -37,7 +37,7 @@ export default class SellModal extends ModalSubmit {
 
       await interaction.editReply({
         content: `${message}\n💰 New Balance: **${newBalance?.toLocaleString() ?? '???'}** gold`,
-        components: [], files: [], embeds: [],
+        components: [], files: [], embeds: []
       });
     } catch (err: any) {
       await interaction.editReply({ content: formatError(err.message, err.code), files: [], components: [], embeds: [] });

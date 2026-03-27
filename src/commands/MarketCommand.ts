@@ -1,7 +1,7 @@
 import {
   ActionRowBuilder, AttachmentBuilder, ButtonBuilder, ButtonStyle,
-  ChatInputCommandInteraction, Client, EmbedBuilder, MessageFlags,
-  StringSelectMenuBuilder, StringSelectMenuOptionBuilder,
+  type ChatInputCommandInteraction, type Client, EmbedBuilder, MessageFlags,
+  StringSelectMenuBuilder, StringSelectMenuOptionBuilder
 } from "discord.js";
 import SlashCommand from "../structures/SlashCommand";
 import { apiFetch } from "../utilities/ApiClient";
@@ -17,7 +17,7 @@ const RARITY_CHOICES = [
   { name: 'Common', value: 'Common' }, { name: 'Uncommon', value: 'Uncommon' },
   { name: 'Rare', value: 'Rare' }, { name: 'Elite', value: 'Elite' },
   { name: 'Epic', value: 'Epic' }, { name: 'Legendary', value: 'Legendary' },
-  { name: 'Divine', value: 'Divine' }, { name: 'Exotic', value: 'Exotic' },
+  { name: 'Divine', value: 'Divine' }, { name: 'Exotic', value: 'Exotic' }
 ];
 
 const SORT_CHOICES = [
@@ -27,13 +27,13 @@ const SORT_CHOICES = [
   { name: 'Level: High → Low', value: 'level_desc' },
   { name: 'Highest ATK', value: 'atk_desc' },
   { name: 'Highest DEF', value: 'def_desc' },
-  { name: 'Highest HP', value: 'hp_desc' },
+  { name: 'Highest HP', value: 'hp_desc' }
 ];
 
 const TYPE_CHOICES = [
   { name: 'All', value: 'All' },
   { name: 'Weapon', value: 'Weapon' }, { name: 'Armor', value: 'Armor' },
-  { name: 'Accessory', value: 'Accessory' }, { name: 'Consumable', value: 'Consumable' },
+  { name: 'Accessory', value: 'Accessory' }, { name: 'Consumable', value: 'Consumable' }
 ];
 
 export const SELL_PAGE_SIZE = 25;
@@ -49,21 +49,18 @@ export default class MarketCommand extends SlashCommand {
     });
 
     this.data
-      .addSubcommand((sub) =>
-        sub.setName('browse')
-          .setDescription('Browse items for sale on the Global Market')
-          .addStringOption((o) => o.setName('search').setDescription('Search by item name').setRequired(false))
-          .addStringOption((o) => o.setName('rarity').setDescription('Filter by rarity').setChoices(RARITY_CHOICES).setRequired(false))
-          .addStringOption((o) => o.setName('type').setDescription('Filter by item type').setChoices(TYPE_CHOICES).setRequired(false))
-          .addStringOption((o) => o.setName('sort').setDescription('Sort order').setChoices(SORT_CHOICES).setRequired(false))
+      .addSubcommand((sub) => sub.setName('browse')
+        .setDescription('Browse items for sale on the Global Market')
+        .addStringOption((o) => o.setName('search').setDescription('Search by item name').setRequired(false))
+        .addStringOption((o) => o.setName('rarity').setDescription('Filter by rarity').setChoices(RARITY_CHOICES).setRequired(false))
+        .addStringOption((o) => o.setName('type').setDescription('Filter by item type').setChoices(TYPE_CHOICES).setRequired(false))
+        .addStringOption((o) => o.setName('sort').setDescription('Sort order').setChoices(SORT_CHOICES).setRequired(false))
       )
-      .addSubcommand((sub) =>
-        sub.setName('listings')
-          .setDescription('View your active market listings')
+      .addSubcommand((sub) => sub.setName('listings')
+        .setDescription('View your active market listings')
       )
-      .addSubcommand((sub) =>
-        sub.setName('sell')
-          .setDescription('Select an item from your inventory to list on the market')
+      .addSubcommand((sub) => sub.setName('sell')
+        .setDescription('Select an item from your inventory to list on the market')
       );
   }
 
@@ -72,9 +69,9 @@ export default class MarketCommand extends SlashCommand {
     const discordId = interaction.user.id;
 
     switch (sub) {
-      case 'browse': return this.handleBrowse(interaction, discordId);
-      case 'listings': return this.handleListings(interaction, discordId);
-      case 'sell': return this.handleSell(interaction, discordId);
+    case 'browse': return this.handleBrowse(interaction, discordId);
+    case 'listings': return this.handleListings(interaction, discordId);
+    case 'sell': return this.handleSell(interaction, discordId);
     }
   }
 
@@ -191,7 +188,7 @@ export async function buildSellPage(discordId: string, page: number): Promise<{ 
     if (!def) continue;
 
     const enhTag = inv.enhanceLevel > 0 ? ` +${inv.enhanceLevel}` : '';
-    const modTag = (inv.enhanceLevel > 0 || inv.statOverrides || inv.affixOverrides) ? ' ✨' : '';
+    const modTag = inv.enhanceLevel > 0 || inv.statOverrides || inv.affixOverrides ? ' ✨' : '';
     const value = def.value || 0;
 
     options.push(
@@ -231,7 +228,7 @@ export async function buildSellPage(discordId: string, page: number): Promise<{ 
         .setCustomId(`mkt_sell_page:${safePage + 1}`)
         .setLabel('Next ▶')
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(safePage >= totalPages - 1),
+        .setDisabled(safePage >= totalPages - 1)
     );
     components.push(navRow);
   }
@@ -296,7 +293,7 @@ function buildMarketButtons(
         .setCustomId(`mkt_next:${config.page}:${filterKey}:${mode}`)
         .setLabel('Next ▶')
         .setStyle(ButtonStyle.Secondary)
-        .setDisabled(config.page >= config.totalPages),
+        .setDisabled(config.page >= config.totalPages)
     );
     rows.push(navRow);
   }
