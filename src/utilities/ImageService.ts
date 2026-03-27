@@ -4,7 +4,7 @@ import { type ICombatJSON } from '../interfaces/ICombatJSON';
 import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
 import { type IItemJSON } from '../interfaces/IItemJSON';
 import { type IInventoryItem } from '../interfaces/IInventoryJSON';
-import { type ITaskJSON, type IChestSlot } from '../interfaces/IGameJSON';
+import type { ITaskJSON, IChestSlot } from '../interfaces/IGameJSON';
 import * as ItemManager from '../managers/ItemManager';
 import * as WorkerPool from './WorkerPool';
 import type {

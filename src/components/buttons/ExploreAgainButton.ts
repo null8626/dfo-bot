@@ -1,4 +1,4 @@
-import { type ButtonInteraction, type Client } from 'discord.js';
+import type { ButtonInteraction, Client } from 'discord.js';
 import Button from '../../structures/Button';
 import { apiFetch } from '../../utilities/ApiClient';
 import { buildCombatResponse } from '../../utilities/CombatResponseBuilder';

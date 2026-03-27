@@ -1,4 +1,4 @@
-import { type AnySelectMenuInteraction, type Client } from 'discord.js';
+import type { AnySelectMenuInteraction, Client } from 'discord.js';
 import type IExecutable from '../interfaces/IExecutable';
 
 export interface SelectMenuOptions {

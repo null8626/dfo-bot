@@ -1,5 +1,5 @@
 import type IExecutable from '../interfaces/IExecutable';
-import { type ButtonInteraction, type Client } from 'discord.js';
+import type { ButtonInteraction, Client } from 'discord.js';
 
 export interface ButtonOptions {
   customId: string;

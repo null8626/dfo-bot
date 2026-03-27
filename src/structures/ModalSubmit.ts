@@ -1,4 +1,4 @@
-import { type ModalSubmitInteraction, type Client } from 'discord.js';
+import type { ModalSubmitInteraction, Client } from 'discord.js';
 import type IExecutable from '../interfaces/IExecutable';
 
 export interface ModalSubmitOptions {

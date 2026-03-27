@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, type Client } from 'discord.js';
+import type { ChatInputCommandInteraction, Client } from 'discord.js';
 import SlashCommand from '../structures/SlashCommand';
 import { type IStepJSON } from '../interfaces/IStepJSON';
 import { apiFetch } from '../utilities/ApiClient';

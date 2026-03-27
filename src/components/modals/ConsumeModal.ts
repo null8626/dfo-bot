@@ -1,4 +1,4 @@
-import { type ModalSubmitInteraction, type Client } from 'discord.js';
+import type { ModalSubmitInteraction, Client } from 'discord.js';
 import ModalSubmit from '../../structures/ModalSubmit';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
