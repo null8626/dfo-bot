@@ -12,8 +12,8 @@ import {
 import SlashCommand from '../structures/SlashCommand';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
-import ImageService from '../utilities/ImageService';
+import * as Routes from '../utilities/Routes';
+import * as ImageService from '../utilities/ImageService';
 import type { ITaskJSON } from '../interfaces/IGameJSON';
 
 export default class TasksCommand extends SlashCommand {
@@ -25,16 +25,15 @@ export default class TasksCommand extends SlashCommand {
       cooldown: 5,
       isGlobalCommand: true
     });
-    this.builder.addStringOption((o) =>
-      o
-        .setName('period')
-        .setDescription('Task period to view')
-        .setRequired(false)
-        .addChoices(
-          { name: 'Daily', value: 'daily' },
-          { name: 'Weekly', value: 'weekly' },
-          { name: 'Monthly', value: 'monthly' }
-        )
+    this.builder.addStringOption((o) => o
+      .setName('period')
+      .setDescription('Task period to view')
+      .setRequired(false)
+      .addChoices(
+        { name: 'Daily', value: 'daily' },
+        { name: 'Weekly', value: 'weekly' },
+        { name: 'Monthly', value: 'monthly' }
+      )
     );
   }
 

@@ -7,7 +7,7 @@ import {
 } from 'discord.js';
 import { type ICombatJSON } from '../interfaces/ICombatJSON';
 import { type IStepJSON } from '../interfaces/IStepJSON';
-import ImageService from './ImageService';
+import * as ImageService from './ImageService';
 
 export interface CombatResponse {
   embeds: EmbedBuilder[];

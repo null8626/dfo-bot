@@ -23,16 +23,14 @@ export default class SellButton extends Button {
     const modal = new ModalBuilder()
       .setCustomId(`sell:${docId}`)
       .setTitle('Sell Item')
-      .addLabelComponents((label) =>
-        label
-          .setLabel('Amount')
-          .setDescription(`Enter amount to sell. (Max: ${maxQty})`)
-          .setTextInputComponent((ti) =>
-            ti
-              .setCustomId('ti1')
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-          )
+      .addLabelComponents((label) => label
+        .setLabel('Amount')
+        .setDescription(`Enter amount to sell. (Max: ${maxQty})`)
+        .setTextInputComponent((ti) => ti
+          .setCustomId('ti1')
+          .setRequired(true)
+          .setStyle(TextInputStyle.Short)
+        )
       );
 
     await interaction.showModal(modal);

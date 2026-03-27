@@ -23,16 +23,14 @@ export default class ConsumeButton extends Button {
     const modal = new ModalBuilder()
       .setTitle('Consume Item')
       .setCustomId(`consume:${docId}`)
-      .addLabelComponents((label) =>
-        label
-          .setLabel('Amount')
-          .setDescription(`Enter amount to consume (Max: ${maxQty})`)
-          .setTextInputComponent((ti) =>
-            ti
-              .setCustomId('ti1')
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-          )
+      .addLabelComponents((label) => label
+        .setLabel('Amount')
+        .setDescription(`Enter amount to consume (Max: ${maxQty})`)
+        .setTextInputComponent((ti) => ti
+          .setCustomId('ti1')
+          .setRequired(true)
+          .setStyle(TextInputStyle.Short)
+        )
       );
 
     await interaction.showModal(modal);

@@ -12,11 +12,11 @@ import SlashCommand from '../structures/SlashCommand';
 import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
 import { type IInventoryItem } from '../interfaces/IInventoryJSON';
 import { type ICollectionJSON } from '../interfaces/ICollectionJSON';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
 import { type EquipmentSlot } from '../interfaces/IItemJSON';
-import ImageService from '../utilities/ImageService';
+import * as ImageService from '../utilities/ImageService';
 
 export default class ProfileCommand extends SlashCommand {
   constructor() {
@@ -27,8 +27,7 @@ export default class ProfileCommand extends SlashCommand {
       cooldown: 5,
       isGlobalCommand: true
     });
-    this.builder.addUserOption((o) =>
-      o.setName('user').setDescription('Select a user').setRequired(false)
+    this.builder.addUserOption((o) => o.setName('user').setDescription('Select a user').setRequired(false)
     );
   }
 
@@ -90,10 +89,10 @@ export default class ProfileCommand extends SlashCommand {
           options.length >= 1
             ? options
             : [
-                new StringSelectMenuOptionBuilder()
-                  .setLabel('None')
-                  .setValue('None')
-              ]
+              new StringSelectMenuOptionBuilder()
+                .setLabel('None')
+                .setValue('None')
+            ]
         )
         .setMaxValues(1)
         .setPlaceholder('Unequip Slot');

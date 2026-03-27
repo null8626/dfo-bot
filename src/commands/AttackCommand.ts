@@ -4,7 +4,7 @@ import { type ICombatJSON } from '../interfaces/ICombatJSON';
 import { apiFetch } from '../utilities/ApiClient';
 import { buildCombatResponse } from '../utilities/CombatResponseBuilder';
 import { formatError, formatCooldown } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 
 export default class AttackCommand extends SlashCommand {
   constructor() {

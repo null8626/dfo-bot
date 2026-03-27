@@ -5,11 +5,11 @@ import {
   type Client
 } from 'discord.js';
 import Event from '../structures/Event';
-import SlashCommandHandler from '../handlers/SlashCommandHandler';
+import * as SlashCommandHandler from '../handlers/SlashCommandHandler';
 import logger from '../utilities/Logger';
-import ButtonHandler from '../handlers/ButtonHandler';
-import SelectMenuHandler from '../handlers/SelectMenuHandler';
-import ModalSubmitHandler from '../handlers/ModalSubmitHandler';
+import * as ButtonHandler from '../handlers/ButtonHandler';
+import * as SelectMenuHandler from '../handlers/SelectMenuHandler';
+import * as ModalSubmitHandler from '../handlers/ModalSubmitHandler';
 import { formatError } from '../utilities/ErrorMessages';
 import { ApiError } from '../utilities/ApiClient';
 
@@ -21,7 +21,10 @@ export default class InteractionCreateEvent extends Event {
     });
   }
 
-  private async handleError(interaction: BaseInteraction, err: any) {
+  private async handleError(
+    interaction: BaseInteraction,
+    err: any
+  ): Promise<void> {
     logger.error(err);
 
     if (interaction.isAutocomplete()) return;

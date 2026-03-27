@@ -31,21 +31,16 @@ export default class GuildCreateEvent extends Event {
       if (logChannel && guild) {
         const container = new ContainerBuilder()
           .setAccentColor(Colors.Green)
-          .addSectionComponents((section) =>
-            section
-              .setThumbnailAccessory((t) =>
-                t.setURL(guild.iconURL() ?? client.user?.avatarURL()!)
-              )
-              .addTextDisplayComponents(
-                (textDisplay) =>
-                  textDisplay.setContent('## I Joined A New Server!'),
-                (textDisplay) =>
-                  textDisplay.setContent(
-                    `Joined the ${guild.name} server! It has ${guild.memberCount.toLocaleString()} members.`
-                  ),
-                (textDisplay) =>
-                  textDisplay.setContent(`-# ID: \`${guild.id}\``)
-              )
+          .addSectionComponents((section) => section
+            .setThumbnailAccessory((t) => t.setURL(guild.iconURL() ?? client.user?.avatarURL()!)
+            )
+            .addTextDisplayComponents(
+              (textDisplay) => textDisplay.setContent('## I Joined A New Server!'),
+              (textDisplay) => textDisplay.setContent(
+                `Joined the ${guild.name} server! It has ${guild.memberCount.toLocaleString()} members.`
+              ),
+              (textDisplay) => textDisplay.setContent(`-# ID: \`${guild.id}\``)
+            )
           );
 
         await logChannel.send({
@@ -64,8 +59,7 @@ export default class GuildCreateEvent extends Event {
         guild.systemChannel ??
         (guild.channels.cache
           .filter(
-            (c) =>
-              c.isTextBased() &&
+            (c) => c.isTextBased() &&
               c.permissionsFor(guild.members.me!)?.has('SendMessages')
           )
           .first() as TextChannel | undefined);

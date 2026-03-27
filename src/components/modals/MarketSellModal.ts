@@ -6,8 +6,8 @@ import {
 import ModalSubmit from '../../structures/ModalSubmit';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
-import ItemManager from '../../managers/ItemManager';
+import * as Routes from '../../utilities/Routes';
+import * as ItemManager from '../../managers/ItemManager';
 
 export default class MarketSellModal extends ModalSubmit {
   constructor() {

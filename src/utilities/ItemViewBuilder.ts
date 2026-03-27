@@ -6,8 +6,8 @@ import {
   type EmbedBuilder
 } from 'discord.js';
 import { type IInventoryItem } from '../interfaces/IInventoryJSON';
-import ItemManager from '../managers/ItemManager';
-import ImageService from './ImageService';
+import * as ItemManager from '../managers/ItemManager';
+import * as ImageService from './ImageService';
 import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
 import { type IItemJSON } from '../interfaces/IItemJSON';
 

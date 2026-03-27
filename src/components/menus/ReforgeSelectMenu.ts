@@ -2,7 +2,7 @@ import { type AnySelectMenuInteraction, type Client } from 'discord.js';
 import SelectMenu from '../../structures/SelectMenu';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 
 export default class ReforgeSelectMenu extends SelectMenu {
   constructor() {
@@ -66,7 +66,7 @@ export default class ReforgeSelectMenu extends SelectMenu {
         body.newStats &&
         (reforgeType === 'stats' || reforgeType === 'full')
       ) {
-        const fmtStat = (label: string, old: number, now: number) => {
+        const fmtStat = (label: string, old: number, now: number): string => {
           const diff = now - old;
           const arrow = diff > 0 ? '🟢' : diff < 0 ? '🔴' : '⚪';
           return `${arrow} ${label}: ${old} → **${now}** (${diff > 0 ? '+' : ''}${diff})`;

@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "lint": "eslint",
+    "lint": "eslint --fix",
     "prettier": "prettier **/*.ts --write",
     "build": "tsc && node -e \"const fs=require('fs'); ['commands', 'events', 'components/buttons', 'components/menus', 'components/modals'].forEach(d => fs.mkdirSync('./dist/' + d, { recursive: true }));\"",
     "start": "node dist/index.js"

@@ -23,19 +23,17 @@ export default class CollectButton extends Button {
     const modal = new ModalBuilder()
       .setCustomId(`collect:${docId}`)
       .setTitle('⚠️ Collect Item (Permanent)')
-      .addLabelComponents((label) =>
-        label
-          .setLabel('Amount')
-          .setDescription(
-            `⚠️ This is PERMANENT and cannot be undone. Items are removed from inventory and added to your Collection Book. (Max: ${maxQty})`
-          )
-          .setTextInputComponent((ti) =>
-            ti
-              .setCustomId('ti1')
-              .setRequired(true)
-              .setStyle(TextInputStyle.Short)
-              .setPlaceholder(maxQty)
-          )
+      .addLabelComponents((label) => label
+        .setLabel('Amount')
+        .setDescription(
+          `⚠️ This is PERMANENT and cannot be undone. Items are removed from inventory and added to your Collection Book. (Max: ${maxQty})`
+        )
+        .setTextInputComponent((ti) => ti
+          .setCustomId('ti1')
+          .setRequired(true)
+          .setStyle(TextInputStyle.Short)
+          .setPlaceholder(maxQty)
+        )
       );
 
     await interaction.showModal(modal);

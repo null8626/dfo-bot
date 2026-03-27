@@ -6,13 +6,13 @@ import {
 } from 'discord.js';
 import SlashCommand from '../structures/SlashCommand';
 import { apiFetch } from '../utilities/ApiClient';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import { formatError } from '../utilities/ErrorMessages';
 import {
   type LeaderboardEntry,
   type LeaderboardConfig
 } from '../utilities/LeaderboardImageBuilder';
-import ImageService from '../utilities/ImageService';
+import * as ImageService from '../utilities/ImageService';
 
 const STAT_OPTIONS = [
   { name: 'Level', value: 'level' },
@@ -62,12 +62,11 @@ export default class LeaderboardCommand extends SlashCommand {
       isGlobalCommand: true
     });
 
-    this.builder.addStringOption((o) =>
-      o
-        .setName('stat')
-        .setDescription('Which stat to rank by')
-        .setChoices(STAT_OPTIONS)
-        .setRequired(false)
+    this.builder.addStringOption((o) => o
+      .setName('stat')
+      .setDescription('Which stat to rank by')
+      .setChoices(STAT_OPTIONS)
+      .setRequired(false)
     );
   }
 

@@ -22,36 +22,29 @@ export default class ExploreContainer {
 
     container.addTextDisplayComponents(
       (textDisplay) => textDisplay.setContent(cleanFlavorText),
-      (textDisplay) =>
-        textDisplay.setContent(
-          `-# **ID:** \`${this.data.scenarioId}\` | **Author:** \`${this.data.scenarioAuthor}\``
-        )
+      (textDisplay) => textDisplay.setContent(
+        `-# **ID:** \`${this.data.scenarioId}\` | **Author:** \`${this.data.scenarioAuthor}\``
+      )
     );
 
     if (this.data.enemy) {
       const enemy = this.data.enemy;
       container.addSeparatorComponents((s) => s);
       container.addTextDisplayComponents(
-        (textDisplay) =>
-          textDisplay.setContent(
-            `**Enemy**: \`LVL${enemy.level.toLocaleString()} ${enemy.name}\``
-          ),
-        (textDisplay) =>
-          textDisplay.setContent(
-            `**HP:** \`${enemy.currentHp.toLocaleString()}/${enemy.maxHp.toLocaleString()}\``
-          ),
-        (textDisplay) =>
-          textDisplay.setContent(`**ATK:** \`${enemy.atk.toLocaleString()}\``),
-        (textDisplay) =>
-          textDisplay.setContent(`**DEF:** \`${enemy.def.toLocaleString()}\``),
-        (textDisplay) =>
-          textDisplay.setContent(`-# Use the /attack command to fight`)
+        (textDisplay) => textDisplay.setContent(
+          `**Enemy**: \`LVL${enemy.level.toLocaleString()} ${enemy.name}\``
+        ),
+        (textDisplay) => textDisplay.setContent(
+          `**HP:** \`${enemy.currentHp.toLocaleString()}/${enemy.maxHp.toLocaleString()}\``
+        ),
+        (textDisplay) => textDisplay.setContent(`**ATK:** \`${enemy.atk.toLocaleString()}\``),
+        (textDisplay) => textDisplay.setContent(`**DEF:** \`${enemy.def.toLocaleString()}\``),
+        (textDisplay) => textDisplay.setContent(`-# Use the /attack command to fight`)
       );
 
       container.addSeparatorComponents((s) => s);
 
-      container.addTextDisplayComponents((textDisplay) =>
-        textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
+      container.addTextDisplayComponents((textDisplay) => textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
       );
 
       return container;
@@ -75,23 +68,20 @@ export default class ExploreContainer {
 
       if (rewardText.length >= 1) {
         container.addSeparatorComponents((s) => s);
-        container.addTextDisplayComponents((textDisplay) =>
-          textDisplay.setContent(
-            `-# **Lvl:** \`${level.toLocaleString()}\` | **Exp:** \`${experience.toLocaleString()}/${expRequired.toLocaleString()}\``
-          )
+        container.addTextDisplayComponents((textDisplay) => textDisplay.setContent(
+          `-# **Lvl:** \`${level.toLocaleString()}\` | **Exp:** \`${experience.toLocaleString()}/${expRequired.toLocaleString()}\``
+        )
         );
       }
 
       for (const text of rewardText) {
-        container.addTextDisplayComponents((textDisplay) =>
-          textDisplay.setContent(text)
+        container.addTextDisplayComponents((textDisplay) => textDisplay.setContent(text)
         );
       }
 
       container.addSeparatorComponents((s) => s);
 
-      container.addTextDisplayComponents((textDisplay) =>
-        textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
+      container.addTextDisplayComponents((textDisplay) => textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
       );
 
       return container;
@@ -99,8 +89,7 @@ export default class ExploreContainer {
 
     container.addSeparatorComponents((s) => s);
 
-    container.addTextDisplayComponents((textDisplay) =>
-      textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
+    container.addTextDisplayComponents((textDisplay) => textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
     );
 
     return container;

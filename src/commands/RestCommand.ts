@@ -2,7 +2,7 @@ import { type ChatInputCommandInteraction, type Client } from 'discord.js';
 import SlashCommand from '../structures/SlashCommand';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 
 export default class RestCommand extends SlashCommand {
   constructor() {

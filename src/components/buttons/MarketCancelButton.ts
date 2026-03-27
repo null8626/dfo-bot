@@ -2,7 +2,7 @@ import { type ButtonInteraction, type Client, MessageFlags } from 'discord.js';
 import Button from '../../structures/Button';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 
 export default class MarketCancelButton extends Button {
   constructor() {

@@ -1,4 +1,4 @@
-import Routes from './Routes';
+import * as Routes from './Routes';
 import logger from './Logger';
 
 const DEFAULT_TIMEOUT = 10_000; // 10 seconds

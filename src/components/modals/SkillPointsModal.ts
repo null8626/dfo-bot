@@ -6,7 +6,7 @@ import {
 import ModalSubmit from '../../structures/ModalSubmit';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 
 export default class SkillPointsModal extends ModalSubmit {
   constructor() {

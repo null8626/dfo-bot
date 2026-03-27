@@ -13,11 +13,11 @@ import SlashCommand from '../structures/SlashCommand';
 import { type IInventoryItem } from '../interfaces/IInventoryJSON';
 import { type IPlayerJSON } from '../interfaces/IPlayerJSON';
 import PaginatorBuilder from '../utilities/PaginatorBuilder';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
-import ItemManager from '../managers/ItemManager';
-import ImageService from '../utilities/ImageService';
+import * as ItemManager from '../managers/ItemManager';
+import * as ImageService from '../utilities/ImageService';
 
 export default class InventoryCommand extends SlashCommand {
   constructor() {

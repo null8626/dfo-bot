@@ -9,9 +9,9 @@ import {
   TextDisplayBuilder
 } from 'discord.js';
 import Button from '../../structures/Button';
-import ItemManager from '../../managers/ItemManager';
+import * as ItemManager from '../../managers/ItemManager';
 import { apiFetch } from '../../utilities/ApiClient';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 import type { IInventoryItem } from '../../interfaces/IInventoryJSON';
 
 const ITEMS_PER_PAGE = 15;

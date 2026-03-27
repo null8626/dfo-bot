@@ -89,7 +89,7 @@ export default class PaginatorBuilder {
       .setLabel('⏩')
       .setStyle(ButtonStyle.Secondary);
 
-    const getNavRow = (index: number) => {
+    const getNavRow = (index: number): ActionRowBuilder<ButtonBuilder> => {
       return new ActionRowBuilder<ButtonBuilder>().addComponents(
         firstBtn.setDisabled(index === 0),
         prevBtn.setDisabled(index === 0),
@@ -108,7 +108,7 @@ export default class PaginatorBuilder {
       return rows.slice(0, 5);
     };
 
-    const getEmbed = (index: number) => {
+    const getEmbed = (index: number): EmbedBuilder => {
       const originalEmbed = this.pages[index];
       const embed = EmbedBuilder.from(originalEmbed);
       const currentFooter = originalEmbed.data.footer?.text || '';
@@ -154,18 +154,18 @@ export default class PaginatorBuilder {
     collector.on('collect', async (i) => {
       collector.resetTimer();
       switch (i.customId) {
-        case 'page_first':
-          currentPage = 0;
-          break;
-        case 'page_prev':
-          currentPage = Math.max(0, currentPage - 1);
-          break;
-        case 'page_next':
-          currentPage = Math.min(this.pages.length - 1, currentPage + 1);
-          break;
-        case 'page_last':
-          currentPage = this.pages.length - 1;
-          break;
+      case 'page_first':
+        currentPage = 0;
+        break;
+      case 'page_prev':
+        currentPage = Math.max(0, currentPage - 1);
+        break;
+      case 'page_next':
+        currentPage = Math.min(this.pages.length - 1, currentPage + 1);
+        break;
+      case 'page_last':
+        currentPage = this.pages.length - 1;
+        break;
       }
       await i.update({
         embeds: [getEmbed(currentPage)],
@@ -176,8 +176,7 @@ export default class PaginatorBuilder {
 
     collector.on('end', async () => {
       const finalComponents = getComponents(currentPage);
-      finalComponents.forEach((row) =>
-        row.components.forEach((c) => c.setDisabled(true))
+      finalComponents.forEach((row) => row.components.forEach((c) => c.setDisabled(true))
       );
       try {
         await interaction.editReply({ components: finalComponents });

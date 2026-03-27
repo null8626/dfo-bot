@@ -5,7 +5,7 @@ import {
   Colors
 } from 'discord.js';
 import SlashCommand from '../structures/SlashCommand';
-import SlashCommandHandler from '../handlers/SlashCommandHandler';
+import * as SlashCommandHandler from '../handlers/SlashCommandHandler';
 import PaginatorBuilder from '../utilities/PaginatorBuilder';
 
 const CATEGORY_ICONS: Record<string, string> = {
@@ -39,12 +39,10 @@ export default class HelpCommand extends SlashCommand {
   ): Promise<void> {
     await interaction.deferReply();
 
-    const commands = SlashCommandHandler.getCache();
-
     // Group commands by category
     const categories = new Map<string, SlashCommand[]>();
 
-    for (const command of commands.values()) {
+    for (const command of SlashCommandHandler.cache.values()) {
       // Hide developer commands from regular users
       if (command.category === 'Developer') continue;
 

@@ -5,9 +5,9 @@ import {
 } from 'discord.js';
 import SlashCommand from '../structures/SlashCommand';
 import { type ICollectionJSON } from '../interfaces/ICollectionJSON';
-import ItemManager from '../managers/ItemManager';
+import * as ItemManager from '../managers/ItemManager';
 import PaginatorBuilder from '../utilities/PaginatorBuilder';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
 
@@ -21,8 +21,7 @@ export default class CollectionCommand extends SlashCommand {
       isGlobalCommand: true
     });
 
-    this.builder.addUserOption((o) =>
-      o.setName('user').setDescription('Select a user').setRequired(false)
+    this.builder.addUserOption((o) => o.setName('user').setDescription('Select a user').setRequired(false)
     );
   }
 

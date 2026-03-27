@@ -145,17 +145,16 @@ export default class GuideCommand extends SlashCommand {
       cooldown: 3,
       isGlobalCommand: true
     });
-    this.builder.addStringOption((o) =>
-      o
-        .setName('section')
-        .setDescription('Jump to a specific section')
-        .setRequired(false)
-        .addChoices(
-          ...SECTION_ORDER.map((key) => ({
-            name: `${SECTIONS[key].emoji} ${SECTIONS[key].title}`,
-            value: key
-          }))
-        )
+    this.builder.addStringOption((o) => o
+      .setName('section')
+      .setDescription('Jump to a specific section')
+      .setRequired(false)
+      .addChoices(
+        ...SECTION_ORDER.map((key) => ({
+          name: `${SECTIONS[key].emoji} ${SECTIONS[key].title}`,
+          value: key
+        }))
+      )
     );
   }
 

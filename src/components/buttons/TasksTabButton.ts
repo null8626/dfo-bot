@@ -10,8 +10,8 @@ import {
 import Button from '../../structures/Button';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
-import ImageService from '../../utilities/ImageService';
+import * as Routes from '../../utilities/Routes';
+import * as ImageService from '../../utilities/ImageService';
 import type { ITaskJSON } from '../../interfaces/IGameJSON';
 
 export default class TasksTabButton extends Button {

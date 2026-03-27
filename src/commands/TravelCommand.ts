@@ -11,13 +11,13 @@ import {
 import SlashCommand from '../structures/SlashCommand';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import {
   getAccessibleZones,
   getZone,
   type ZoneInfo
 } from '../utilities/ZoneData';
-import ImageService from '../utilities/ImageService';
+import * as ImageService from '../utilities/ImageService';
 
 export default class TravelCommand extends SlashCommand {
   constructor() {
@@ -77,13 +77,12 @@ export default class TravelCommand extends SlashCommand {
       const components: ActionRowBuilder<StringSelectMenuBuilder>[] = [];
 
       if (accessible.length > 0) {
-        const options = accessible.map((zone) =>
-          new StringSelectMenuOptionBuilder()
-            .setLabel(zone.name)
-            .setDescription(
-              `Lvl ${zone.levelReq}+ • ${zone.rarityCap} cap • ${zone.combatChance}% combat`
-            )
-            .setValue(String(zone.id))
+        const options = accessible.map((zone) => new StringSelectMenuOptionBuilder()
+          .setLabel(zone.name)
+          .setDescription(
+            `Lvl ${zone.levelReq}+ • ${zone.rarityCap} cap • ${zone.combatChance}% combat`
+          )
+          .setValue(String(zone.id))
         );
 
         const selectMenu = new StringSelectMenuBuilder()

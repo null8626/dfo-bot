@@ -2,7 +2,7 @@ import { type ModalSubmitInteraction, type Client } from 'discord.js';
 import ModalSubmit from '../../structures/ModalSubmit';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 
 export default class CollectModal extends ModalSubmit {
   constructor() {

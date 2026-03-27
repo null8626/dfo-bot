@@ -20,24 +20,20 @@ export default class AttackContainer {
       '**$1**'
     );
 
-    container.addTextDisplayComponents((textDisplay) =>
-      textDisplay.setContent(cleanFlavorText)
+    container.addTextDisplayComponents((textDisplay) => textDisplay.setContent(cleanFlavorText)
     );
 
     if (!this.data.combatEnded && this.data.enemy) {
       container.addSeparatorComponents((s) => s);
 
       container.addTextDisplayComponents(
-        (textDisplay) =>
-          textDisplay.setContent(
-            `**Your HP:** ❤️ \`${this.data.playerStats.stats.hp.toLocaleString()}/${this.data.playerStats.maxHp?.toLocaleString()}\``
-          ),
-        (textDisplay) =>
-          textDisplay.setContent(
-            `**${this.data.enemy!.name}'s HP:** ❤️ \`${Math.max(0, this.data.enemy!.currentHp)}/${this.data.enemy!.maxHp}\``
-          ),
-        (textDisplay) =>
-          textDisplay.setContent(`-# Use /attack to strike again!`)
+        (textDisplay) => textDisplay.setContent(
+          `**Your HP:** ❤️ \`${this.data.playerStats.stats.hp.toLocaleString()}/${this.data.playerStats.maxHp?.toLocaleString()}\``
+        ),
+        (textDisplay) => textDisplay.setContent(
+          `**${this.data.enemy!.name}'s HP:** ❤️ \`${Math.max(0, this.data.enemy!.currentHp)}/${this.data.enemy!.maxHp}\``
+        ),
+        (textDisplay) => textDisplay.setContent(`-# Use /attack to strike again!`)
       );
     }
 
@@ -52,16 +48,14 @@ export default class AttackContainer {
         rewardText.push(`🎒 Looted: **${this.data.rewards.item.name}**`);
 
       for (const reward of rewardText) {
-        container.addTextDisplayComponents((textDisplay) =>
-          textDisplay.setContent(reward)
+        container.addTextDisplayComponents((textDisplay) => textDisplay.setContent(reward)
         );
       }
     }
 
     container.addSeparatorComponents((s) => s);
 
-    container.addTextDisplayComponents((textDisplay) =>
-      textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
+    container.addTextDisplayComponents((textDisplay) => textDisplay.setContent('-# ⚔️ DFO Cross-Platform Integration')
     );
 
     return container;

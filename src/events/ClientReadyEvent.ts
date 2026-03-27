@@ -1,9 +1,9 @@
 import { type Client } from 'discord.js';
 import Event from '../structures/Event';
 import logger from '../utilities/Logger';
-import ItemManager from '../managers/ItemManager';
-import WorkerPool from '../utilities/WorkerPool';
-import PresenceManager from '../managers/PresenceManager';
+import * as ItemManager from '../managers/ItemManager';
+import * as WorkerPool from '../utilities/WorkerPool';
+import * as PresenceManager from '../managers/PresenceManager';
 
 export default class ClientReadyEvent extends Event {
   constructor() {
@@ -13,7 +13,7 @@ export default class ClientReadyEvent extends Event {
     });
   }
 
-  public async execute(client: Client) {
+  public async execute(client: Client): Promise<void> {
     // Use cluster id from hybrid sharding, fallback to shard id
     const clusterId = (client as any).cluster?.id ?? client.shard?.ids[0] ?? 0;
     logger.info(

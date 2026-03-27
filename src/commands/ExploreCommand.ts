@@ -4,7 +4,7 @@ import { type IStepJSON } from '../interfaces/IStepJSON';
 import { apiFetch } from '../utilities/ApiClient';
 import { buildCombatResponse } from '../utilities/CombatResponseBuilder';
 import { formatError, formatCooldown } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 
 export default class ExploreCommand extends SlashCommand {
   constructor() {

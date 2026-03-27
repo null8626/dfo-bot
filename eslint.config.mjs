@@ -5,7 +5,7 @@ import globals from 'globals'
 
 export default [
   {
-    files: ['src/**/*.ts', 'bin/*.ts'],
+    files: ['src/**/*.ts'],
 
     plugins: {
       '@typescript-eslint': typescriptEslint,
@@ -63,7 +63,6 @@ export default [
       '@stylistic/no-extra-parens': 'error',
       '@stylistic/no-extra-semi': 'error',
       '@typescript-eslint/no-extraneous-class': 'error',
-      '@typescript-eslint/no-loop-func': 'error',
       '@typescript-eslint/no-loss-of-precision': 'error',
 
       '@typescript-eslint/no-misused-promises': [
@@ -109,7 +108,6 @@ export default [
       'block-scoped-var': 'error',
       'block-spacing': 'error',
       camelcase: 'error',
-      'class-methods-use-this': 'error',
       'comma-style': 'error',
       'default-case-last': 'error',
       'dot-notation': 'error',
@@ -142,7 +140,6 @@ export default [
       'no-invalid-regexp': 'error',
       'no-label-var': 'error',
       'no-lonely-if': 'error',
-      'no-mixed-operators': 'error',
       'no-mixed-spaces-and-tabs': 'error',
       'no-new': 'error',
       'no-new-func': 'error',

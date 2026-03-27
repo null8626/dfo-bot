@@ -7,11 +7,11 @@ import {
   StringSelectMenuOptionBuilder
 } from 'discord.js';
 import SelectMenu from '../../structures/SelectMenu';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
 import { type IPlayerJSON } from '../../interfaces/IPlayerJSON';
-import ImageService from '../../utilities/ImageService';
+import * as ImageService from '../../utilities/ImageService';
 import { type EquipmentSlot } from '../../interfaces/IItemJSON';
 
 export default class UnequipMenu extends SelectMenu {
@@ -85,10 +85,10 @@ export default class UnequipMenu extends SelectMenu {
             options.length >= 1
               ? options
               : [
-                  new StringSelectMenuOptionBuilder()
-                    .setLabel('None')
-                    .setValue('None')
-                ]
+                new StringSelectMenuOptionBuilder()
+                  .setLabel('None')
+                  .setValue('None')
+              ]
           )
           .setMaxValues(1)
           .setPlaceholder('Unequip Slot');

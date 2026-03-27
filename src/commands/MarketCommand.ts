@@ -13,13 +13,13 @@ import {
 import SlashCommand from '../structures/SlashCommand';
 import { apiFetch } from '../utilities/ApiClient';
 import { formatError } from '../utilities/ErrorMessages';
-import Routes from '../utilities/Routes';
+import * as Routes from '../utilities/Routes';
 import {
   type MarketListing,
   type MarketPageConfig
 } from '../utilities/MarketImageBuilder';
-import ImageService from '../utilities/ImageService';
-import ItemManager from '../managers/ItemManager';
+import * as ImageService from '../utilities/ImageService';
+import * as ItemManager from '../managers/ItemManager';
 import type { IInventoryItem } from '../interfaces/IInventoryJSON';
 
 const RARITY_CHOICES = [
@@ -65,49 +65,42 @@ export default class MarketCommand extends SlashCommand {
     });
 
     this.data
-      .addSubcommand((sub) =>
-        sub
-          .setName('browse')
-          .setDescription('Browse items for sale on the Global Market')
-          .addStringOption((o) =>
-            o
-              .setName('search')
-              .setDescription('Search by item name')
-              .setRequired(false)
-          )
-          .addStringOption((o) =>
-            o
-              .setName('rarity')
-              .setDescription('Filter by rarity')
-              .setChoices(RARITY_CHOICES)
-              .setRequired(false)
-          )
-          .addStringOption((o) =>
-            o
-              .setName('type')
-              .setDescription('Filter by item type')
-              .setChoices(TYPE_CHOICES)
-              .setRequired(false)
-          )
-          .addStringOption((o) =>
-            o
-              .setName('sort')
-              .setDescription('Sort order')
-              .setChoices(SORT_CHOICES)
-              .setRequired(false)
-          )
+      .addSubcommand((sub) => sub
+        .setName('browse')
+        .setDescription('Browse items for sale on the Global Market')
+        .addStringOption((o) => o
+          .setName('search')
+          .setDescription('Search by item name')
+          .setRequired(false)
+        )
+        .addStringOption((o) => o
+          .setName('rarity')
+          .setDescription('Filter by rarity')
+          .setChoices(RARITY_CHOICES)
+          .setRequired(false)
+        )
+        .addStringOption((o) => o
+          .setName('type')
+          .setDescription('Filter by item type')
+          .setChoices(TYPE_CHOICES)
+          .setRequired(false)
+        )
+        .addStringOption((o) => o
+          .setName('sort')
+          .setDescription('Sort order')
+          .setChoices(SORT_CHOICES)
+          .setRequired(false)
+        )
       )
-      .addSubcommand((sub) =>
-        sub
-          .setName('listings')
-          .setDescription('View your active market listings')
+      .addSubcommand((sub) => sub
+        .setName('listings')
+        .setDescription('View your active market listings')
       )
-      .addSubcommand((sub) =>
-        sub
-          .setName('sell')
-          .setDescription(
-            'Select an item from your inventory to list on the market'
-          )
+      .addSubcommand((sub) => sub
+        .setName('sell')
+        .setDescription(
+          'Select an item from your inventory to list on the market'
+        )
       );
   }
 
@@ -119,12 +112,12 @@ export default class MarketCommand extends SlashCommand {
     const discordId = interaction.user.id;
 
     switch (sub) {
-      case 'browse':
-        return this.handleBrowse(interaction, discordId);
-      case 'listings':
-        return this.handleListings(interaction, discordId);
-      case 'sell':
-        return this.handleSell(interaction, discordId);
+    case 'browse':
+      return this.handleBrowse(interaction, discordId);
+    case 'listings':
+      return this.handleListings(interaction, discordId);
+    case 'sell':
+      return this.handleSell(interaction, discordId);
     }
   }
 
@@ -394,9 +387,8 @@ function buildMarketButtons(
     for (const chunk of chunks.slice(0, 2)) {
       const row = new ActionRowBuilder<ButtonBuilder>();
 
-      for (let i = 0; i < chunk.length; i++) {
-        const globalIndex = listings.indexOf(chunk[i]);
-        const listing = chunk[i];
+      for (const listing of chunk) {
+        const globalIndex = listings.indexOf(listing);
 
         if (isBrowse) {
           row.addComponents(

@@ -2,7 +2,7 @@ import { type AnySelectMenuInteraction, type Client } from 'discord.js';
 import SelectMenu from '../../structures/SelectMenu';
 import { apiFetch } from '../../utilities/ApiClient';
 import { formatError } from '../../utilities/ErrorMessages';
-import Routes from '../../utilities/Routes';
+import * as Routes from '../../utilities/Routes';
 import { buildItemView } from '../../utilities/ItemViewBuilder';
 import type { IInventoryItem } from '../../interfaces/IInventoryJSON';
 import type { IPlayerJSON } from '../../interfaces/IPlayerJSON';
