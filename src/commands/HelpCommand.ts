@@ -19,7 +19,13 @@ const CATEGORY_COLORS: Record<string, number> = {
 
 export default class HelpCommand extends SlashCommand {
   constructor() {
-    super('help', 'View all available commands and how to get started', 'General');
+    super({
+      name: "help",
+      description: "View all available commands and how to get started",
+      category: "General",
+      cooldown: 3,
+      isGlobalCommand: true
+    });
   }
 
   public async execute(interaction: ChatInputCommandInteraction, client: Client): Promise<void> {
@@ -31,12 +37,11 @@ export default class HelpCommand extends SlashCommand {
     const categories = new Map<string, SlashCommand[]>();
 
     for (const command of commands.values()) {
-      const cat = command.getCategory();
       // Hide developer commands from regular users
-      if (cat === 'Developer') continue;
+      if (command.category === 'Developer') continue;
 
-      if (!categories.has(cat)) categories.set(cat, []);
-      categories.get(cat)!.push(command);
+      if (!categories.has(command.category)) categories.set(command.category, []);
+      categories.get(command.category)!.push(command);
     }
 
     const pages: EmbedBuilder[] = [];
@@ -66,7 +71,7 @@ export default class HelpCommand extends SlashCommand {
 
       let description = '';
       for (const cmd of cmds) {
-        description += `**\`/${cmd.getName()}\`** — ${cmd.getDescription()}\n`;
+        description += `**\`/${cmd.name}\`** — ${cmd.description}\n`;
       }
 
       const embed = new EmbedBuilder()
@@ -83,13 +88,5 @@ export default class HelpCommand extends SlashCommand {
       .setIdleTimeout(120_000); // 2 minutes for help browsing
 
     await paginator.start(interaction);
-  }
-
-  public isGlobalCommand(): boolean {
-    return true;
-  }
-
-  public cooldown(): number {
-    return 3;
   }
 }
